@@ -166,11 +166,11 @@ body.wp-core-ui a:hover {
 
 .wp-core-ui textarea:focus {
 
-    border-color: #8AB336;
+    border-color: #8AB336 !important;
 
-    -webkit-box-shadow: 0 0 2px rgba(26,134,21,.8);
+    -webkit-box-shadow: 0 0 2px rgba(26,134,21,.8) !important;
 
-    box-shadow: 0 0 2px rgba(26,134,21,.8);
+    box-shadow: 0 0 2px rgba(26,134,21,.8) !important;
 
 }
 
@@ -1150,6 +1150,60 @@ html .menu-item-handle:hover .item-type {
     color: #52760A !important
 }
 
+
+.wp-core-ui select:hover {
+    color: #A5C83C !important;
+}
+
+
+.wp-core-ui select:focus {
+    color: #32373c !important;
+}
+
+
+::selection {
+    background-color: #A5C83C !important;
+    color: #fff;
+}
+
+.block-editor-link-control .block-editor-link-control__search-input.block-editor-link-control__search-input input[type=text]:focus {
+    border: 1px solid #72942D !important;
+    box-shadow: 0 0 0 0.5px #72942D !important;
+}
+
+.components-form-toggle .components-form-toggle__input:focus+.components-form-toggle__track {
+    box-shadow: none;
+}
+
+.components-button:focus:not(:disabled) {
+    border-color: #52760A;
+}
+
+.components-button.is-pressed:focus:not(:disabled) {
+    box-shadow: inset 0 0 0 1px #fff,0 0 0 1.5px #52760A;
+}
+
+.table-of-contents__wrapper:focus:before {
+    box-shadow: inset 0 0 0 1.5px #72942D;
+}
+
+.postbox .handlediv:focus {
+    box-shadow: 0 0 0 1px #A5C83C;
+}
+
+.acf-admin-toolbar .acf-tab.is-active {
+    border-bottom: #A5C83C solid 3px;
+}
+
+.acf-admin-toolbar .acf-tab:hover {
+    color: #A5C83C;
+}
+
+/* here */
+
+
+
+
 /* guttenberg
 ==========================================*/
 
@@ -1384,8 +1438,8 @@ html .menu-item-handle:hover .item-type {
 .edit-post-visual-editor input[type=tel]:focus, 
 .edit-post-visual-editor input[type=text]:focus, .edit-post-visual-editor input[type=time]:focus, .edit-post-visual-editor input[type=url]:focus, .edit-post-visual-editor input[type=week]:focus, .edit-post-visual-editor select:focus, .edit-post-visual-editor textarea:focus, .editor-post-publish-panel .input-control:focus, .editor-post-publish-panel input[type=checkbox]:focus, .editor-post-publish-panel input[type=color]:focus, .editor-post-publish-panel input[type=date]:focus, .editor-post-publish-panel input[type=datetime-local]:focus, .editor-post-publish-panel input[type=datetime]:focus, .editor-post-publish-panel input[type=email]:focus, .editor-post-publish-panel input[type=month]:focus, .editor-post-publish-panel input[type=number]:focus, .editor-post-publish-panel input[type=password]:focus, .editor-post-publish-panel input[type=radio]:focus, .editor-post-publish-panel input[type=search]:focus, .editor-post-publish-panel input[type=tel]:focus, .editor-post-publish-panel input[type=text]:focus, .editor-post-publish-panel input[type=time]:focus, .editor-post-publish-panel input[type=url]:focus, .editor-post-publish-panel input[type=week]:focus, .editor-post-publish-panel select:focus, 
 .editor-post-publish-panel textarea:focus {
-    border-color: #52760A;
-    box-shadow: 0 0 0 1px #52760A;
+    border-color: #52760A !important;
+    box-shadow: 0 0 0 1px #52760A !important;
 }
 
 .block-editor-block-types-list__item:not(:disabled):active, 

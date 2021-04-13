@@ -5,7 +5,7 @@
 	Plugin Name: WeDesIn Branding
 	Plugin URI: https://www.wedesin.cz/
 	Description: WeDesIn branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
-	Version: 1.43
+	Version: 2.0.0
 	Author: WeDesIn
 	Author URI: https://www.wedesin.cz/
 	License: WeDesIn
