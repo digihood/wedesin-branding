@@ -3,9 +3,9 @@ Contributors: wedesin
 Donate link: https://www.wedesin.cz/
 Tags: branding
 Requires at least: 4.0
-Tested up to: 5.7
-Stable tag: 4.3
-Requires PHP: 7.0
+Tested up to: 5.7.1
+Stable tag: 4.5
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,7 @@ Here is a short description of the plugin.  This should be no more than 150 char
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
-
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+This is the long description. 
 
 A few notes about the sections above:
 
