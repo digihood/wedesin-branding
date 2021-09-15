@@ -48,7 +48,7 @@ if( ! class_exists( 'WdsSendEmail' ) )
       }
       public function text_settings(){
         $text = array(
-          'footer_copy'=> '© '. date('Y') .' TIS partners, s.r.o',
+          'footer_copy'=> '© '. date('Y') .'WeDesIn',
           'footer_text'=> 'Tento email byl odeslán z webu '. get_home_url()
         );
         return $text;
@@ -75,7 +75,7 @@ if( ! class_exists( 'WdsSendEmail' ) )
         $body="",
         $footer=""
         ){
-          $img = get_option('_wds_wdslicsys_license_plugin_wds_obrazek', false);
+          $img = get_option('_wds_WDSBRAND_brand_emails_settings_header_logo', false);
           $return ='<!DOCTYPE html>
               <html lang="cs">
               <head>
@@ -152,15 +152,6 @@ if( ! class_exists( 'WdsSendEmail' ) )
       }
       public function render_mail_footer() {
         $text = $this->text_settings();
-        /*$fb = get_field('facebook_address', 'option') ;
-        $insta = get_field('instagram_address', 'option') ;
-        $pinte = get_field('pinterest_address', 'option') ;
-        $yt = get_field('youtube_address', 'option') ;
-        $links = new linksWds;
-        $contact_link = (method_exists($links,'contact_link') ? $links->contact_link( ) : '');
-        $business_terms = (method_exists($links,'business_terms') ? $links->business_terms( ) : '');
-        $gdpr = (method_exists($links,'gdpr') ? $links->gdpr( ) : '');
-        */
         $return = '<table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td align="center">
@@ -168,41 +159,6 @@ if( ! class_exists( 'WdsSendEmail' ) )
                     <tr>
                         <td style="padding: 0px 0px 20px 0px;">
                             <table style="background: '.$this->background.'; color:'.$this->fontColorFooter.';" width="600" border="0" cellspacing="0" cellpadding="0" align="center" class="responsive-table">';
-                              /*if ($contact_link || $business_terms || $gdpr){  
-                                $return .='<tr>
-                                  <td align="center" valign="middle" style="font-size: '.$this->fontSize .'; line-height: '. $this->lineHeight.'; font-family: '.$this->fontFamily.'; padding-top: 35px;">';
-                                    if ($contact_link){
-                                      $return .='<a href="'.$contact_link.'" target="_blank" style="color: #ffffff;">Kontakt</a>
-                                      <span style="color: #ffffff; padding: 0 10px">|</span>';
-                                    }
-                                      
-                                    if ($business_terms){
-                                      $return .='<a href="'. $business_terms.'" target="_blank" style="color: #ffffff;">Obchodní podmínky</a>
-                                      <span style="color: #ffffff; padding: 0 10px">|</span>';
-                                    }
-                                    if ($gdpr){
-                                        $return .='<a href="'.$gdpr.'" target="_blank" style="color: #ffffff;">Ochrana osobních údajů</a>';
-                                    }
-                                  $return .='</td>
-                                </tr>';
-                              }
-                                if (!empty($fb) || !empty($insta) || !empty($pinte) || !empty($yt)) {
-                                $return .='<tr>
-                                  <td align="center" valign="middle" style="font-size: '.$this->fontSize .'; line-height: '. $this->lineHeight.'; font-family: '.$this->fontFamily.'; padding: 35px 5px 20px 5px;">';
-                                  if (! empty($fb)) { $return .= '<a href="'.$fb.'" target="_blank" style="color: '.$this->fontColorFooter.'; text-decoration: none; padding:0 10px">
-                                    <img src="'.home_url().'/wp-content/themes/fleraacademy/assets/svg/mail/facebook.svg" width="30" height="30" style="width: auto; height:30px;">
-                                    </a>'; }
-                                  if (! empty($yt)) { $return .= '<a href="'.$yt.'" target="_blank" style="color: '.$this->fontColorFooter.'; text-decoration: none; padding:0 10px">
-                                    <img src="'.home_url().'/wp-content/themes/fleraacademy/assets/svg/mail/youtube.svg" width="30" height="30" style="width: auto; height:30px;">
-                                    </a>'; }
-                                  if (! empty($insta)) { $return .= '<a href="'.$insta.'" target="_blank" style="color: '.$this->fontColorFooter.'; text-decoration: none; padding:0 10px">
-                                    <img src="'.home_url().'/wp-content/themes/fleraacademy/assets/svg/mail/instagram.svg" width="30" height="30" style="width: auto; height:30px;">
-                                    </a>'; }
-                                  if (! empty($pinte)) { $return .= '<a href="'.$pinte.'" target="_blank" style="color: '.$this->fontColorFooter.'; text-decoration: none; padding:0 10px">
-                                    <img src="'.home_url().'/wp-content/themes/fleraacademy/assets/svg/mail/pinterest.svg" width="30" height="30" style="width: auto; height:30px;">
-                                    </a>'; }
-                                  $return .='</td>
-                                </tr>'; }*/
                                 $return .='<tr>
                                     <td align="center" valign="middle" style="font-size: '.$this->fontSize .'; line-height: '. $this->lineHeight.'; font-family: '.$this->fontFamily.'; padding: 15px 5px 0px 5px;">
                                     '. $text['footer_copy'].'

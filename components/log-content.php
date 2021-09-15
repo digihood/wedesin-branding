@@ -1,5 +1,5 @@
 <?php 
-namespace pluginslug\log;
+namespace pluginbrandslug\log;
 if ( ! defined( 'ABSPATH' ) ) {
 
   exit;

@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-if (!class_exists('WDS_Front_Form')) {
-    class WDS_Front_Form
+if (!class_exists('WDS_Front_Form_brand')) {
+    class WDS_Front_Form_brand
     {
 
         private $fields;
@@ -69,10 +69,15 @@ if (!class_exists('WDS_Front_Form')) {
                             <form method="post" id="<?= $formID ?>_form" class="wds-form" action="<?php // the_permalink(); 
                                                                                                                     ?>" enctype="multipart/form-data" novalidate data-abide>
                                 <?php wp_nonce_field( $formID, 'nonce_' . $formID ); ?>
-                                <input type="hidden" value="<?=$formID?>" name="form_id_wds" />                                                             
-                                <?php $this->get_form_fields($formID); ?>
-
-                                <?php submit_button(); ?>
+                                <input type="hidden" value="<?=$formID?>" name="form_id_wds" />     
+                                <input type="hidden" value="<?= WDS_BRANDING ?>" name="plugin_id" />                                                        
+                                <?php $this->get_form_fields($formID); 
+                                if ($formID == 'update_report') {
+                                    $button_text = 'Odeslat hlášení';
+                                }else {
+                                    $button_text ="";
+                                }
+                                submit_button($button_text); ?>
 
                             </form>
                         </div>
@@ -798,7 +803,7 @@ if (!class_exists('WDS_Front_Form')) {
 
         public function save_form()
         {
-            $inputs = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $inputs = filter_input_array(INPUT_POST);
             if (!isset($inputs['form_id_wds']) || $inputs['form_id_wds'] == '') {
                 return;
             }
@@ -806,8 +811,6 @@ if (!class_exists('WDS_Front_Form')) {
             $this->form_ID = $formID;
             if (isset($inputs['nonce_' . $formID]) && wp_verify_nonce($inputs['nonce_' . $formID], $formID)) {
                 //validace polí
-                //preprint($inputs);
-                //die('test některých polí');
                 if (!$this->validate_fields($inputs, $formID)) {
                     $this->session->addSession($formID . '_save', 'fail');
                     wp_safe_redirect($inputs['_wp_http_referer']);
@@ -817,95 +820,67 @@ if (!class_exists('WDS_Front_Form')) {
                 if ((isset($inputs['wds_meta']['name']) && $inputs['wds_meta']['name'] !== "") || (isset($inputs['wds_meta']['surname']) && $inputs['wds_meta']['surname'] !== "")) {
                     exit;
                 }
-                $metas = $inputs;
-                $validation_data = $this->session->getSession( $this->form_ID.'_validation' );
-                //preprint($validation_data);
 
-                // Doplnění dat z odškrtnutých checkboxů
-                foreach ($validation_data as $input_name => $input_data) {
-                        if ( isset($input_data['type']) && (
-                            $input_data['type'] == 'checkbox' || 
-                            $input_data['type'] == 'switch' || 
-                            $input_data['type'] == 'checkbox_large' )
-                        ){
-                            if (empty($input_data['value']) ) {
-                                $metas[$input_name] = 0;
+                //preprint( $this->fields );
+
+                if (isset($this->fields) && isset($this->fields[0])) {
+
+                    // zde můžeme upravovat jak se má soubor zpracovávat
+                    if (array_key_exists('save_option',$this->fields[0])){
+                        if($this->fields[0]['save_option'] == 'send_mail'){
+                            $result = $this->send_update_email($inputs, $formID);              
+                            if ($result) {
+                                $this->session->addSession($formID . '_submit_res', 'true');                                                          
+                            } else {
+                                $this->session->addSession($formID . '_submit_res', 'false');
                             }
+
+                            //$newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);  
+                            wp_safe_redirect($inputs['_wp_http_referer']);
+                            exit();
                         }
-                }
-                //vyhodit hodnoty, které se nemají uložit
-                if(isset($metas['_wp_http_referer'])) unset($metas['_wp_http_referer']);
-                if(isset($metas['form_id_wds'])) unset($metas['form_id_wds']);
-                if(isset($metas['submit'])) unset($metas['submit']);
-                if(isset($metas['nonce_' . $formID])) unset($metas['nonce_' . $formID]);
-                // preprint($metas);
-                // die();
-                //zde budeme zpracovávat ukládání hodnot
-                if ($metas && !empty($metas)) {
-                    foreach ($metas as $meta_key => $meta_value) {
-                        /*$gallery = 'gallery_';
 
-                        if (substr($meta_key, 0, strlen($gallery)) === $gallery) {
+                    //defaultní zpracování formuláře
+                    }else {
 
-                            // save gallery
-                            if ($meta_value && $meta_value != '') {
-                                $images = explode(',', $meta_value);
-                                $imageCount = count($images);
+                        $metas = $inputs;
+                        $validation_data = $this->session->getSession( $this->form_ID.'_validation' );
 
-                                //if it is gallery
-
-                                if (is_array($images) && $imageCount > 0) {
-
-
-
-                                    $prevCount = get_post_meta($save_post, $meta_key, true);
-                                    // delete all previous rows from database
-                                    if ($prevCount > 0) {
-                                        for ($tempIndex = 0; $tempIndex < $prevCount; $tempIndex++) {
-                                            delete_post_meta($save_post, $meta_key . '_' . ($tempIndex) . '_gallery_image_' . $inputs['post_type']);
-                                            delete_post_meta($save_post, '_' . $meta_key . '_' . ($tempIndex) . '_gallery_image_' . $inputs['post_type']);
-                                        }
-                                    }
-                                    // reset image count for ACF repeater
-                                    delete_post_meta($save_post, $meta_key);
-
-                                    $imgindex = 0;
-
-
-                                    foreach ($images as $file_path) {
-
-                                        $file_url = get_site_url() . '/' . str_replace(ABSPATH, '', $file_path);
-
-                                        update_post_meta($save_post, $meta_key . '_' . ($imgindex) . '_gallery_image_' . $inputs['post_type'], $file_url);
-
-                                        $imgindex++;
-                                    }
-
-                                    if ($this->get_field_parameter(str_replace('gallery_', '', $meta_key), 'useAsFeatured')) {
-                                        if ($imgindex > 1) {
-                                            // save the number of images to complete data for ACF repeater
-                                            update_post_meta($save_post, $meta_key, $imageCount - 1);
-                                        }
-                                    } else {
-                                        if ($imgindex > 0) {
-                                            // save the number of images to complete data for ACF repeater
-                                            update_post_meta($save_post, $meta_key, $imageCount);
-                                        }
-                                    }
+                        // Doplnění dat z odškrtnutých checkboxů
+                        foreach ($validation_data as $input_name => $input_data) {
+                            if ( isset($input_data['type']) && (
+                                $input_data['type'] == 'checkbox' || 
+                                $input_data['type'] == 'switch' || 
+                                $input_data['type'] == 'checkbox_large' )
+                            ){
+                                if (empty($input_data['value']) ) {
+                                    $metas[$input_name] = 0;
                                 }
                             }
-                        } else {*/
-                        if($meta_key)
-                            $this->save_data($meta_key, $meta_value);
-                        //}
+                        }
+                        //vyhodit hodnoty, které se nemají uložit
+                        if(isset($metas['_wp_http_referer'])) unset($metas['_wp_http_referer']);
+                        if(isset($metas['form_id_wds'])) unset($metas['form_id_wds']);
+                        if(isset($metas['submit'])) unset($metas['submit']);
+                        if(isset($metas['nonce_' . $formID])) unset($metas['nonce_' . $formID]);
+
+                        //zde budeme zpracovávat ukládání hodnot
+                        if ($metas && !empty($metas)) {
+                            foreach ($metas as $meta_key => $meta_value) {
+                               
+                                if($meta_key)
+                                    $this->save_data($meta_key, $meta_value);
+                            }
+                            // remove field validation data
+                            $this->session->removeSession($formID . '_validation');
+                            // add "all good and saved" notice
+                            $this->session->addSession($formID . '_save', 'success');
+                            $newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);
+                            wp_safe_redirect($newUrl);
+                            exit;
+                        }
                     }
-                    // remove field validation data
-                    $this->session->removeSession($formID . '_validation');
-                    // add "all good and saved" notice
-                    $this->session->addSession($formID . '_save', 'success');
-                    $newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);
-                    wp_safe_redirect($newUrl);
-                    exit;
+
                 }
                 $this->session->addSession($formID . '_save', 'fail');
                 wp_safe_redirect($inputs['_wp_http_referer']);
@@ -913,6 +888,7 @@ if (!class_exists('WDS_Front_Form')) {
                 die('Nastala chyba');
             }
         }
+
         public function save_data($key, $value) {
             $id = ($this->form_ID ? $this->form_ID : 'default');
             $pref = $this->prefix;
@@ -1308,7 +1284,7 @@ if (!class_exists('WDS_Front_Form')) {
         function save_cpt_meta(){
             global $post;
             if ($post && isset($post->post_type) && !empty($post->post_type)){
-                $builder = new formsBuilderWDS;
+                $builder = new formsBuilderWDS_brand;
                 $all_fields = $builder->get_fields_cpt_form($post->post_type);
                 if (!empty($all_fields)) {
                     foreach ($all_fields as $field) {
@@ -1321,7 +1297,67 @@ if (!class_exists('WDS_Front_Form')) {
 
             }
         }
+        /**
+         * Odeslat email s aktualizací
+         *
+         * @author Wedesin
+         * @return true/false
+         */ 
+        function send_update_email($inputs, $formID){
+            $email = get_option('_wds_WDSBRAND_brand_emails_settings_send_to_email',false);
+            if (empty($email)) {
+                $email = get_option( 'admin_email' );
+            }
+            $content = $this->update_email_content($inputs);
+            $footer = __('Děkujeme, že využíváte naše služby.', 'WDSBRAND');
+            $email = new WdsSendEmail;
+            echo $email->email_content('Aktualizace webu', array($content),$footer );
+            die('semtu');
+        }
+        public function update_email_content($inputs) {
+            global $wp_version;
+            $text = get_option('_wds_WDSBRAND_brand_emails_settings_mail_text_license_wds',false);
+            $content = __('dobrý den', 'WDSBRAND').',<br><br>';
+            $content .= __('Právě jsme aktualizovali Váš web', 'WDSBRAND') . ' - '. get_home_url(). '.<br><br>';
+            if ($text) $content .= $text;
+            $content .= '<h3>'.__('Přehled aktualizací:', 'WDSBRAND').'</h3>';
+            if(isset($inputs['up_wp']) && !empty($inputs['up_wp'])) {
+                if ($wp_version){
+                    $content .= __('Wordpress aktualizován na verzi', 'WDSBRAND').' '. $wp_version.'<br>';
+                }else {
+                    $content .= __('Wordpress aktualizován na nejnovější verzi', 'WDSBRAND').'<br>';
+                } 
+            }
+            if(isset($inputs['up_theme']) && !empty($inputs['up_theme'])) {
+                $content .= __('Šablona byla aktualizován na nejnovější verzi', 'WDSBRAND').'<br>';
+            }
+            if(isset($inputs['up_settings']) && !empty($inputs['up_settings'])) {
+                $content .= __('Na webu jsme aktualizovali nastavení webu (zabezpečení, zálohy, php, nastavení eshopu)', 'WDSBRAND').'<br>';
+            }
+            if(isset($inputs['up_plugins']) && !empty($inputs['up_plugins'])) {
+                $content .= '<p>'. __('Aktualizované pluginy', 'WDSBRAND').':</p>';
+                $plugins_list = get_plugins();
+                foreach ($inputs['up_plugins'] as $key => $value) {
+                    if(array_key_exists($value, $plugins_list )){
+                        if (isset($plugins_list[$value])){
+                            $name = (isset($plugins_list[$value]['Name'])? $plugins_list[$value]['Name'] : '');
+                            $version = (isset($plugins_list[$value]['Version'])? $plugins_list[$value]['Version'] : '');
+                            if ($name && $version) {
+                                $content .= $name . ' '. __('Aktualizováno na verzi', 'WDSBRAND'). ' '. $version. '<br>';
+                            }
+                        }
+                    }
+                }
+            }
+            if(isset($inputs['up_content']) && !empty($inputs['up_content'])) {
+                $content .= '<p><b>'.__('Poznámka k aktualizaci', 'WDSBRAND').'</b></p>';
+                $content .= '<div>'.$inputs['up_content'].'</div>';
+            }
+            return $content;
+
+        }
+
     }
 
-    new WDS_Front_Form;
+    new WDS_Front_Form_brand;
 }

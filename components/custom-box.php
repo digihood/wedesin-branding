@@ -78,7 +78,7 @@ if( ! class_exists( 'WedesinPostsWDS' ) )
 
                 echo "Při stažení posledního příspěvku došlo k chybě " . $e->getMessage() . '.';
 
-                $log = new pluginslug\log\wedesinLogSettings;
+                $log = new pluginbrandslug\log\wedesinLogSettings;
                 $log->add_log('WeDesIn stažení příspěvků', 'Nepodařilo se stáhnout poslední příspěvky, došlo k chybě' . $e->getMessage());
 
             }
