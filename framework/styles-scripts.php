@@ -45,14 +45,6 @@ if ( !class_exists('ScriptsStylesWDS') ) {
   
     public function add_scripts( ) {
   
-      //Register style
-      $star_style = filemtime(  WDS_BRANDPATH . 'assets/styles/star-rating.css' );
-      wp_enqueue_style( 'star-comments', WDS_BRANDURL . 'assets/styles/star-rating.css', array( ), $star_style, 'all' );
-  
-      //register gavascript
-      $star_script = filemtime(  WDS_BRANDPATH . 'assets/scripts/star-rating.js' );
-      wp_enqueue_script( 'star-comments', WDS_BRANDURL . 'assets/scripts/star-rating.js', array( 'jquery' ), $star_script, true );
-      
     }
   
     public function add_admin_scripts( ) {

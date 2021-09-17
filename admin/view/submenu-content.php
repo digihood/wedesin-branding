@@ -71,7 +71,7 @@ if (!class_exists('submenuContentWDS')) {
                                 $mailingForm = $builder->get_fields_form("brand_emails_settings");
                             if (!empty($mailingForm)){
                                 ?>
-                                <a href="?page=wds_brand&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo file_get_contents(WDS_URLSEC . "assets/icons/link-line.svg"); ?>Emaily</a>
+                                <a href="?page=wds_brand&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo file_get_contents(WDS_BRANDURL . "assets/icons/link-line.svg"); ?>Emaily</a>
                                 <?php 
                             } ?>
                         </nav>
