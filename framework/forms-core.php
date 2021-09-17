@@ -1304,23 +1304,49 @@ if (!class_exists('WDS_Front_Form_brand')) {
          * @return true/false
          */ 
         function send_update_email($inputs, $formID){
-            $email = get_option('_wds_WDSBRAND_brand_emails_settings_send_to_email',false);
-            if (empty($email)) {
-                $email = get_option( 'admin_email' );
+            $mail = get_option('_wds_WDSBRAND_brand_emails_settings_send_to_email',false);
+            if (empty($mail)) {
+                $mail = get_option( 'admin_email' );
             }
             $content = $this->update_email_content($inputs);
             $footer = __('Děkujeme, že využíváte naše služby.', 'WDSBRAND');
-            $email = new WdsSendEmail;
-            echo $email->email_content('Aktualizace webu', array($content),$footer );
-            die('semtu');
+            $subject = get_option('_wds_WDSBRAND_brand_emails_settings_license_email_subject','Aktualizovali jsme váš web');
+            $email = new WdsSendEmailBrand;
+            //zde zprovoznit emaily
+            $text = $email->email_content('Aktualizace webu', array($content),$footer );
+            $email->send_client_emails($mail, $subject ,$text);
+            //uložení aktualizace
+            $this->save_update_data($inputs);
+            if ($this->save_update_data($inputs)) {
+                $this->session->addSession($formID . '_save', 'success');
+            } else {
+                $this->session->addSession($formID . '_save', 'fail');
+            }
+            wp_safe_redirect($inputs['_wp_http_referer']);
+            exit;
         }
-        public function update_email_content($inputs) {
+
+        public function save_update_data($inputs){
+            $update_list = get_option('_wds_list', []);
+            $new = $this->update_list($inputs);
+            if($new) {
+                $update_list[strtotime('now')] = array(
+                    'user'=> get_current_user_id(),
+                    'update'=> $new
+                );
+                update_option('_wds_list',$update_list);
+                return true;
+            } else{
+                return false;
+            }
+
+
+
+        }
+        
+        public function update_list($inputs) {
             global $wp_version;
-            $text = get_option('_wds_WDSBRAND_brand_emails_settings_mail_text_license_wds',false);
-            $content = __('dobrý den', 'WDSBRAND').',<br><br>';
-            $content .= __('Právě jsme aktualizovali Váš web', 'WDSBRAND') . ' - '. get_home_url(). '.<br><br>';
-            if ($text) $content .= $text;
-            $content .= '<h3>'.__('Přehled aktualizací:', 'WDSBRAND').'</h3>';
+            $content = '';
             if(isset($inputs['up_wp']) && !empty($inputs['up_wp'])) {
                 if ($wp_version){
                     $content .= __('Wordpress aktualizován na verzi', 'WDSBRAND').' '. $wp_version.'<br>';
@@ -1353,6 +1379,16 @@ if (!class_exists('WDS_Front_Form_brand')) {
                 $content .= '<p><b>'.__('Poznámka k aktualizaci', 'WDSBRAND').'</b></p>';
                 $content .= '<div>'.$inputs['up_content'].'</div>';
             }
+            return $content;
+
+        }
+        public function update_email_content($inputs) {
+            $text = get_option('_wds_WDSBRAND_brand_emails_settings_mail_text_license_wds',false);
+            $content = __('dobrý den', 'WDSBRAND').',<br><br>';
+            $content .= __('Právě jsme aktualizovali Váš web', 'WDSBRAND') . ' - '. get_home_url(). '.<br><br>';
+            if ($text) $content .= $text;
+            $content .= '<h3>'.__('Přehled aktualizací:', 'WDSBRAND').'</h3>';
+            $content .= $this->update_list($inputs);
             return $content;
 
         }

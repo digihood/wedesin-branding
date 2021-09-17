@@ -51,11 +51,22 @@ if (!class_exists('submenuContentWDS')) {
 
                 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
-                <?php settings_errors(); ?>
+                <?php 
+                if ( isset($_SESSION['update_report_save']) && !empty($_SESSION['update_report_save']) ) {
+                    $this->showMessage( __("Report odeslán", WDS_BRANDING), false);
+                    unset($_SESSION['update_report_save']);
+                }else if ( isset($_SESSION['update_report_save']) && !empty($_SESSION['update_report_save']) ) {
+                    $this->showMessage( __("Při ukládání reportu došlo k chybě.", WDS_BRANDING), true);
+                    unset($_SESSION['update_report_save']);
+                    
+                }  
+                settings_errors(); 
+                ?>
                 <div class="row">
                     <div class="column content">
                         <nav class="nav-tab-wrapper">
                             <a href="?page=wds_brand" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>"> <?php echo file_get_contents(WDS_BRANDURL . "assets/icons/home-line.svg"); ?> Záznam aktualizace</a>
+                                <a href="?page=wds_brand&tab=updates_list" class="nav-tab <?php if ($tab === 'updates_list') : ?>nav-tab-active<?php endif; ?>"> <?php echo file_get_contents(WDS_BRANDURL . "assets/icons/home-line.svg"); ?>Přehled aktualizací</a>
                             <?php
                                 $mailingForm = $builder->get_fields_form("brand_emails_settings");
                             if (!empty($mailingForm)){
@@ -83,6 +94,9 @@ if (!class_exists('submenuContentWDS')) {
                                         $builder->display_form("brand_emails_settings");
                                     }
                                     break;
+                                case 'updates_list':
+                                    $this->the_updates_list();
+                                    break;
 
                             endswitch; ?>
                         </div>
@@ -102,7 +116,60 @@ if (!class_exists('submenuContentWDS')) {
             </div>
 <?php
         }
+        public function the_updates_list() {
+            $updates_list = get_option('_wds_list', []);
+            ?>
+            <h2>Seznam dostupných zapsaných aktualizací</h2>
+            <table width=100%>
+                <thead style="font-weight:700">
+                    <tr>
+                        <td>Datum</td>
+                        <td>Autor</td>
+                        <td>Seznam aktualizací</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($updates_list as $date => $record) {
+                        if (isset($record['user']) && $record['update']) {
+                            $user = get_userdata($record['user']);
+                            echo '<tr style="border-top: 1px solid black">';
+                            echo '<td>'.date('d. m. Y H:i',$date).'</td>';
+                            echo '<td>'.$user->user_login. '('.$user->ID.')</td>';
+                            echo '<td>'.$record['update'].'</td>';
+                            echo '</tr>';
+                        }
+
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <?php
+            
+            //preprint($updates_list);
+        }
+        /**
+         * přidat zprávu
+         *
+         * @param $message = obsah zprávy
+         * @param $errormsq = zda je to chybová hláška
+         * 
+         * @author Wedesin
+         * @return true/false
+         */ 
+        function showMessage($message, $errormsg = false)
+        {
+            if ($errormsg) {
+                echo '<div id="message" class="error">';
+            }
+            else {
+                echo '<div id="message" class="updated fade">';
+            }
+            echo "<p><strong>$message</strong></p></div>";
+        } 
+        
     }
+    
 
     new submenuContentWDS;
 }

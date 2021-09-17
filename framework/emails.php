@@ -9,11 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-if( ! class_exists( 'WdsSendEmail' ) )
+if( ! class_exists( 'WdsSendEmailBrand' ) )
 
 {
 
-    class WdsSendEmail
+    class WdsSendEmailBrand
     {
 
       private $background;
@@ -30,10 +30,10 @@ if( ! class_exists( 'WdsSendEmail' ) )
         $this->settings_css();
       }
       public function settings_css() {
-        $this->background = '#414b55';
+        $this->background = get_option('_wds_WDSBRAND_brand_emails_settings_footer_bg_color','#414b55') ;
         $this->fontColorText = '#151B24';
         $this->fontColorLink = '#03acff';
-        $this->fontColorFooter = '#03acff';
+        $this->fontColorFooter = get_option('_wds_WDSBRAND_brand_emails_settings_footer_color','#03acff');
         $this->fontSize = '12px';
         $this->lineHeight = '16px';
         $this->fontFamily = 'Arial, sans-serif';
@@ -48,7 +48,7 @@ if( ! class_exists( 'WdsSendEmail' ) )
       }
       public function text_settings(){
         $text = array(
-          'footer_copy'=> '© '. date('Y') .'WeDesIn',
+          'footer_copy'=> '© '. date('Y') .' <a href="https://wedesin.cz" target="_blank">WeDesIn</a>',
           'footer_text'=> 'Tento email byl odeslán z webu '. get_home_url()
         );
         return $text;
@@ -75,7 +75,8 @@ if( ! class_exists( 'WdsSendEmail' ) )
         $body="",
         $footer=""
         ){
-          $img = get_option('_wds_WDSBRAND_brand_emails_settings_header_logo', false);
+          $img_default = WDS_BRANDURL . 'assets/img/wedesin-logo-cz.png';
+          $img = get_option('_wds_WDSBRAND_brand_emails_settings_header_logo', $img_default);
           $return ='<!DOCTYPE html>
               <html lang="cs">
               <head>
@@ -291,10 +292,6 @@ if( ! class_exists( 'WdsSendEmail' ) )
       ========================================================*/
   
       public function send_client_emails( $mail, $subject, $message ){ 
-  
-        if (empty($subject)) {
-            $subject = __('', 'custom' );
-        }
   
         $headers = array( 'Content-Type: text/html; charset=UTF-8 ');
   

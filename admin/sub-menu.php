@@ -68,7 +68,7 @@ if( ! class_exists( 'subMenuWDS' ) )
 
     }
 
-	new subMenuWDS;
+	new \pluginbrandslug\admin\submenu\subMenuWDS;
 
 }
 

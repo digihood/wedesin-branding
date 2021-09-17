@@ -19,13 +19,6 @@ if( ! class_exists( 'brandPluginField' ) )
 					[
 						'headline' => 'Nastavení emailů',
 						'description' => 'Pro správné používání emailů je potřeba přizpůsobit jejich vzhled a nastavení.',
-						[
-							'type' => 'switch',
-							'name' => 'switch',
-							'label' => 'Aktivace emailů',
-							'description' => 'Zaškrtnutí tlačítka aktivuje odesílání emailů',
-							'saveAs' => 'meta',
-						],
 					],
 					[           
                         'headline' => 'Nastavení vzhledu emailu',     
