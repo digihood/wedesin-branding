@@ -103,14 +103,20 @@ if (!class_exists('submenuContentWDS')) {
                     </div>
                     <div class="column sidebar">
                         <div class="card">
-                            <p><img src="<?php echo WDS_BRANDURL ?>assets/img/Logo-Wedesin-CZ.png" alt=""></p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Senectus libero ut lorem ac dictumst phasellus nunc sit. Eu nisi sed viverra id aliquam enim, odio nunc.</p>
-                            <p><a href="#" class="button">tlačítko</a></p>
+                   <?php 
+                   $WedesinApiWDS = new \WedesinRestApiWDS();
+                   $WedesinApiWDS->wedesin_dashboard_widget_display('rest_api');
+                
+                   ?>
+
+
                         </div>
-                        <div class="card info">
-                            <h3><?php echo file_get_contents(WDS_BRANDURL . "assets/icons/info-standard-line.svg"); ?>Info blok</h3>
+                     <div class="card info">
+
+                     <?php  echo $WedesinApiWDS->pull_geenbox_post('plugins'); ?>
+                            <h3><?php echo file_get_contents(WDS_BRANDURL . "assets/icons/info-standard-line.svg"); ?> <!--Info blok</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Senectus libero ut lorem ac dictumst phasellus nunc sit. Eu nisi sed viverra id aliquam enim, odio nunc.</p>
-                        </div>
+                        --></div> 
                     </div>
                 </div>
             </div>

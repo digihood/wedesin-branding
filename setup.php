@@ -38,6 +38,7 @@ define( 'WDS_BRANDING', 'WDSBRAND' );
 /       INCLUDE PARTS          *
 ********************************/
 //framework
+
 include_once( WDS_BRANDPATH . 'framework/styles-scripts.php');  
 include_once( WDS_BRANDPATH . 'framework/main-menu.php');  
 include_once( WDS_BRANDPATH . 'framework/log/log-setup.php');  
@@ -62,6 +63,7 @@ include_once( WDS_BRANDPATH . 'components/admin-update.php');
 include_once( WDS_BRANDPATH . 'components/styles-scripts.php');
 include_once( WDS_BRANDPATH . 'components/custom-functions.php');  
 include_once( WDS_BRANDPATH . 'components/custom-box.php');
+include_once( WDS_BRANDPATH . 'components/custom-new-box.php');
 
 // Nastavení utomatické kontroly auktualizací 
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
