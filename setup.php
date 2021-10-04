@@ -3,7 +3,7 @@
 /**
 * Plugin Name: WeDesIn Branding
 * Description: WeDesIn branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
-* Version: 2.1.1
+* Version: 2.1.2
 * Author: WeDesIn
 * Author URI: https://www.wedesin.cz/
 * Requires at least: 3.0.
@@ -62,3 +62,18 @@ include_once( WDS_BRANDPATH . 'components/admin-update.php');
 include_once( WDS_BRANDPATH . 'components/styles-scripts.php');
 include_once( WDS_BRANDPATH . 'components/custom-functions.php');  
 include_once( WDS_BRANDPATH . 'components/custom-box.php');
+
+
+
+require 'components/plugin-update-checker/plugin-update-checker.php';
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://github.com/WeDesIn/wedesin-branding',
+	__FILE__,
+	'wedesin-branding'
+);
+
+//Set the branch that contains the stable release.
+$myUpdateChecker->setBranch('master');
+
+//Optional: If you're using a private repository, specify the access token like this:
+$myUpdateChecker->setAuthentication('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');
