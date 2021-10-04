@@ -3,7 +3,7 @@
 /**
 * Plugin Name: WeDesIn Branding
 * Description: WeDesIn branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
-* Version: 2.1.2
+* Version: 2.1.3
 * Author: WeDesIn
 * Author URI: https://www.wedesin.cz/
 * Requires at least: 3.0.
@@ -48,7 +48,7 @@ include_once( WDS_BRANDPATH . 'framework/forms-core.php');
 include_once( WDS_BRANDPATH . 'framework/helpers.php'); 
 include_once( WDS_BRANDPATH . 'framework/forms-core.php');  
 include_once( WDS_BRANDPATH . 'framework/emails.php'); 
-
+include_once( WDS_BRANDPATH . 'framework/plugin-update-checker/plugin-update-checker.php'); 
 //add admin page
 include_once( WDS_BRANDPATH . 'admin/sub-menu.php');  
 include_once( WDS_BRANDPATH . 'admin/form_fields.php'); 
@@ -56,24 +56,20 @@ include_once( WDS_BRANDPATH . 'admin/view/main-menu.php');
 include_once( WDS_BRANDPATH . 'admin/view/submenu-content.php'); 
 
 // Include utility functions
-include_once( WDS_BRANDPATH . 'components/plugin-update-checker/plugin-update-checker.php'); 
+
 include_once( WDS_BRANDPATH . 'components/email-content.php'); 
 include_once( WDS_BRANDPATH . 'components/admin-update.php'); 
 include_once( WDS_BRANDPATH . 'components/styles-scripts.php');
 include_once( WDS_BRANDPATH . 'components/custom-functions.php');  
 include_once( WDS_BRANDPATH . 'components/custom-box.php');
 
-
-
-require 'components/plugin-update-checker/plugin-update-checker.php';
+// Nastavení utomatické kontroly auktualizací 
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://github.com/WeDesIn/wedesin-branding',
 	__FILE__,
 	'wedesin-branding'
 );
-
 //Set the branch that contains the stable release.
 $myUpdateChecker->setBranch('master');
-
 //Optional: If you're using a private repository, specify the access token like this:
 $myUpdateChecker->setAuthentication('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');
