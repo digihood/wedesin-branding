@@ -111,16 +111,16 @@ if (!class_exists('submenuContentWDS')) {
 
 
                         </div>
-                     <div class="card info">
-
+                    <!-- <div class="card info">-->
+                        
                      <?php  echo $WedesinApiWDS->pull_geenbox_post('plugins'); ?>
-                            <h3><?php echo file_get_contents(WDS_BRANDURL . "assets/icons/info-standard-line.svg"); ?> <!--Info blok</h3>
+                          <!--  <h3><?php //echo file_get_contents(WDS_BRANDURL . "assets/icons/info-standard-line.svg"); ?> Info blok</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Senectus libero ut lorem ac dictumst phasellus nunc sit. Eu nisi sed viverra id aliquam enim, odio nunc.</p>
-                        --></div> 
+                       </div>  -->
                     </div>
                 </div>
             </div>
-<?php
+       <?php
         }
         public function the_updates_list() {
             $updates_list = get_option('_wds_list', []);

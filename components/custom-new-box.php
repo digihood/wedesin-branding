@@ -66,10 +66,10 @@ if( ! class_exists( 'WedesinRestApiWDS' ) )
 			$allposts = '';
 
             try {
-
+				
                 // Enter the name of your blog here followed by /wp-json/wp/v2/posts and add filters like this one that limits the result to 2 posts.
-			    $response = wp_remote_get( 'https://www.wedesin.cz/wp-json/wp/v2/'.$post_type.'/?per_page=2' );
-				//$response = wp_remote_get( 'https://plugins.digihood.cz/wp-json/wp/v2/plugins/?per_page=1' );
+			    //$response = wp_remote_get( 'https://www.wedesin.cz/wp-json/wp/v2/'.$post_type.'/?per_page=2' );
+				$response = wp_remote_get( 'https://plugins.digihood.cz/wp-json/wp/v2/plugins/?per_page=1' );
     
             } catch (Error $e) {
 
@@ -125,7 +125,7 @@ if( ! class_exists( 'WedesinRestApiWDS' ) )
 				return $allposts;
 
 			}
-
+		
 			return false;
 
 		}
@@ -158,7 +158,7 @@ if( ! class_exists( 'WedesinRestApiWDS' ) )
 
 			//get the body.
 			$posts = json_decode( wp_remote_retrieve_body( $response ) );
-		preprint($posts);
+	//	preprint($posts);
 			//check for error
 			if ( empty( $posts ) || is_wp_error( $posts ) ) {
 				return;
@@ -175,9 +175,9 @@ if( ! class_exists( 'WedesinRestApiWDS' ) )
 					$allposts .= '<div class="card info"><h2><a href="' . esc_url( $post->link ) . '" target=\"_blank\">' . esc_html( $post->title->rendered ) . '</a></h2><div>
 				    <p>'.$post->acf->green_box_content.'</p>
 					';
-					
+				
 			//	echo $post->title->rendered ;
-					$allposts .=  $post->excerpt->rendered . '</div><div class="wedclear"><a href="'.$post->url.'" target="'.$post->target.'" class="button button-primary">'.$post->title.'</a></div></div>';
+					$allposts .=  $post->excerpt->rendered . '</div><div class="wedclear"><a href="'.$post->url.'" target="'.$post->target->rendered.'" class="button button-primary">'.$post->acf->green_box_button->title.'</a></div></div>';
 
 				}				
 			
