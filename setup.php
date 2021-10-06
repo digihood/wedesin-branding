@@ -55,6 +55,10 @@ include_once( WDS_BRANDPATH . 'admin/sub-menu.php');
 include_once( WDS_BRANDPATH . 'admin/form_fields.php'); 
 include_once( WDS_BRANDPATH . 'admin/view/main-menu.php'); 
 include_once( WDS_BRANDPATH . 'admin/view/submenu-content.php'); 
+include_once( WDS_BRANDPATH . 'admin/info-box/custom-box.php');
+include_once( WDS_BRANDPATH . 'admin/info-box/custom-new-box.php');
+include_once( WDS_BRANDPATH . 'admin/info-box/zobrazeni.php');
+include_once( WDS_BRANDPATH . 'admin/info-box/volaniapi.php');
 
 // Include utility functions
 
@@ -62,8 +66,7 @@ include_once( WDS_BRANDPATH . 'components/email-content.php');
 include_once( WDS_BRANDPATH . 'components/admin-update.php'); 
 include_once( WDS_BRANDPATH . 'components/styles-scripts.php');
 include_once( WDS_BRANDPATH . 'components/custom-functions.php');  
-include_once( WDS_BRANDPATH . 'components/custom-box.php');
-include_once( WDS_BRANDPATH . 'components/custom-new-box.php');
+
 
 // Nastavení utomatické kontroly auktualizací 
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(

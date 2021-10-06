@@ -104,8 +104,10 @@ if (!class_exists('submenuContentWDS')) {
                     <div class="column sidebar">
                         <div class="card">
                    <?php 
-                   $WedesinApiWDS = new \WedesinRestApiWDS();
+                   $WedesinApiWDS = new \WedesinRestApiWDS;
                    $WedesinApiWDS->wedesin_dashboard_widget_display('rest_api');
+                   $zobrazeni = new \viewAdminBoxWDS;
+                   $zobrazeni->wedesin_dashboard_widget_display('rest_api');
                 
                    ?>
 
