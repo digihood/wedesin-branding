@@ -51,6 +51,21 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 			return $posts;
 
 		}
+		private function get_api_title(){
+
+		}
+
+		private function get_api_content(){
+			
+		}
+
+		private function get_api_thumbnail(){
+			
+		}
+		
+		private function get_api_button(){
+			
+		}
 
 		private function pull_wedesin_post( $post_type ) {
 
@@ -119,18 +134,6 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 
 			return false;
 
-		}
-		private function get_api_title(){
-
-		}
-		private function get_api_content(){
-			
-		}
-		private function get_api_thumbnail(){
-			
-		}
-		private function get_api_button(){
-			
 		}
 
 
