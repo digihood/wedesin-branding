@@ -105,9 +105,9 @@ if (!class_exists('submenuContentWDS')) {
                         <div class="card">
                    <?php 
                    $WedesinApiWDS = new \WedesinRestApiWDS;
-                   $WedesinApiWDS->wedesin_dashboard_widget_display('rest_api');
-                   $zobrazeni = new \viewAdminBoxWDS;
-                   $zobrazeni->wedesin_dashboard_widget_display('rest_api');
+                   $WedesinApiWDS->wedesin_dashboard_widget_display('pluginsnews');
+                   //$zobrazeni = new \viewAdminBoxWDS;
+                   //$zobrazeni->wedesin_dashboard_widget_display('rest_api');
                 
                    ?>
 

@@ -72,8 +72,8 @@ if( ! class_exists( 'WedesinPostsWDS' ) )
             try {
 
                 // Enter the name of your blog here followed by /wp-json/wp/v2/posts and add filters like this one that limits the result to 2 posts.
-			    $response = wp_remote_get( 'https://www.wedesin.cz/wp-json/wp/v2/'.$post_type.'/?per_page=1' );
-    
+			    $response = wp_remote_get( 'https://www.plugins.digihood.cz/wp-json/wp/v2/'.$post_type.'/?per_page=1' );
+   
             } catch (Error $e) {
 
                 echo "Při stažení posledního příspěvku došlo k chybě " . $e->getMessage() . '.';

@@ -28,10 +28,10 @@ if( ! class_exists( 'WedesinRestApiWDS' ) )
 			add_meta_box('withdraw_to_bank', 'Nástěnka WeDesIn', array($this, 'wedesin_dashboard_widget_display'),'dashboard', 'side','high' );
 		}
 
-        public function wedesin_dashboard_widget_display(){
+        public function wedesin_dashboard_widget_display($type='pluginsnews'){
 
 			$lang = get_bloginfo('language');
-
+            
 			if ($lang == "en-GB" || $lang == "en-US" || $lang == "en-AU" || $lang == "en-CA" || $lang == "en-NZ" || $lang == "en-ZA" ) {
 
 				echo '<div><h3>Welcome to your admin section</h3>
@@ -47,7 +47,8 @@ if( ! class_exists( 'WedesinRestApiWDS' ) )
 
 				<div class="wedesin-widget">
 					<h2 style="margin-top:0">Novinky na webu WeDesIn</h2>
-					<?php print_r( $this->pull_wedesin_post( 'rest_api' ) );
+					<?php print_r( $this->pull_wedesin_post( $type ) );
+					
                     /*?>
 					<br>
 					<h3 style="font-size:18px">Převod obrázků online mezi formáty JPG, PNG, BMP, GIF a PDF</h3>
@@ -68,8 +69,8 @@ if( ! class_exists( 'WedesinRestApiWDS' ) )
             try {
 				
                 // Enter the name of your blog here followed by /wp-json/wp/v2/posts and add filters like this one that limits the result to 2 posts.
-			    //$response = wp_remote_get( 'https://www.wedesin.cz/wp-json/wp/v2/'.$post_type.'/?per_page=2' );
-				$response = wp_remote_get( 'https://plugins.digihood.cz/wp-json/wp/v2/plugins/?per_page=1' );
+			//    $response = wp_remote_get( 'https://www.wedesin.cz/wp-json/wp/v2/'.$post_type.'/?per_page=2' );
+				$response = wp_remote_get( 'https://plugins.digihood.cz/wp-json/wp/v2/'.$post_type.'/?pluginsnews_type=7&per_page=2' );
     
             } catch (Error $e) {
 
@@ -139,8 +140,8 @@ if( ! class_exists( 'WedesinRestApiWDS' ) )
             try {
 
                 // Enter the name of your blog here followed by /wp-json/wp/v2/posts and add filters like this one that limits the result to 2 posts.
-			  //  $response = wp_remote_get( 'https://www.wedesin.cz/wp-json/wp/v2/'.$post_type.'/?per_page=2' );
-				$response = wp_remote_get( 'https://plugins.digihood.cz/wp-json/wp/v2/plugins/?per_page=1' );
+			   //$response = wp_remote_get( 'https://www.wedesin.cz/wp-json/wp/v2/'.$post_type.'/?per_page=2' );
+				$response = wp_remote_get( 'https://plugins.digihood.cz/wp-json/wp/v2/'.$post_type.'/?per_page=1' );
     
             } catch (Error $e) {
 
