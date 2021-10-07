@@ -23,15 +23,38 @@ if( ! class_exists( 'viewAdminBoxWDS' ) )
 
 		}
 
+	   /**
+     *  přidaní na nastenku ??
+     *
+     * @param none
+     * 
+     * @author Wedesin
+     * @return string
+     */
+		
 		public function custom_dash_widget_wed(){
            
 			add_meta_box('withdraw_to_bank', 'Nástěnka WeDesIn', array($this, 'wedesin_dashboard_widget_display'),'dashboard', 'side','high' );
 		}
-
+	   /**
+     *  zobrazeni boxu
+     *
+     * @param none
+     * 
+     * @author Wedesin
+     * @return string
+     */
         public function wedesin_dashboard_widget_display(){
 			$this->display_box();
 		}
-
+	   /**
+     *  box nastenka 
+     *
+     * @param type (default: none)
+     * 
+     * @author Wedesin
+     * @return string
+     */
 		private function display_box($type="rest_api") { 
 
 			$lang = get_bloginfo('language');

@@ -15,21 +15,44 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 	class getRestApiRequestWDS
 	{
 		private $api_url;
-
+  
 		public function __construct()
 		{
 			$this->api_url = 'https://www.wedesin.cz/wp-json/wp/v2/';
 		}
+		   /**
+     *  ziskaní url 
+     *
+     * @param type (CPT)
+     * 
+     * @author Wedesin
+     * @return string
+     */ 
 		private function get_url($type) {
 
 			return $this->api_url . $type . '/?per_page=1';
 		}
 
-
+   /**
+     * odesladni jazyku  a typu
+     *
+     * @param lang,type (jazyk, a typ přispěvku)
+     * 
+     * @author Wedesin
+     * @return string
+     */ 
 		public function get_data($lang, $type) {
 			$data = $this->rest_api_post($lang, $type);
 			preprint($data);
 		}
+		   /**
+     * získaní dat z URL podle jazyka a typu
+     *
+     * @param lang,type (jazyk,typ přispěvku)
+     * 
+     * @author Wedesin
+     * @return string
+     */ 
 		private function rest_api_post($lang, $type){
 
 			try {
@@ -50,22 +73,57 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 			$posts = json_decode( wp_remote_retrieve_body( $response ) );
 			return $posts;
 
-		}
+		}   /**
+		*  získaní title 
+		*
+		* @param none
+		* 
+		* @author Wedesin
+		* @return string
+		*/ 
 		private function get_api_title(){
 
-		}
+		}   /**
+		* ziskani obsahu
+		*
+		* @param none
+		* 
+		* @author Wedesin
+		* @return string
+		*/ 
 
 		private function get_api_content(){
 			
-		}
+		}   /**
+		* ziskaní miniatury
+		*
+		* @param none
+		* 
+		* @author Wedesin
+		* @return true/false
+		*/ 
 
 		private function get_api_thumbnail(){
 			
-		}
+		}   /**
+		* získani tlačitek
+		*
+		* @param none
+		* 
+		* @author Wedesin
+		* @return true/false
+		*/ 
 		
 		private function get_api_button(){
 			
-		}
+		}   /**
+		* api a decode vystupu
+		*
+		* @param post_type (typ přispevku)
+		* 
+		* @author Wedesin
+		* @return string
+		*/ 
 
 		private function pull_wedesin_post( $post_type ) {
 
