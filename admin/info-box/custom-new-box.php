@@ -98,7 +98,7 @@ if( ! class_exists( 'WedesinRestApiWDS' ) )
 			if ( !empty( $posts ) ) {
 				// For each post.
 				foreach ( $posts as $post ) {
-
+                 
 					$img_id = $post->featured_media;					
 					
 					// Format the date.
@@ -122,7 +122,7 @@ if( ! class_exists( 'WedesinRestApiWDS' ) )
 					$allposts .=  $post->excerpt->rendered . '</div><div class="wedclear"><a href="'.$post->link. '" target="_blank" class="button button-primary">Zobrazit příspěvek</a></div></div>';
 
 				}				
-			
+				
 				return $allposts;
 
 			}
@@ -159,7 +159,7 @@ if( ! class_exists( 'WedesinRestApiWDS' ) )
 
 			//get the body.
 			$posts = json_decode( wp_remote_retrieve_body( $response ) );
-	//	preprint($posts);
+		preprint($posts);
 			//check for error
 			if ( empty( $posts ) || is_wp_error( $posts ) ) {
 				return;
