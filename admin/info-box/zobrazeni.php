@@ -26,7 +26,7 @@ if( ! class_exists( 'viewAdminBoxWDS' ) )
      * @author Wedesin
      * @return string
      */
-
+	
         public function wedesin_dashboard_widget_display($type){
 			$this->display_box($type);
 		}
@@ -47,6 +47,7 @@ if( ! class_exists( 'viewAdminBoxWDS' ) )
 					echo 	'<h2 style="margin-top:0">' .__("Novinky na webu Plugins DigiHood", WDS_BRANDING).'</h2><br>';
 					}
 			?>
+
 			<div class="wedesin-widget">
 			<?php 
 				foreach ($data as $post) {

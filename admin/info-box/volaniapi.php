@@ -15,6 +15,8 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 	class getRestApiRequestWDS
 	{
 		private $api_url;
+		private $taxpluginsnews_id = 7;
+		private $taxplugins_id = 5;
   
 		public function __construct()
 		{ 
@@ -35,7 +37,11 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 			if ($type == 'media' && $img_id) {
 				return $this->api_url . 'media/' . $img_id;
 			} else {
-				return $this->api_url . $type . '/?per_page=1';
+				if($type == 'pluginsnews') { 
+				return $this->api_url . $type . '/?'.$type.'_type='.$this->taxpluginsnews_id.'&per_page=1';
+				} else {
+				return $this->api_url . $type . '/?'.$type.'_type='.$this->taxplugins_id.'&per_page=1';
+				  }
 			}
 			
 		}
