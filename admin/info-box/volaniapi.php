@@ -17,17 +17,20 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 		private $api_url;
   
 		public function __construct()
-		{
+		{ 
+			// URl pro získaní dat
 			$this->api_url = 'https://plugins.digihood.cz/wp-json/wp/v2/';
 		}
-		   /**
-     *  ziskaní url 
-     *
-     * @param type (CPT)
-     * 
-     * @author Wedesin
-     * @return string
-     */ 
+
+		/**
+		 *  ziskaní url 
+		 *
+		 * @param type (CPT)
+		 * 
+		 * @author Wedesin
+		 * @return string
+		 */ 
+
 		private function get_url($type, $img_id='') {
 			if ($type == 'media' && $img_id) {
 				return $this->api_url . 'media/' . $img_id;
@@ -37,44 +40,49 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 			
 		}
 
-   /**
-     * odesladni jazyku  a typu
-     *
-     * @param lang,type (jazyk, a typ přispěvku)
-     * 
-     * @author Wedesin
-     * @return string
-     */ 
+		/**
+		 * odesladni jazyku  a typu
+		 *
+		 * @param lang,type (jazyk, a typ přispěvku)
+		 * 
+		 * @author Wedesin
+		 * @return string
+		 */ 
+
 		public function get_data($lang, $type) {
 			$data = $this->rest_api_post($lang, $type);
 			return $data;
 		}
 	
-	
+		/**
+		 *  Rest API přispěvků
+		 *
+		 * @param type,lang 
+		 * 
+		 * @author Wedesin
+		 * @return string
+		 */
+
 		private function rest_api_post($lang, $type){
 			try {
-                // Enter the name of your blog here followed by /wp-json/wp/v2/posts and add filters like this one that limits the result to 2 posts.
+			// Přimé napojení Rest API na ziskanou URL 
 			    $response = wp_remote_get( $this->get_url($type) );
             } catch (Error $e) {
                 echo "Při stažení posledního příspěvku došlo k chybě " . $e->getMessage() . '.';
             }
 
-			// Exit if error.
+			// Ukončí pokud se vyskytne error vrátí prazdno
 			if ( !$response || is_wp_error( $response ) || !is_array( $response ) ) {
 				return '';
 			}
 
-			//get the body.
+			// Získá Data
 			$posts = json_decode( wp_remote_retrieve_body( $response ) );
 
 			$array = [];
-			
-			if ( !empty( $posts ) ) {
-				
-				// For each post.
-				//preprint($this->get_img());
-				//preprint($posts);
-		
+	        // Pokud je $posts prazdný vrátí prazdný pole
+			if ( !empty( $posts ) ) {	
+			// Data Pro kazdý Posts 
 				foreach ( $posts as $post ) {
 					$array[] = array (
 						'title'      => ( isset($post->title->rendered) && !empty($post->title->rendered) ? $post->title->rendered : '') , 
@@ -89,35 +97,41 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 
 				}
 			} 
-			return $array;
-			
+			return $array;	
 		}
-		
-		private function rest_api_img( $img_id){
-				
-			$type = 'media';
+		/**
+		 *  Rest API Obrazků
+		 *
+		 * @param img_id
+		 * 
+		 * @author Wedesin
+		 * @return string
+		 */
 
+		private function rest_api_img( $img_id ){
+			// defautní type pro media
+			$type = 'media';
 			try {
+			// Přimé napojení Rest API na ziskanou URL 
 				$img_response = wp_remote_get( $this->get_url($type,$img_id) );
 			} catch (Error $e) {
 				echo "Při stažení posledního příspěvku došlo k chybě " . $e->getMessage() . '.';
 			}
-		
-			// Exit if error.
+	 		// Ukončí pokud se vyskytne error a vrátí prazdno
 			if ( !$img_response || is_wp_error( $img_response ) || !is_array( $img_response ) ) {
 				return '';
 			}
-			
-			if (isset($img_response['body']) && !empty($img_response['body']) ) { 
-				$api_img = json_decode( $img_response['body'] ); 
-				if ($api_img->media_details->sizes->medium->source_url){ 		
-					return $api_img->media_details->sizes->medium->source_url;
-				} else {
-							
-					return '';
-				}
+			// Pokud $img_response['body'] je vyplnený a není prazdný poté se decoduje a vratí URL obrazku 
+				if (isset($img_response['body']) && !empty($img_response['body']) ) { 
+					$api_img = json_decode( $img_response['body'] ); 
+					if ($api_img->media_details->sizes->medium->source_url){ 		
+						return $api_img->media_details->sizes->medium->source_url;
+					} else {
+								
+						return '';
+					}
 
-			}
+				}
 				
 			return '';
 				
