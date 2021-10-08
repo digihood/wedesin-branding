@@ -102,18 +102,18 @@ if (!class_exists('submenuContentWDS')) {
                         </div>
                     </div>
                 <div class="column sidebar">
-                    <div class="card">
+                    
                         <?php 
                         $zobrazeni = new \viewAdminBoxWDS;
                         $zobrazeni->wedesin_dashboard_widget_display('pluginsnews');
                         ?>
-                    </div>
-                    <div class="card info">   
+                    
+                     
                             <?php   
                             $zobrazeni->wedesin_dashboard_widget_display('plugins');
                             ?>
                             <h3><?php echo file_get_contents(WDS_BRANDURL . "assets/icons/info-standard-line.svg"); ?>
-                        </div>  
+                        
                     </div>
                 </div>
             </div>
