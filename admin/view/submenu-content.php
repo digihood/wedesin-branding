@@ -24,7 +24,7 @@ if (!class_exists('submenuContentWDS')) {
         function form_page_contents()
         {
 
-            $builder = new formsBuilderWDS_brand();
+            $builder = new \pluginbrandslug\framework\forms_builder\formsBuilderWDS();
             //$builder = new formsBuilderWDS_brand("test_form_mini");
 
             //$builder->display_form("test_form_mini");
@@ -45,7 +45,7 @@ if (!class_exists('submenuContentWDS')) {
 
             //Získat aktivní tab z parametru $_GET 
             $default_tab = null;
-            $builder = new \formsBuilderWDS_brand();
+            $builder = new \pluginbrandslug\framework\forms_builder\formsBuilderWDS();
             $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab; ?>
             <div class="wrap wds-admin">
 
@@ -104,7 +104,7 @@ if (!class_exists('submenuContentWDS')) {
                 <div class="column sidebar">
                     
                         <?php 
-                        $zobrazeni = new \viewAdminBoxWDS;
+                        $zobrazeni = new \pluginbrandslug\admin\info_box\view\viewAdminBoxWDS;
                         $zobrazeni->wedesin_dashboard_widget_display('pluginsnews');
                         ?>
                     
@@ -114,7 +114,7 @@ if (!class_exists('submenuContentWDS')) {
                             ?>
                             <h3><?php echo file_get_contents(WDS_BRANDURL . "assets/icons/info-standard-line.svg"); ?>
                         
-                    </div>
+                </div>
                 </div>
             </div>
        <?php
@@ -174,5 +174,5 @@ if (!class_exists('submenuContentWDS')) {
     }
     
 
-    new submenuContentWDS;
+    new \pluginbrandslug\admin\submenu\submenuContentWDS;
 }

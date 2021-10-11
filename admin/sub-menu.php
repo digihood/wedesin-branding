@@ -38,7 +38,7 @@ if( ! class_exists( 'subMenuWDS' ) )
             6) callback na přidání obsahu
             */
 
-            $subcontent = new submenuContentWDS;
+            $subcontent = new \pluginbrandslug\admin\submenu\submenuContentWDS;
 
             $submenus = [
                 [

@@ -1,11 +1,12 @@
-<?php 
+<?php
+namespace pluginbrandslug\framework\forms_builder; 
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-if( ! class_exists( 'formsBuilderWDS_brand' ) )
+if( ! class_exists( 'formsBuilderWDS' ) )
 {
-	class formsBuilderWDS_brand
+	class formsBuilderWDS
 	{
 		private $fields;
 		private $wds_form;
@@ -33,17 +34,16 @@ if( ! class_exists( 'formsBuilderWDS_brand' ) )
          */
 		public function display_form($formID ) {
 			$field = $this->get_fields_form($formID);
-			$this->wds_form = new WDS_Front_Form_brand($field);
+			$this->wds_form = new \pluginbrandslug\framework\forms_core\WDS_Front_Form($field);
 			echo $this->wds_form->get_form($formID );
 		}
 
 		public function save_form() {
 			$inputs = filter_input_array(INPUT_POST);
-
-            if (isset($inputs['form_id_wds']) && !empty($inputs['form_id_wds'])) {
+            if (isset($inputs['form_id_wds']) && !empty($inputs['form_id_wds'])&& !empty($inputs['plugin_id_wds']) && $inputs['plugin_id_wds'] == WDS_IDSLUG ) {
 				$formID = $inputs['form_id_wds'];
 				$field = $this->get_fields_form($formID);
-				$this->wds_form = new WDS_Front_Form_brand($field);
+				$this->wds_form = new \pluginbrandslug\framework\forms_core\WDS_Front_Form($field);
 				return $this->wds_form->save_form();
             }
 
@@ -52,20 +52,20 @@ if( ! class_exists( 'formsBuilderWDS_brand' ) )
 
 		public function get_fields_form($formID){
 			$fields= [];
-			$tpf = new brandPluginField;
+			$tpf = new \pluginbrandslug\admin\form_fields\thisPluginField;
 			$fields = $tpf->get_fields_form($formID);
 			return $fields;
 		}
 
 		public function get_fields_cpt_form($post_type){
 			$fields= [];
-			$tpf = new brandPluginField;
+			$tpf = new \pluginbrandslug\admin\form_fields\thisPluginField;
 			$fields = $tpf->get_fields_cpt_form($post_type);
 			return $fields;
 		}
 		
 	}
 	
-    new formsBuilderWDS_brand;
+    new \pluginbrandslug\framework\forms_builder\formsBuilderWDS;
 
 }

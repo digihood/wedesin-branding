@@ -1,11 +1,11 @@
 <?php
-
+namespace pluginbrandslug\framework\forms_core;
 if (!defined('ABSPATH')) {
     exit;
 }
 
-if (!class_exists('WDS_Front_Form_brand')) {
-    class WDS_Front_Form_brand
+if (!class_exists('WDS_Front_Form')) {
+    class WDS_Front_Form
     {
 
         private $fields;
@@ -29,7 +29,7 @@ if (!class_exists('WDS_Front_Form_brand')) {
             //ukládání metadat do kuponu (licence)
             add_action('save_post', [$this, 'save_cpt_meta']);
 
-            $this->session = new sessionClassWDS;
+            $this->session = new \pluginbrandslug\framework\sessions\sessionClassWDS;
         }
 
         private function check_if_fields_has($var)
@@ -70,7 +70,8 @@ if (!class_exists('WDS_Front_Form_brand')) {
                                                                                                                     ?>" enctype="multipart/form-data" novalidate data-abide>
                                 <?php wp_nonce_field( $formID, 'nonce_' . $formID ); ?>
                                 <input type="hidden" value="<?=$formID?>" name="form_id_wds" />     
-                                <input type="hidden" value="<?= WDS_BRANDING ?>" name="plugin_id" />                                                        
+                                <input type="hidden" value="<?= WDS_BRANDING ?>" name="plugin_id" />  
+                                <input type="hidden" value="<?= WDS_BRANDING?>" name="plugin_id_wds" />                                                        
                                 <?php $this->get_form_fields($formID); 
                                 if ($formID == 'update_report') {
                                     $button_text = 'Odeslat hlášení';
@@ -1395,5 +1396,5 @@ if (!class_exists('WDS_Front_Form_brand')) {
 
     }
 
-    new WDS_Front_Form_brand;
+    new \pluginbrandslug\framework\forms_core\WDS_Front_Form;
 }

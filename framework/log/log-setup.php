@@ -2,7 +2,6 @@
 
 if( ! class_exists( 'logSetupWDS') )
 {
-
 	class logSetupWDS
 	{
 

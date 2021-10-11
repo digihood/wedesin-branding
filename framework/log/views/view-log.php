@@ -13,9 +13,9 @@
                 
                 /*$idoklad_log = iDoklad_Log::get_instance();
                 echo $idoklad_log->render_table();*/
-                $settings = new wedesinLog;
+                $settings = new \pluginbrandslug\framework\log_functions\wedesinLog;
                 echo $settings->get_print_log($viewfile);
-
+              
                 ?>
             </div>
         </div>                 

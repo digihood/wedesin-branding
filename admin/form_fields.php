@@ -1,12 +1,12 @@
 <?php 
-
+namespace pluginbrandslug\admin\form_fields;
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
   }
   
-if( ! class_exists( 'brandPluginField' ) )
+if( ! class_exists( 'PluginField' ) )
 {
-    class brandPluginField
+    class thisPluginField
     {
         public function __construct()
         {

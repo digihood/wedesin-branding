@@ -5,7 +5,7 @@
  * 
  * @author Wedesin
  */ 
-
+namespace pluginbrandslug\framework\sessions;
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }

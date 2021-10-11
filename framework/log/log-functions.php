@@ -1,4 +1,5 @@
 <?php 
+namespace pluginbrandslug\framework\log_functions;
 if ( ! defined( 'ABSPATH' ) ) {
 
   exit;
@@ -27,7 +28,7 @@ if( ! class_exists( 'wedesinLog' ) )
      * @return true/false
      */ 
     public function add_log($file, $event, $message, $note="" ) { 
-        $settings = new logSetupWDS;
+        $settings = new \logSetupWDS;
         $folder = $settings->get_wds_log_folder();
         $filename = $folder . '/'. $file . '.log';
         if(is_array($message) || is_object($message )) {
@@ -51,7 +52,7 @@ if( ! class_exists( 'wedesinLog' ) )
      */ 
     public function get_print_log($file) {
       $type = isset($_GET['tab']) ? $_GET['tab'] : 'default';
-      $settings = new logSetupWDS;
+      $settings = new \logSetupWDS;
       $folder = $settings->get_wds_log_folder();
       $filename = $folder . '/'. $file . '.log';
       if ($filename) {
@@ -65,6 +66,6 @@ if( ! class_exists( 'wedesinLog' ) )
   }  
   }
 
-	new wedesinLog;
+	new \pluginbrandslug\framework\log_functions\wedesinLog;
 
 }

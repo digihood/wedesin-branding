@@ -1,5 +1,5 @@
 <?php 
-
+namespace pluginbrandslug\framework\mainMenu;
 if ( ! defined( 'ABSPATH' ) ) {
 
   exit;
@@ -98,5 +98,5 @@ if( ! class_exists( 'mainMenuWDS' ) )
         }
 
     }
-	new mainMenuWDS;
+	new \pluginbrandslug\framework\mainMenu\mainMenuWDS;
 }

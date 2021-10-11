@@ -4,7 +4,7 @@
  * 
  * @author Wedesin
  */ 
-
+namespace pluginbrandslug\admin\info_box\view;
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
@@ -41,7 +41,7 @@ if( ! class_exists( 'viewAdminBoxWDS' ) )
 
 		private function display_box($type="plugins") { 
 			$lang = get_bloginfo('language');
-			$rApi = new getRestApiRequestWDS;
+			$rApi = new \pluginbrandslug\admin\info_box\call\getRestApiRequestWDS;
 			$data = $rApi->get_data($lang, $type);
             if($data) {
 				echo '<div class="card'.($type == 'plugins' ? ' info' : '').'">';
@@ -57,10 +57,6 @@ if( ! class_exists( 'viewAdminBoxWDS' ) )
 							if($post){
 								
 								echo '<h'.($type == 'plugins' ? '2' : '3').' style="'.($type == 'plugins' ? 'margin-top:0' : 'font-size:18px') .'">'.$post['title'].'</h'.($type == 'plugins' ? '2>' : '3>');
-									//echo (!empty($post['title']) ? '<h2 style="margin-top:0">'.$post['title'].'</h2>' : '');
-								
-									//echo (!empty($post['title']) ? '<h3 style="font-size:18px">'.$post['title'].'</h3>' : ''); 
-								
 								echo (!empty($post['content']) ? '<p>'.$post['content'].'</p>' : '');
 								echo (!empty($post['button']) && !empty($post['button']['url']) && !empty($post['button']['text']) ? '<a href="'.$post['button']['url'].'" target="_blank" class="button button-primary">'.$post['button']['text'].'</a>' : '');
 							}
@@ -75,6 +71,6 @@ if( ! class_exists( 'viewAdminBoxWDS' ) )
 }
 
 if( is_admin() )
-	new viewAdminBoxWDS;
+	new \pluginbrandslug\admin\info_box\view\viewAdminBoxWDS;
 
 

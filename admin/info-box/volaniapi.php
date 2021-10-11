@@ -4,7 +4,7 @@
  * 
  * @author Wedesin
  */ 
-
+namespace pluginbrandslug\admin\info_box\call;
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
@@ -79,6 +79,7 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 
 			// Ukončí pokud se vyskytne error vrátí prazdno
 			if ( !$response || is_wp_error( $response ) || !is_array( $response ) ) {
+				
 				return '';
 			}
 
