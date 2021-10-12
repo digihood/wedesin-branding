@@ -65,13 +65,13 @@ if (!class_exists('submenuContentWDS')) {
                 <div class="row">
                     <div class="column content">
                         <nav class="nav-tab-wrapper">
-                            <a href="?page=wds_brand" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>"> <?php echo file_get_contents(WDS_BRANDURL . "assets/icons/home-line.svg"); ?> Záznam aktualizace</a>
-                                <a href="?page=wds_brand&tab=updates_list" class="nav-tab <?php if ($tab === 'updates_list') : ?>nav-tab-active<?php endif; ?>"> <?php echo file_get_contents(WDS_BRANDURL . "assets/icons/home-line.svg"); ?>Přehled aktualizací</a>
+                            <a href="?page=wds_brand" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>"> <?php echo wds_get_svg(WDS_BRANDURL . "assets/icons/home-line.svg"); ?> Záznam aktualizace</a>
+                                <a href="?page=wds_brand&tab=updates_list" class="nav-tab <?php if ($tab === 'updates_list') : ?>nav-tab-active<?php endif; ?>"> <?php echo wds_get_svg(WDS_BRANDURL . "assets/icons/home-line.svg"); ?>Přehled aktualizací</a>
                             <?php
                                 $mailingForm = $builder->get_fields_form("brand_emails_settings");
                             if (!empty($mailingForm)){
                                 ?>
-                                <a href="?page=wds_brand&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo file_get_contents(WDS_BRANDURL . "assets/icons/link-line.svg"); ?>Emaily</a>
+                                <a href="?page=wds_brand&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo wds_get_svg(WDS_BRANDURL . "assets/icons/link-line.svg"); ?>Emaily</a>
                                 <?php 
                             } ?>
                         </nav>
@@ -112,7 +112,7 @@ if (!class_exists('submenuContentWDS')) {
                             <?php   
                             $zobrazeni->wedesin_dashboard_widget_display('plugins');
                             ?>
-                            <h3><?php echo file_get_contents(WDS_BRANDURL . "assets/icons/info-standard-line.svg"); ?>
+                            <h3><?php echo wds_get_svg(WDS_BRANDURL . "assets/icons/info-standard-line.svg"); ?>
                         
                 </div>
                 </div>

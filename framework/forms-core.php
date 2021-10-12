@@ -480,7 +480,7 @@ if (!class_exists('WDS_Front_Form')) {
                     }
 
                     echo '<div class="input-group">';
-                    echo '<span class="input-group-label">' . file_get_contents(WDS_BRANDURL . "assets/icons/link-line.svg") . '</span>';
+                    echo '<span class="input-group-label">' . wds_get_svg(WDS_BRANDURL . "assets/icons/link-line.svg") . '</span>';
                     echo  $floating_label_start;
 
                     echo '<input type="url" value="' . $value . '" name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" />';
@@ -506,7 +506,7 @@ if (!class_exists('WDS_Front_Form')) {
                     }
                     
                     echo '<div class="input-group">';
-                    echo '<span class="input-group-label">' . file_get_contents(WDS_BRANDURL . "assets/icons/link-line.svg") . '</span>';
+                    echo '<span class="input-group-label">' . wds_get_svg(WDS_BRANDURL . "assets/icons/link-line.svg") . '</span>';
                     echo  $floating_label_start;
 
                     echo '<input type="url" id="wds-media-url" value="' . $value . '" name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" />';
@@ -515,7 +515,7 @@ if (!class_exists('WDS_Front_Form')) {
 
                     echo $floating_label_end ;
 
-                    echo '<a href="#" id="wds-media-upload" class="button">' . file_get_contents(WDS_BRANDURL . "assets/icons/upload-cloud-line.svg") . 'Nahrát</a>';
+                    echo '<a href="#" id="wds-media-upload" class="button">' . wds_get_svg(WDS_BRANDURL . "assets/icons/upload-cloud-line.svg") . 'Nahrát</a>';
 
 
                     echo '</div>';
@@ -525,7 +525,7 @@ if (!class_exists('WDS_Front_Form')) {
                     if ($value) {
                         echo '<p><div class=upload-img-preview>';
                         echo '<img src="' . $value . '" width="300" height="200" alt="alt">';
-                        echo '<a href="#" class="button white icon">' . file_get_contents(WDS_BRANDURL . "assets/icons/trash-line.svg") . 'Odstranit</a>';
+                        echo '<a href="#" class="button white icon">' . wds_get_svg(WDS_BRANDURL . "assets/icons/trash-line.svg") . 'Odstranit</a>';
                         echo '</div></p>';
                     }
 
@@ -740,7 +740,7 @@ if (!class_exists('WDS_Front_Form')) {
                     }
 
                     echo '<div class="input-group">';
-                    echo '<span class="input-group-label">' . file_get_contents(WDS_BRANDURL . $icon) . '</span>';
+                    echo '<span class="input-group-label">' . wds_get_svg(WDS_BRANDURL . $icon) . '</span>';
                     echo $floating_label_start;
                     echo '<input type="' . $type . '" id="' . $name . '" name="' . $name . '" value="' . $value . '">';
                     if ($label)  echo '<label for="' . $name . '">' . $label . $required . '</label>';
@@ -779,7 +779,7 @@ if (!class_exists('WDS_Front_Form')) {
 
                     echo '<div class="info-block' . $warning . '">';
 
-                    echo '<span class="icon">' . file_get_contents(WDS_BRANDURL . $icon) . '</span>';
+                    echo '<span class="icon">' . wds_get_svg(WDS_BRANDURL . $icon) . '</span>';
 
                     if ($headline) echo '<h3>' . $headline . '</h3>';
                     if ($description) echo '<p>' . $description . '</p>';
