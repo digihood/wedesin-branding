@@ -76,7 +76,8 @@ if( ! class_exists( 'WdsSendEmailBrand' ) )
         $footer=""
         ){
           $img_default = WDS_BRANDURL . 'assets/img/wedesin-logo-cz.png';
-          $img = get_option('_wds_WDSBRAND_brand_emails_settings_header_logo', $img_default);
+          $img = (get_option('_wds_WDSBRAND_brand_emails_settings_header_logo') ? get_option('_wds_WDSBRAND_brand_emails_settings_header_logo') : $img_default);
+
           $return ='<!DOCTYPE html>
               <html lang="cs">
               <head>

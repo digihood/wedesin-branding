@@ -40,7 +40,7 @@ if( ! class_exists( 'formsBuilderWDS' ) )
 
 		public function save_form() {
 			$inputs = filter_input_array(INPUT_POST);
-            if (isset($inputs['form_id_wds']) && !empty($inputs['form_id_wds'])&& !empty($inputs['plugin_id_wds']) && $inputs['plugin_id_wds'] == WDS_IDSLUG ) {
+            if (isset($inputs['form_id_wds']) && !empty($inputs['form_id_wds'])&& !empty($inputs['plugin_id_wds']) && $inputs['plugin_id_wds'] == WDS_BRANDING ) {
 				$formID = $inputs['form_id_wds'];
 				$field = $this->get_fields_form($formID);
 				$this->wds_form = new \pluginbrandslug\framework\forms_core\WDS_Front_Form($field);

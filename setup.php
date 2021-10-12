@@ -55,8 +55,8 @@ include_once( WDS_BRANDPATH . 'admin/sub-menu.php');
 include_once( WDS_BRANDPATH . 'admin/form_fields.php'); 
 include_once( WDS_BRANDPATH . 'admin/view/main-menu.php'); 
 include_once( WDS_BRANDPATH . 'admin/view/submenu-content.php'); 
-include_once( WDS_BRANDPATH . 'admin/info-box/zobrazeni.php');
-include_once( WDS_BRANDPATH . 'admin/info-box/volaniapi.php');
+include_once( WDS_BRANDPATH . 'admin/info-box/view-box.php');
+include_once( WDS_BRANDPATH . 'admin/info-box/restapi-call.php');
 
 // Include utility functions
 

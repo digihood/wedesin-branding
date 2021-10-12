@@ -31,7 +31,6 @@ if( ! class_exists( 'PluginField' ) )
 									'help_text' => 'Vyberte si barvu, kterou bude mít zápatí emailů',
 									'value' => '#0a0a0a', // rgba(30,30,30,0.64)
 									'saveAs' => 'meta',
-									'required' => true,
 								]
 							],
 							[
@@ -42,7 +41,6 @@ if( ! class_exists( 'PluginField' ) )
 									'help_text' => 'Vyberte si barvu, kterou bude mít text  v zápatí emailů',
 									'value' => '#ff00dd', // rgba(30,30,30,0.64)
 									'saveAs' => 'meta',
-									'required' => true,
 								]
 							]
 						],

@@ -152,8 +152,12 @@ body .wds-notice a:hover {
 }
 .wds-admin .form-item {
   position: relative;
-  padding-left: 63px;
+  padding-left: 26px;
   margin: 20px 0;
+}
+
+.wds-admin .form-item .switch {
+  padding-left: 53px;
 }
 
 .wds-admin .form-item h3 {
@@ -424,7 +428,7 @@ min-width: 60px;
   position: absolute;
   cursor: pointer;
   top: 0;
-  left: 0;
+  left: 26px;
   right: 0;
   bottom: 0;
   width: 44px;

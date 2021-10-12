@@ -27,7 +27,7 @@ if (!class_exists('WDS_Front_Form')) {
             add_action('wp_ajax_wds_frontend_form_dropzone_get_files', [$this, 'get_files_callback'], 10, 1);
             add_action('wp_ajax_nopriv_wds_frontend_form_dropzone_get_files', [$this, 'get_files_callback'], 10, 1);
             //ukládání metadat do kuponu (licence)
-            add_action('save_post', [$this, 'save_cpt_meta']);
+            //add_action('save_post', [$this, 'save_cpt_meta']);
 
             $this->session = new \pluginbrandslug\framework\sessions\sessionClassWDS;
         }
@@ -822,8 +822,6 @@ if (!class_exists('WDS_Front_Form')) {
                     exit;
                 }
 
-                //preprint( $this->fields );
-
                 if (isset($this->fields) && isset($this->fields[0])) {
 
                     // zde můžeme upravovat jak se má soubor zpracovávat
@@ -1312,7 +1310,7 @@ if (!class_exists('WDS_Front_Form')) {
             $content = $this->update_email_content($inputs);
             $footer = __('Děkujeme, že využíváte naše služby.', 'WDSBRAND');
             $subject = get_option('_wds_WDSBRAND_brand_emails_settings_license_email_subject','Aktualizovali jsme váš web');
-            $email = new WdsSendEmailBrand;
+            $email = new \WdsSendEmailBrand;
             //zde zprovoznit emaily
             $text = $email->email_content('Aktualizace webu', array($content),$footer );
             $email->send_client_emails($mail, $subject ,$text);

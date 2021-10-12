@@ -15,8 +15,8 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 	class getRestApiRequestWDS
 	{
 		private $api_url;
-		private $taxpluginsnews_id = 7;
-		private $taxplugins_id = 5;
+		private $taxpluginsnews_id = 6;
+		private $taxplugins_id = 8;
   
 		public function __construct()
 		{ 
