@@ -56,8 +56,8 @@ if( ! class_exists( 'viewAdminBoxWDS' ) )
 						foreach ($data as $post) {
 							if($post){
 								
-								echo '<h'.($type == 'plugins' ? '2' : '3').' style="'.($type == 'plugins' ? '' : 'font-size:18px') .'">'.$post['title'].'</h'.($type == 'plugins' ? '2>' : '3>');
-								echo (!empty($post['content']) ? '<p>'.$post['content'].'</p>' : '');
+								echo '<h'.($type == 'plugins' ? '2' : '3').' '.($type == 'plugins' ? '>' : 'style="font-size:18px">') .' '.$post['title'].'</h'.($type == 'plugins' ? '2>' : '3>');
+								echo (!empty($post['content']) ? ''.$post['content'].'' : '');
 								echo (!empty($post['thumbnail']) ? '<img src="'.$post['thumbnail'].'" style="float:left; width:100%;height:auto;margin:5px 10px 10px 0;">' : '');
 								echo (!empty($post['button']) && !empty($post['button']['url']) && !empty($post['button']['text']) ? '<a href="'.$post['button']['url'].'" target="_blank" class="button button-primary">'.$post['button']['text'].'</a>' : '');
 							}

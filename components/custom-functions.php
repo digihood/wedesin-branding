@@ -9,16 +9,16 @@ function is_eng_wds( ) {
         return false;
     }
 }
-
-function wds_get_svg($url) {
-    $arrContextOptions=array(
-        "ssl"=>array(
-            "verify_peer"=>false,
-            "verify_peer_name"=>false,
-        ),
-    );  
-    
-    $response = file_get_contents($url , false, stream_context_create($arrContextOptions));
-    return $response;
-
+if( ! function_exists('wds_get_svg') ){ 
+    function wds_get_svg($url) {
+        $arrContextOptions=array(
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ),
+        );  
+        
+        $response = file_get_contents($url , false, stream_context_create($arrContextOptions));
+        return $response;
+    }
 }

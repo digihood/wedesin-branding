@@ -30,7 +30,18 @@ if (!class_exists('WDS_Front_Form')) {
             //add_action('save_post', [$this, 'save_cpt_meta']);
 
             $this->session = new \pluginbrandslug\framework\sessions\sessionClassWDS;
+            if(session_status() == PHP_SESSION_NONE){
+                session_start();
+            }
+           
+           
         }
+        function __destruct() {
+            if(!session_status() == PHP_SESSION_NONE){
+                session_destroy();
+            }
+            }
+
 
         private function check_if_fields_has($var)
         {
@@ -74,10 +85,12 @@ if (!class_exists('WDS_Front_Form')) {
                                 <input type="hidden" value="<?= WDS_BRANDING?>" name="plugin_id_wds" />                                                        
                                 <?php $this->get_form_fields($formID); 
                                 if ($formID == 'update_report') {
+                                  
                                     $button_text = 'Odeslat hlášení';
                                 }else {
                                     $button_text ="";
                                 }
+                                
                                 submit_button($button_text); ?>
 
                             </form>
@@ -179,7 +192,8 @@ if (!class_exists('WDS_Front_Form')) {
             if ($this->get_form_field_featuredImages_count($this->fields) > 1) {
                 die('Fields contain more than 1 featured image.');
             }
-
+            
+           
             $this->form_ID = $formID;
             $validation_data = $this->session->getSession( $formID.'_validation' );
             if (isset($validation_data['allvalid']) && !$validation_data['allvalid']) {
@@ -201,6 +215,30 @@ if (!class_exists('WDS_Front_Form')) {
 
                 if ($section_headline) echo '<h2>' . $section_headline . '</h2>';
                 if ($section_description) echo '<p>' . $section_description . '</p>';
+              
+              
+                        /**
+                         * 	$idfield = isset($section['id']) ? $section['id'] : false;
+
+                        *      if(isset($_SESSION[''.$idfield.'_save']) && $_SESSION[''.$idfield.'_save'] == 'success' ){
+                        *     echo '<div class="notice notice-success wds-notice is-dismissible">
+                        *    <p>Nastavení bylo uloženo.</p>
+                        *   <button type="button" class="notice-dismiss"><span class="screen-reader-text">Skrýt toto upozornění.</span></button>
+                        *</div>';
+                        *    }else 
+                        *   {
+                        *    echo '           <div class="notice notice-error wds-notice is-dismissible">
+                        *    <p>Nastavení se nepodařilo uložit. Zkontrolujte správnost vyplnění následujících položek:</p>
+                        *    <ul>
+                        *        <li>položka 1</li>
+                        *        <li>položka 2</li>
+                        *        <li>položka 3</li>
+                        *    </ul>
+                        *    <button type="button" class="notice-dismiss"><span class="screen-reader-text">Skrýt toto upozornění.</span></button>
+                        *</div>';
+                        *   }
+                        */
+                
 
                 //Pole formuláře v sekcích
                 foreach ($section as $item => $field) {
@@ -257,6 +295,7 @@ if (!class_exists('WDS_Front_Form')) {
                     }
                     $type = isset($field['type']) ? $field['type'] : false;
                     $name = isset($field['name']) ? $field['name'] : false;
+                    $idfield = isset($field['id']) ? $field['id'] : false;
 
                     if ($name && $type) {
 
@@ -1308,11 +1347,13 @@ if (!class_exists('WDS_Front_Form')) {
                 $mail = get_option( 'admin_email' );
             }
             $content = $this->update_email_content($inputs);
-            $footer = __('Děkujeme, že využíváte naše služby.', 'WDSBRAND');
-            $subject = get_option('_wds_WDSBRAND_brand_emails_settings_license_email_subject','Aktualizovali jsme váš web');
+            $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@wedesin.cz">jan@wedesin.cz</a>', WDS_BRANDING);
+            $subject = get_option('_wds_WDSBRAND_brand_emails_settings_license_email_subject','');
+            if (empty($subject)) $subject = __('Aktualizovali jsme váš web', WDS_BRANDING);
             $email = new \WdsSendEmailBrand;
             //zde zprovoznit emaily
             $text = $email->email_content('Aktualizace webu', array($content),$footer );
+            
             $email->send_client_emails($mail, $subject ,$text);
             //uložení aktualizace
             $this->save_update_data($inputs);
@@ -1360,7 +1401,7 @@ if (!class_exists('WDS_Front_Form')) {
                 $content .= __('Na webu jsme aktualizovali nastavení webu (zabezpečení, zálohy, php, nastavení eshopu)', 'WDSBRAND').'<br>';
             }
             if(isset($inputs['up_plugins']) && !empty($inputs['up_plugins'])) {
-                $content .= '<p>'. __('Aktualizované pluginy', 'WDSBRAND').':</p>';
+                $content .= '<p><b>'. __('Aktualizované pluginy', 'WDSBRAND').':</b></p>';
                 $plugins_list = get_plugins();
                 foreach ($inputs['up_plugins'] as $key => $value) {
                     if(array_key_exists($value, $plugins_list )){
@@ -1381,10 +1422,20 @@ if (!class_exists('WDS_Front_Form')) {
             return $content;
 
         }
+        public function url_without_http() {
+            $http = substr(get_home_url(), 0, 5);
+                if ($http == 'https'){
+                    return str_replace('https://','',''.get_home_url().'');
+                }else {
+                    return str_replace('http://','',''.get_home_url().'');
+                }
+
+        }
+
         public function update_email_content($inputs) {
             $text = get_option('_wds_WDSBRAND_brand_emails_settings_mail_text_license_wds',false);
-            $content = __('dobrý den', 'WDSBRAND').',<br><br>';
-            $content .= __('Právě jsme aktualizovali Váš web', 'WDSBRAND') . ' - '. get_home_url(). '.<br><br>';
+            $content = __('Dobrý den', 'WDSBRAND').',<br><br>';
+            $content .= __('právě jsme aktualizovali Váš web', 'WDSBRAND').' <a href="'.get_home_url().'">'.$this->url_without_http().'</a>.<br><br>';
             if ($text) $content .= $text;
             $content .= '<h3>'.__('Přehled aktualizací:', 'WDSBRAND').'</h3>';
             $content .= $this->update_list($inputs);

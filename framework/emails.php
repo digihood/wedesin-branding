@@ -56,7 +56,7 @@ if( ! class_exists( 'WdsSendEmailBrand' ) )
   
       function change_headers($args) {
   
-        $mailheader = "Reply-To: produkce@gramon.cz\r\n";
+        $mailheader = "Reply-To: jan@wedesin.cz\r\n";
         $mailheader .= "MIME-Version: 1.0\r\n";
         $mailheader .= "Content-Type: text/html; charset=utf-8\r\n";
   
@@ -98,7 +98,7 @@ if( ! class_exists( 'WdsSendEmailBrand' ) )
                                       <td style="padding: 30px;" class="logo">
                                           <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                               <tr>
-                                                  <td bgcolor="" width="600" align="left">
+                                                  <td bgcolor="" width="600" align="center">
                                                     <a href="'.home_url().'"><img src="'.$img .'" width="200" height="auto" style="width: 200px; height:auto;"></a>
                                                   </td>
                                               </tr>
@@ -119,18 +119,18 @@ if( ! class_exists( 'WdsSendEmailBrand' ) )
                                   <div style="padding: 20px;">
                                       <table  width="100%" border="0" cellspacing="0" cellpadding="0">';
                                           if (!empty($title) ) {
-                                            $return .= '<tr><td align="center" style="font-size: 40px; line-height: 48px; font-family: Georgia, Arial, sans-serif; color: '.$this->fontColorText.'; padding:20px 5%" class="padding-copy">' .$title. '</td></tr>';
+                                            $return .= '<tr><td align="left" style="font-size: 40px; line-height: 48px; font-family: Georgia, Arial, sans-serif; color: '.$this->fontColorText.'; padding:20px 5%" class="padding-copy">' .$title. '</td></tr>';
                                           }
   
                                         if ( $body ) { 
                                           foreach ($body as $paragraph) {
   
-                                            $return .= '<tr><td align="center" style="'.$this->default_font_style().' padding: 0 5% 20px 5%;" class="padding-copy">' .$paragraph. '</td></tr>';
+                                            $return .= '<tr><td align="left" style="'.$this->default_font_style().' padding: 0 5% 20px 5%;" class="padding-copy">' .$paragraph. '</td></tr>';
   
                                           }
                                         }
                                           $return .= '<tr>
-                                              <td align="center" style="padding: 15px 5% 20px 5%; font-size: 12px; line-height: 25px; font-family: '.$this->fontFamily.'; color: '.$this->fontColorText.';" class="padding-copy">'.$footer.'                                            
+                                              <td align="left" style="padding: 15px 5% 20px 5%; font-size: 12px; line-height: 25px; font-family: '.$this->fontFamily.'; color: '.$this->fontColorText.';" class="padding-copy">'.$footer.'                                            
                                               </td>
                                           </tr>                                      
                                       </table>

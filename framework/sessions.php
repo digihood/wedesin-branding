@@ -115,7 +115,26 @@ if( ! class_exists( 'sessionClassWDS' ) )
 
             return false;
         }
-        
-	}
+         /**
+         * zobrazi všechny session
+         *
+         * @param $name = jméno session
+         * 
+         * @author Wedesin
+         * @return true/false
+         */ 
+            public function chceckallsesion() {
 
-}
+                if (isset($_SESSION)){
+                    
+                    return $_SESSION;
+                    }
+                    echo 'neni sessions';
+                    
+            }
+                
+            
+       
+         
+      }
+ }

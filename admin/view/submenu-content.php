@@ -32,6 +32,10 @@ if (!class_exists('submenuContentWDS')) {
             $builder->display_form("test_form_all");
         }
 
+        function checkreport(){
+           
+        }
+
         /**
          * Zobrazení ukázkového formuláře
          *
@@ -52,6 +56,9 @@ if (!class_exists('submenuContentWDS')) {
                 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
                 <?php 
+                $ses = new \pluginbrandslug\framework\sessions\sessionClassWDS;
+
+          // preprint ($ses->chceckallsesion());
                 if ( isset($_SESSION['update_report_save']) && !empty($_SESSION['update_report_save']) ) {
                     $this->showMessage( __("Report odeslán", WDS_BRANDING), false);
                     unset($_SESSION['update_report_save']);
@@ -66,7 +73,7 @@ if (!class_exists('submenuContentWDS')) {
                     <div class="column content">
                         <nav class="nav-tab-wrapper">
                             <a href="?page=wds_brand" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>"> <?php echo wds_get_svg(WDS_BRANDURL . "assets/icons/home-line.svg"); ?> Záznam aktualizace</a>
-                                <a href="?page=wds_brand&tab=updates_list" class="nav-tab <?php if ($tab === 'updates_list') : ?>nav-tab-active<?php endif; ?>"> <?php echo wds_get_svg(WDS_BRANDURL . "assets/icons/home-line.svg"); ?>Přehled aktualizací</a>
+                                <a href="?page=wds_brand&tab=updates_list" class="nav-tab <?php if ($tab === 'updates_list') : ?>nav-tab-active<?php endif; ?>"> <?php echo wds_get_svg(WDS_BRANDURL . "assets/icons/calendar-line.svg"); ?>Přehled aktualizací</a>
                             <?php
                                 $mailingForm = $builder->get_fields_form("brand_emails_settings");
                             if (!empty($mailingForm)){
@@ -79,6 +86,7 @@ if (!class_exists('submenuContentWDS')) {
                             <?php switch ($tab):
                                     // Default tab
                                 default:
+                               
                             ?>
                                     <h2>Odeslat hlášení o aktualizaci</h2>
                                     <p>Formulář pro vyplnění hlášení o aktualizaci</p>
@@ -90,6 +98,10 @@ if (!class_exists('submenuContentWDS')) {
 
                                     //Tab 2
                                 case 'emails':
+                                  //  $ses = new \pluginbrandslug\framework\sessions\sessionClassWDS;
+                                   // echo $ses->chceckallsesion();
+                                 
+                                  
                                     if (!empty($mailingForm)){
                                         $builder->display_form("brand_emails_settings");
                                     }
@@ -104,21 +116,22 @@ if (!class_exists('submenuContentWDS')) {
                 <div class="column sidebar">
                     
                         <?php 
-                        $zobrazeni = new \pluginbrandslug\admin\info_box\view\viewAdminBoxWDS;
-                        $zobrazeni->wedesin_dashboard_widget_display('pluginsnews');
+                        $view = new \pluginbrandslug\admin\info_box\view\viewAdminBoxWDS;
+                        $view->wedesin_dashboard_widget_display('pluginsnews');
+                        $view->wedesin_dashboard_widget_display('plugins');
                         ?>
-                    
-                     
-                            <?php   
-                            $zobrazeni->wedesin_dashboard_widget_display('plugins');
-                            ?>
-                            <h3><?php echo wds_get_svg(WDS_BRANDURL . "assets/icons/info-standard-line.svg"); ?>
+                          
                         
                 </div>
                 </div>
             </div>
-       <?php
+       <?php 
+       session_destroy();
+
         }
+        
+
+
         public function the_updates_list() {
             $updates_list = get_option('_wds_list', []);
             ?>
@@ -133,14 +146,17 @@ if (!class_exists('submenuContentWDS')) {
                 </thead>
                 <tbody>
                     <?php
-                    foreach ($updates_list as $date => $record) {
+                    $rev_updates_list = array_reverse($updates_list, true);
+                    foreach ($rev_updates_list as $date => $record) {
                         if (isset($record['user']) && $record['update']) {
                             $user = get_userdata($record['user']);
+                          //  $zone = new \DateTimeZone('UTC +2');
                             echo '<tr style="border-top: 1px solid black">';
-                            echo '<td>'.date('d. m. Y H:i',$date).'</td>';
+                            echo '<td>'.wp_date('d. m. Y H:i', $date) .'</td>';
                             echo '<td>'.$user->user_login. '('.$user->ID.')</td>';
                             echo '<td>'.$record['update'].'</td>';
                             echo '</tr>';
+                            
                         }
 
                     }
@@ -149,7 +165,7 @@ if (!class_exists('submenuContentWDS')) {
             </table>
             <?php
             
-            //preprint($updates_list);
+           // preprint($updates_list);
         }
         /**
          * přidat zprávu
@@ -166,9 +182,13 @@ if (!class_exists('submenuContentWDS')) {
                 echo '<div id="message" class="error">';
             }
             else {
-                echo '<div id="message" class="updated fade">';
+                echo '<div class="notice notice-success wds-notice is-dismissible">
+                <p>'.$message.'</p>
+                <button type="button" class="notice-dismiss"><span class="screen-reader-text">'.__("Skrýt toto upozornění.", WDS_BRANDING).'</span></button>
+            </div>';
+               // echo '<div id="message" class="updated fade">';
             }
-            echo "<p><strong>$message</strong></p></div>";
+          
         } 
         
     }
