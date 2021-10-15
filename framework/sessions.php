@@ -14,9 +14,13 @@ if( ! class_exists( 'sessionClassWDS' ) )
 {
 	class sessionClassWDS
 	{
+        private $default_mess_succ;
+        private $default_mess_error;
 
 		public function __construct()
 		{
+            $this->default_mess_succ = __("Nastavení bylo úspěšně aktualizováno", WDS_BRANDING);
+            $this->default_mess_error = __("Nastavení se nepodařilo uložit. Zkuste to, prosím, znovu.", WDS_BRANDING);
 
         }
 
@@ -46,7 +50,6 @@ if( ! class_exists( 'sessionClassWDS' ) )
          */ 
         public function checkSession( $name, $value="" ) 
         {
-            
             if ( isset( $_SESSION[$name] ) ) 
             {
 
@@ -60,7 +63,7 @@ if( ! class_exists( 'sessionClassWDS' ) )
 
                 } else {
 
-                    if ( $_SESSION[$name] == 'error' ) 
+                    if ( $_SESSION[$name] == 'error' || $_SESSION[$name] == 'success' || $_SESSION[$name] == 'fail') 
                     {
 
                         return true;
@@ -115,26 +118,90 @@ if( ! class_exists( 'sessionClassWDS' ) )
 
             return false;
         }
-         /**
-         * zobrazi všechny session
+
+        /**
+         * kontrola aktivace sessin
          *
          * @param $name = jméno session
          * 
          * @author Wedesin
          * @return true/false
          */ 
-            public function chceckallsesion() {
+        public function chceckallsesion() {
 
-                if (isset($_SESSION)){
-                    
-                    return $_SESSION;
-                    }
-                    echo 'neni sessions';
-                    
-            }
+            if (isset($_SESSION)){
                 
+                return $_SESSION;
+                }
+                echo 'neni sessions';
+                
+        }
+
+        /**
+         * přidat zprávu
+         *
+         * @param $message = obsah zprávy
+         * @param $errormsq = zda je to chybová hláška
+         * 
+         * @author Wedesin
+         * @return true/false
+         */ 
+        function showMessage($session, $mess)
+        {
+            $type = 'success';
+            $class = 'notice-success';
+            if ( $this->checkSession($session)) {
+                if ($this->getSession($session) == 'fail' || $this->getSession($session) == 'error'){
+                    $class = 'notice-error';
+                    $type = $this->getSession($session);
+                }else if ($this->getSession($session) == 'warning') {
+                    $class = 'notice-warning';
+                    $type = $this->getSession($session);
+                }
+                $content = $mess[$type];
+                if(empty($content)) $content = $this->default_message($type);
+                echo '<div class="notice '.$class.' wds-notice is-dismissible">'. 
+                    '<p>'.$content.'</p>
+                    <button type="button" class="notice-dismiss"><span class="screen-reader-text">'.__("Skrýt toto upozornění.", WDS_BRANDING).'</span></button>
+                </div>';
+                // echo '<div id="message" class="updated fade">';
+
+            }
+          
+        } 
+        /**
+         * Vrátí základní zprávu, pokud není žádná vyplněná
+         *
+         * @param $type = Typ zprávy (success, error, fail)
+         * 
+         * @author Wedesin
+         * @return string
+         */ 
+        public function default_message($type) {
+            if ($type == 'success'){
+                return $this->default_mess_succ;
+            } else {
+                return $this->default_mess_error;
+            }
+        }
+        
+        /**
+         * zobrazi všechny session
+         *
+         * @param $form_ids = ID formuláře nebo jména sessions
+         * 
+         * @author Wedesin
+         * @return true/false
+         */ 
+        public function display_notice($form_ids) {
+            if ($form_ids){
+                if (is_array($form_ids)) {
+                    foreach ($form_ids as $form_id => $mess) {
+                        $this->showMessage($form_id, $mess);
+                    }
+                }
+            }
+        }
             
-       
-         
-      }
+    }
  }

@@ -56,17 +56,18 @@ if (!class_exists('submenuContentWDS')) {
                 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
                 <?php 
-                $ses = new \pluginbrandslug\framework\sessions\sessionClassWDS;
+                $sessions = new \pluginbrandslug\framework\sessions\sessionClassWDS;
 
-          // preprint ($ses->chceckallsesion());
-                if ( isset($_SESSION['update_report_save']) && !empty($_SESSION['update_report_save']) ) {
-                    $this->showMessage( __("Report odeslán", WDS_BRANDING), false);
-                    unset($_SESSION['update_report_save']);
-                }else if ( isset($_SESSION['update_report_save']) && !empty($_SESSION['update_report_save']) ) {
-                    $this->showMessage( __("Při ukládání reportu došlo k chybě.", WDS_BRANDING), true);
-                    unset($_SESSION['update_report_save']);
-                    
-                }  
+                //preprint($_SESSION);
+
+                $sessins_list = [
+                    'brand_emails_settings_save' => [], 
+                    'update_report_save' => [
+                        'fail' => __("Při ukládání reportu došlo k chybě. Report nebyl pravděpodobně odeslán.<br> Vyplnili jste údaje?", WDS_BRANDING), 
+                        'success' => __("Report uložen a odeslán", WDS_BRANDING)
+                    ]
+                ];
+                $sessions->display_notice($sessins_list);
                 settings_errors(); 
                 ?>
                 <div class="row">
@@ -167,29 +168,7 @@ if (!class_exists('submenuContentWDS')) {
             
            // preprint($updates_list);
         }
-        /**
-         * přidat zprávu
-         *
-         * @param $message = obsah zprávy
-         * @param $errormsq = zda je to chybová hláška
-         * 
-         * @author Wedesin
-         * @return true/false
-         */ 
-        function showMessage($message, $errormsg = false)
-        {
-            if ($errormsg) {
-                echo '<div id="message" class="error">';
-            }
-            else {
-                echo '<div class="notice notice-success wds-notice is-dismissible">
-                <p>'.$message.'</p>
-                <button type="button" class="notice-dismiss"><span class="screen-reader-text">'.__("Skrýt toto upozornění.", WDS_BRANDING).'</span></button>
-            </div>';
-               // echo '<div id="message" class="updated fade">';
-            }
-          
-        } 
+        
         
     }
     

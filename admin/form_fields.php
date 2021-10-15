@@ -17,7 +17,6 @@ if( ! class_exists( 'PluginField' ) )
 			if ($formID == 'brand_emails_settings') {
 				$fields=[
 					[
-						'id' => 'brand_emails_settings',
 						'headline' => 'Nastavení emailů',
 						'description' => 'Pro správné používání emailů je potřeba přizpůsobit jejich vzhled a nastavení.',
 					],
