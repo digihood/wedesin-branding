@@ -63,7 +63,7 @@ if (!class_exists('submenuContentWDS')) {
                 $sessins_list = [
                     'brand_emails_settings_save' => [], 
                     'update_report_save' => [
-                        'fail' => __("Při ukládání reportu došlo k chybě. Report nebyl pravděpodobně odeslán.<br> Vyplnili jste údaje?", WDS_BRANDING), 
+                        'fail' => __("Při ukládání reportu došlo k chybě. Report nebyl odeslán.<br> Vyplnili jste údaje?", WDS_BRANDING), 
                         'success' => __("Report uložen a odeslán", WDS_BRANDING)
                     ]
                 ];

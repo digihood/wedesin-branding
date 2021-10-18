@@ -1353,11 +1353,10 @@ if (!class_exists('WDS_Front_Form')) {
             $email = new \WdsSendEmailBrand;
             //zde zprovoznit emaily
             $text = $email->email_content('Aktualizace webu', array($content),$footer );
-            
-            $email->send_client_emails($mail, $subject ,$text);
             //uložení aktualizace
             $this->save_update_data($inputs);
             if ($this->save_update_data($inputs)) {
+                $email->send_client_emails($mail, $subject ,$text);
                 $this->session->addSession($formID . '_save', 'success');
             } else {
                 $this->session->addSession($formID . '_save', 'fail');
