@@ -35,6 +35,32 @@ define( 'D1G1_BRANDURL', plugin_dir_url( __FILE__ ) );
 define( 'D1G1_BRANDING', 'D1G1BRAND' );
 
 /*******************************
+/     Plugin requirements      *
+********************************/ 
+require( D1G1_BRANDPATH . 'framework/plugin-requirements.php');  
+
+class DemandingPlugin extends \pluginbrandslug\requirements\d1g1PluginRequirements {
+ 
+    const PLUGIN_NAME = "digihood WC Video";
+ 
+    public function __construct() {
+        $this->add_activation_hooks( __FILE__ );
+    }
+ 
+    protected function check_plugin_requirements() {
+        global $wp_version;
+        $failed = array();
+        if ( $wp_version < 4.0 )
+            $failed[] = 'WordPress version must be at least 4.0! ';
+        if ( version_compare( PHP_VERSION, '7.0.0', '<' ) )
+            $failed[] = 'PHP version must be at least 7.0.0! ';
+        return $failed;
+    }
+ 
+}
+$DemandingPlugin = new DemandingPlugin();
+
+/*******************************
 /       INCLUDE PARTS          *
 ********************************/
 //framework

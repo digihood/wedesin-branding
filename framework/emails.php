@@ -30,10 +30,10 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
         $this->settings_css();
       }
       public function settings_css() {
-        $this->background = get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_bg_color','#414b55') ;
+        $this->background = ( get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_bg_color') ? get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_bg_color')  : '#414b55');
         $this->fontColorText = '#151B24';
         $this->fontColorLink = '#03acff';
-        $this->fontColorFooter = get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_color','#03acff');
+        $this->fontColorFooter = ( get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_color') ? get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_color') : '#fff');
         $this->fontSize = '12px';
         $this->lineHeight = '16px';
         $this->fontFamily = 'Arial, sans-serif';
