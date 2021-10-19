@@ -66,7 +66,7 @@ if ( !class_exists('CustomScriptsStylesWDS') ) {
 			<style>
 			#wpadminbar #wp-admin-bar-wp-logo>.ab-item .ab-icon:before {
 				content: ' ' !important;
-				background: url( <?php echo plugins_url(); ?>/wedesin-branding/img/wedesin-logo-icon.png) no-repeat !important;
+				background: url( <?php echo plugins_url(); ?>/wedesin-branding/assets/img/wedesin-logo-icon.png) no-repeat !important;
 				width: 22px !important;
 				height: 22px !important;
 				display: block;
