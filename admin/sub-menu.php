@@ -6,10 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-if( ! class_exists( 'subMenuWDS' ) )
+if( ! class_exists( 'subMenuD1G1' ) )
 
 {
-    class subMenuWDS
+    class subMenuD1G1
 
 	{
 		//hook functions
@@ -20,11 +20,11 @@ if( ! class_exists( 'subMenuWDS' ) )
         }
 
         /**
-         * Přidává stránku nastavení wedesin pluginů do adminu
+         * Přidává stránku nastavení digihood pluginů do adminu
          *
          * @param none
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         public function submenus_callback() {
@@ -38,15 +38,15 @@ if( ! class_exists( 'subMenuWDS' ) )
             6) callback na přidání obsahu
             */
 
-            $subcontent = new \pluginbrandslug\admin\submenu\submenuContentWDS;
+            $subcontent = new \pluginbrandslug\admin\submenu\submenuContentD1G1;
 
             $submenus = [
                 [
-                    'wds-plugins',                              
+                    'd1g1-plugins',                              
                     __( 'Branding', TM_PLUGSEC ),                    
                     __('Branding', TM_PLUGSEC),               
                     'manage_options',                           
-                    'wds_brand',                              
+                    'd1g1_brand',                              
                     [$subcontent, 'my_admin_page_contents'],          
                 ]
             ];
@@ -68,7 +68,7 @@ if( ! class_exists( 'subMenuWDS' ) )
 
     }
 
-	new \pluginbrandslug\admin\submenu\subMenuWDS;
+	new \pluginbrandslug\admin\submenu\subMenuD1G1;
 
 }
 

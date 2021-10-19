@@ -2,17 +2,17 @@
 /**
  * Stažení dat z webu
  * 
- * @author Wedesin
+ * @author digihood
  */ 
 namespace pluginbrandslug\admin\info_box\call;
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-if( ! class_exists( 'getRestApiRequestWDS' ) )
+if( ! class_exists( 'getRestApiRequestD1G1' ) )
 {
     
-	class getRestApiRequestWDS
+	class getRestApiRequestD1G1
 	{
 		private $api_url;
 		private $taxpluginsnews_id = 6;
@@ -29,7 +29,7 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 		 *
 		 * @param type (CPT)
 		 * 
-		 * @author Wedesin
+		 * @author digihood
 		 * @return string
 		 */ 
 
@@ -51,7 +51,7 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 		 *
 		 * @param lang,type (jazyk, a typ přispěvku)
 		 * 
-		 * @author Wedesin
+		 * @author digihood
 		 * @return string
 		 */ 
 
@@ -65,7 +65,7 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 		 *
 		 * @param type,lang 
 		 * 
-		 * @author Wedesin
+		 * @author digihood
 		 * @return string
 		 */
 
@@ -111,7 +111,7 @@ if( ! class_exists( 'getRestApiRequestWDS' ) )
 		 *
 		 * @param img_id
 		 * 
-		 * @author Wedesin
+		 * @author digihood
 		 * @return string
 		 */
 

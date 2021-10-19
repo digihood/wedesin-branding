@@ -66,7 +66,7 @@ if( ! class_exists( 'PluginField' ) )
                         'headline' => 'Nastavení emailu o Aktualizacích',     
 						[
                             'type' => 'editor',
-                            'name' => 'mail_text_license_wds',
+                            'name' => 'mail_text_license_d1g1',
                             'label' => 'Text emailu',
                             'description' => 'Text emailu',
                             'help_text' => 'Pomocný text pro editor',
@@ -155,19 +155,19 @@ if( ! class_exists( 'PluginField' ) )
                 $fields=[
                     [
                         'type' => 'text',
-                        'name' => 'license_author_email_wds',
+                        'name' => 'license_author_email_d1g1',
                         'saveAs' => 'meta',
                         'label' => 'Email zákazníka',
                     ],
                     [
                         'type' => 'text',
-                        'name' => 'transaction_ID_wds',
+                        'name' => 'transaction_ID_d1g1',
                         'saveAs' => 'meta',
                         'label' => 'ID Transakce',
                     ],
                     [
                         'type' => 'text',
-                        'name' => 'license_ID_wds',
+                        'name' => 'license_ID_d1g1',
                         'saveAs' => 'meta',
                         'label' => 'Číslo licence',
                     ]

@@ -3,24 +3,24 @@
  * class description
  *
  * 
- * @author Wedesin
+ * @author digihood
  */ 
 namespace pluginbrandslug\framework\sessions;
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-if( ! class_exists( 'sessionClassWDS' ) )
+if( ! class_exists( 'sessionClassD1G1' ) )
 {
-	class sessionClassWDS
+	class sessionClassD1G1
 	{
         private $default_mess_succ;
         private $default_mess_error;
 
 		public function __construct()
 		{
-            $this->default_mess_succ = __("Nastavení bylo úspěšně aktualizováno", WDS_BRANDING);
-            $this->default_mess_error = __("Nastavení se nepodařilo uložit. Zkuste to, prosím, znovu.", WDS_BRANDING);
+            $this->default_mess_succ = __("Nastavení bylo úspěšně aktualizováno", D1G1_BRANDING);
+            $this->default_mess_error = __("Nastavení se nepodařilo uložit. Zkuste to, prosím, znovu.", D1G1_BRANDING);
 
         }
 
@@ -30,7 +30,7 @@ if( ! class_exists( 'sessionClassWDS' ) )
          * @param $name = jméno session
          * @param $value = hodnota
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         public function addSession( $name, $value="" ) 
@@ -45,7 +45,7 @@ if( ! class_exists( 'sessionClassWDS' ) )
          * @param $name = jméno session
          * @param $value = hodnota
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         public function checkSession( $name, $value="" ) 
@@ -85,7 +85,7 @@ if( ! class_exists( 'sessionClassWDS' ) )
          *
          * @param $name = jméno session
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         public function getSession( $name ) 
@@ -105,7 +105,7 @@ if( ! class_exists( 'sessionClassWDS' ) )
          *
          * @param $name = jméno session
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         public function removeSession( $name ) 
@@ -124,7 +124,7 @@ if( ! class_exists( 'sessionClassWDS' ) )
          *
          * @param $name = jméno session
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         public function chceckallsesion() {
@@ -143,7 +143,7 @@ if( ! class_exists( 'sessionClassWDS' ) )
          * @param $message = obsah zprávy
          * @param $errormsq = zda je to chybová hláška
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         function showMessage($session, $mess)
@@ -160,9 +160,9 @@ if( ! class_exists( 'sessionClassWDS' ) )
                 }
                 $content = $mess[$type];
                 if(empty($content)) $content = $this->default_message($type);
-                echo '<div class="notice '.$class.' wds-notice is-dismissible">'. 
+                echo '<div class="notice '.$class.' d1g1-notice is-dismissible">'. 
                     '<p>'.$content.'</p>
-                    <button type="button" class="notice-dismiss"><span class="screen-reader-text">'.__("Skrýt toto upozornění.", WDS_BRANDING).'</span></button>
+                    <button type="button" class="notice-dismiss"><span class="screen-reader-text">'.__("Skrýt toto upozornění.", D1G1_BRANDING).'</span></button>
                 </div>';
                 // echo '<div id="message" class="updated fade">';
 
@@ -174,7 +174,7 @@ if( ! class_exists( 'sessionClassWDS' ) )
          *
          * @param $type = Typ zprávy (success, error, fail)
          * 
-         * @author Wedesin
+         * @author digihood
          * @return string
          */ 
         public function default_message($type) {
@@ -190,7 +190,7 @@ if( ! class_exists( 'sessionClassWDS' ) )
          *
          * @param $form_ids = ID formuláře nebo jména sessions
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         public function display_notice($form_ids) {

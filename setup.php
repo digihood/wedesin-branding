@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Plugin Name: WeDesIn Branding
+* Plugin Name: WeDesIn Branding(D1G1)
 * Description: WeDesIn branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
 * Version: 2.1.0
 * Author: WeDesIn
@@ -29,41 +29,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 ********************************/
 
 //definice
-define( 'TM_PLUGSEC', 'wds_plugins' );
-define( 'WDS_BRANDPATH', plugin_dir_path( __FILE__ ) );
-define( 'WDS_BRANDURL', plugin_dir_url( __FILE__ ) );
-define( 'WDS_BRANDING', 'WDSBRAND' );
+define( 'TM_PLUGSEC', 'd1g1_plugins' );
+define( 'D1G1_BRANDPATH', plugin_dir_path( __FILE__ ) );
+define( 'D1G1_BRANDURL', plugin_dir_url( __FILE__ ) );
+define( 'D1G1_BRANDING', 'D1G1BRAND' );
 
 /*******************************
 /       INCLUDE PARTS          *
 ********************************/
 //framework
 
-include_once( WDS_BRANDPATH . 'framework/styles-scripts.php');  
-include_once( WDS_BRANDPATH . 'framework/main-menu.php');  
-include_once( WDS_BRANDPATH . 'framework/log/log-setup.php');  
-include_once( WDS_BRANDPATH . 'framework/forms-builder.php'); 
-include_once( WDS_BRANDPATH . 'framework/sessions.php'); 
-include_once( WDS_BRANDPATH . 'framework/cookies.php'); 
-include_once( WDS_BRANDPATH . 'framework/forms-core.php');
-include_once( WDS_BRANDPATH . 'framework/helpers.php'); 
-include_once( WDS_BRANDPATH . 'framework/forms-core.php');  
-include_once( WDS_BRANDPATH . 'framework/emails.php'); 
-include_once( WDS_BRANDPATH . 'framework/plugin-update-checker/plugin-update-checker.php'); 
+include_once( D1G1_BRANDPATH . 'framework/styles-scripts.php');  
+include_once( D1G1_BRANDPATH . 'framework/main-menu.php');  
+include_once( D1G1_BRANDPATH . 'framework/log/log-setup.php');  
+include_once( D1G1_BRANDPATH . 'framework/forms-builder.php'); 
+include_once( D1G1_BRANDPATH . 'framework/sessions.php'); 
+include_once( D1G1_BRANDPATH . 'framework/cookies.php'); 
+include_once( D1G1_BRANDPATH . 'framework/forms-core.php');
+include_once( D1G1_BRANDPATH . 'framework/helpers.php'); 
+include_once( D1G1_BRANDPATH . 'framework/forms-core.php');  
+include_once( D1G1_BRANDPATH . 'framework/emails.php'); 
+include_once( D1G1_BRANDPATH . 'framework/plugin-update-checker/plugin-update-checker.php'); 
 //add admin page
-include_once( WDS_BRANDPATH . 'admin/sub-menu.php');  
-include_once( WDS_BRANDPATH . 'admin/form_fields.php'); 
-include_once( WDS_BRANDPATH . 'admin/view/main-menu.php'); 
-include_once( WDS_BRANDPATH . 'admin/view/submenu-content.php'); 
-include_once( WDS_BRANDPATH . 'admin/info-box/view-box.php');
-include_once( WDS_BRANDPATH . 'admin/info-box/restapi-call.php');
+include_once( D1G1_BRANDPATH . 'admin/sub-menu.php');  
+include_once( D1G1_BRANDPATH . 'admin/form_fields.php'); 
+include_once( D1G1_BRANDPATH . 'admin/view/main-menu.php'); 
+include_once( D1G1_BRANDPATH . 'admin/view/submenu-content.php'); 
+include_once( D1G1_BRANDPATH . 'admin/info-box/view-box.php');
+include_once( D1G1_BRANDPATH . 'admin/info-box/restapi-call.php');
 
 // Include utility functions
 
-include_once( WDS_BRANDPATH . 'components/email-content.php'); 
-include_once( WDS_BRANDPATH . 'components/admin-update.php'); 
-include_once( WDS_BRANDPATH . 'components/styles-scripts.php');
-include_once( WDS_BRANDPATH . 'components/custom-functions.php');  
+include_once( D1G1_BRANDPATH . 'components/email-content.php'); 
+include_once( D1G1_BRANDPATH . 'components/admin-update.php'); 
+include_once( D1G1_BRANDPATH . 'components/styles-scripts.php');
+include_once( D1G1_BRANDPATH . 'components/custom-functions.php');  
 
 
 // Nastavení utomatické kontroly auktualizací 

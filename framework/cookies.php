@@ -10,10 +10,10 @@
  * @link    https://github.com/Lablnet/PHP-Cookie-manipulation-Class
  */
 
-if( ! class_exists( 'CookiesWDS' ) )
+if( ! class_exists( 'CookiesD1G1' ) )
 {
 
-    class CookiesWDS
+    class CookiesD1G1
     {
         private $name; // name of cookie
 

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @param $lang string
  * 
- * @author Wedesin
+ * @author digihood
  * @return echo string
  */ 
 
@@ -32,7 +32,7 @@ if ( !function_exists('preprint') ) {
  *
  * @param $value string
  * 
- * @author Wedesin
+ * @author digihood
  * @return int
  */ 
 if ( !function_exists('valid_leght_string') ) {

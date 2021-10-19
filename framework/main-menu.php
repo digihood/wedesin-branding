@@ -6,9 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-if( ! class_exists( 'mainMenuWDS' ) )
+if( ! class_exists( 'mainMenuD1G1' ) )
 {
-    class mainMenuWDS
+    class mainMenuD1G1
 	{
 		//hook functions
 		public function __construct()
@@ -17,21 +17,21 @@ if( ! class_exists( 'mainMenuWDS' ) )
         }
 
         /**
-         * Přidává stránku nastavení wedesin pluginů do adminu
+         * Přidává stránku nastavení digihood pluginů do adminu
          *
          * @param none
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         public function main_menu_callback() {
 
-            if (!isset( $GLOBALS['admin_page_hooks']['wds-plugins']) || empty( $GLOBALS['admin_page_hooks']['wds-plugins'] ) ) {
+            if (!isset( $GLOBALS['admin_page_hooks']['d1g1-plugins']) || empty( $GLOBALS['admin_page_hooks']['d1g1-plugins'] ) ) {
                 add_menu_page(
-                    __( 'WDS Plugins', TM_PLUGSEC ),
-                    __( 'WDS Plugins', TM_PLUGSEC ),
+                    __( 'D1G1 Plugins', TM_PLUGSEC ),
+                    __( 'D1G1 Plugins', TM_PLUGSEC ),
                     'manage_options',
-                    'wds-plugins',
+                    'd1g1-plugins',
                     array( $this, 'my_admin_page_contents' ),
                     'dashicons-admin-generic',
                     65
@@ -47,7 +47,7 @@ if( ! class_exists( 'mainMenuWDS' ) )
          *
          * @param none
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         function my_admin_page_contents() {
@@ -58,7 +58,7 @@ if( ! class_exists( 'mainMenuWDS' ) )
                 <section>
                     <div class="plugins-list">
                     <?php
-                        $this->wds_plugins_menu();
+                        $this->d1g1_plugins_menu();
                     ?>
                     </div>
                 </section>
@@ -71,17 +71,17 @@ if( ! class_exists( 'mainMenuWDS' ) )
          *
          * @param none
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
-        function wds_plugins_menu() { 
+        function d1g1_plugins_menu() { 
             global $submenu;
             ?>
             <div class="plugins-list">
                 <?php
-                if (isset($submenu['wds-plugins']) && !empty($submenu['wds-plugins'])){
-                    $submenu_list = $submenu['wds-plugins']; ?>
-                    <ul class="wds-plugins-list">
+                if (isset($submenu['d1g1-plugins']) && !empty($submenu['d1g1-plugins'])){
+                    $submenu_list = $submenu['d1g1-plugins']; ?>
+                    <ul class="d1g1-plugins-list">
                         <?php
                         foreach ($submenu_list as $key) {
                             if ( isset($key[2]) && !empty($key[2]) && isset($key[2]) && !empty($key[3]) ) {
@@ -98,5 +98,5 @@ if( ! class_exists( 'mainMenuWDS' ) )
         }
 
     }
-	new \pluginbrandslug\framework\mainMenu\mainMenuWDS;
+	new \pluginbrandslug\framework\mainMenu\mainMenuD1G1;
 }

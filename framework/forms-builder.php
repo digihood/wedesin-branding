@@ -4,12 +4,12 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-if( ! class_exists( 'formsBuilderWDS' ) )
+if( ! class_exists( 'formsBuilderD1G1' ) )
 {
-	class formsBuilderWDS
+	class formsBuilderD1G1
 	{
 		private $fields;
-		private $wds_form;
+		private $d1g1_form;
 
 		public function __construct( )
 		{
@@ -29,22 +29,22 @@ if( ! class_exists( 'formsBuilderWDS' ) )
          *
          * @param none
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */
 		public function display_form($formID ) {
 			$field = $this->get_fields_form($formID);
-			$this->wds_form = new \pluginbrandslug\framework\forms_core\WDS_Front_Form($field);
-			echo $this->wds_form->get_form($formID );
+			$this->d1g1_form = new \pluginbrandslug\framework\forms_core\D1G1_Front_Form($field);
+			echo $this->d1g1_form->get_form($formID );
 		}
 
 		public function save_form() {
 			$inputs = filter_input_array(INPUT_POST);
-            if (isset($inputs['form_id_wds']) && !empty($inputs['form_id_wds'])&& !empty($inputs['plugin_id_wds']) && $inputs['plugin_id_wds'] == WDS_BRANDING ) {
-				$formID = $inputs['form_id_wds'];
+            if (isset($inputs['form_id_d1g1']) && !empty($inputs['form_id_d1g1'])&& !empty($inputs['plugin_id_d1g1']) && $inputs['plugin_id_d1g1'] == D1G1_BRANDING ) {
+				$formID = $inputs['form_id_d1g1'];
 				$field = $this->get_fields_form($formID);
-				$this->wds_form = new \pluginbrandslug\framework\forms_core\WDS_Front_Form($field);
-				return $this->wds_form->save_form();
+				$this->d1g1_form = new \pluginbrandslug\framework\forms_core\D1G1_Front_Form($field);
+				return $this->d1g1_form->save_form();
             }
 
 			return false;
@@ -66,6 +66,6 @@ if( ! class_exists( 'formsBuilderWDS' ) )
 		
 	}
 	
-    new \pluginbrandslug\framework\forms_builder\formsBuilderWDS;
+    new \pluginbrandslug\framework\forms_builder\formsBuilderD1G1;
 
 }

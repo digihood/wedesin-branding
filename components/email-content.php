@@ -8,11 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-if( ! class_exists( 'sendEmailContentWDS' ) )
+if( ! class_exists( 'sendEmailContentD1G1' ) )
  
 {
 
-	class sendEmailContentWDS
+	class sendEmailContentD1G1
 	{
 		
 		public function __construct(){
@@ -27,9 +27,9 @@ if( ! class_exists( 'sendEmailContentWDS' ) )
 
 		============================================*/
 		public function send_license_mail( $mail, $license ) {
-			$class_email = new WdsSendEmail();
+			$class_email = new d1g1SendEmail();
 			$subject = __('Licence od Antihackera', WDSLS);
-			$title = get_option('_wds_wdslicsys_license_plugin_wds_license_email_title',false);
+			$title = get_option('_d1g1_d1g1licsys_license_plugin_d1g1_license_email_title',false);
 			$message =  $class_email->email_content( $title, array('test'), 'test'
 			);
 			/*preprint($message);

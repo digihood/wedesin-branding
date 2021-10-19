@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-if (!class_exists('WDS_Front_Form')) {
-    class WDS_Front_Form
+if (!class_exists('D1G1_Front_Form')) {
+    class D1G1_Front_Form
     {
 
         private $fields;
@@ -16,20 +16,20 @@ if (!class_exists('WDS_Front_Form')) {
         public function __construct($field_list = [])
         {
             $this->fields = $field_list;
-            $this->prefix = '_wds_'.WDS_BRANDING.'_';
+            $this->prefix = '_d1g1_'.D1G1_BRANDING.'_';
 
-            add_action('wp_ajax_wds_frontend_form_dropzone_handle_dropped_files', [$this, 'handle_dropped_files_callback'], 10, 1);
-            add_action('wp_ajax_nopriv_wds_frontend_form_dropzone_handle_dropped_files', [$this, 'handle_dropped_files_callback'], 10, 1);
+            add_action('wp_ajax_d1g1_frontend_form_dropzone_handle_dropped_files', [$this, 'handle_dropped_files_callback'], 10, 1);
+            add_action('wp_ajax_nopriv_d1g1_frontend_form_dropzone_handle_dropped_files', [$this, 'handle_dropped_files_callback'], 10, 1);
 
-            add_action('wp_ajax_wds_frontend_form_dropzone_handle_deleted_files', [$this, 'handle_deleted_files_callback'], 10, 1);
-            add_action('wp_ajax_nopriv_wds_frontend_form_dropzone_handle_deleted_files', [$this, 'handle_deleted_files_callback'], 10, 1);
+            add_action('wp_ajax_d1g1_frontend_form_dropzone_handle_deleted_files', [$this, 'handle_deleted_files_callback'], 10, 1);
+            add_action('wp_ajax_nopriv_d1g1_frontend_form_dropzone_handle_deleted_files', [$this, 'handle_deleted_files_callback'], 10, 1);
 
-            add_action('wp_ajax_wds_frontend_form_dropzone_get_files', [$this, 'get_files_callback'], 10, 1);
-            add_action('wp_ajax_nopriv_wds_frontend_form_dropzone_get_files', [$this, 'get_files_callback'], 10, 1);
+            add_action('wp_ajax_d1g1_frontend_form_dropzone_get_files', [$this, 'get_files_callback'], 10, 1);
+            add_action('wp_ajax_nopriv_d1g1_frontend_form_dropzone_get_files', [$this, 'get_files_callback'], 10, 1);
             //ukládání metadat do kuponu (licence)
             //add_action('save_post', [$this, 'save_cpt_meta']);
 
-            $this->session = new \pluginbrandslug\framework\sessions\sessionClassWDS;
+            $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
             if(session_status() == PHP_SESSION_NONE){
                 session_start();
             }
@@ -57,14 +57,14 @@ if (!class_exists('WDS_Front_Form')) {
             return false;
         }
 
-        public function get_form($formID = 'wds_admin_form')
+        public function get_form($formID = 'd1g1_admin_form')
         {
 
             $return = "";
             $query = filter_input_array(INPUT_GET);
 
             ?>
-            <div class="wrap wds-admin">
+            <div class="wrap d1g1-admin">
 
                 <?php settings_errors(); ?>
 
@@ -77,12 +77,12 @@ if (!class_exists('WDS_Front_Form')) {
 
                             <span class="form-star"><small><?= __('* povinné pole', 'textdomain'); ?></small></span>
 
-                            <form method="post" id="<?= $formID ?>_form" class="wds-form" action="<?php // the_permalink(); 
+                            <form method="post" id="<?= $formID ?>_form" class="d1g1-form" action="<?php // the_permalink(); 
                                                                                                                     ?>" enctype="multipart/form-data" novalidate data-abide>
                                 <?php wp_nonce_field( $formID, 'nonce_' . $formID ); ?>
-                                <input type="hidden" value="<?=$formID?>" name="form_id_wds" />     
-                                <input type="hidden" value="<?= WDS_BRANDING ?>" name="plugin_id" />  
-                                <input type="hidden" value="<?= WDS_BRANDING?>" name="plugin_id_wds" />                                                        
+                                <input type="hidden" value="<?=$formID?>" name="form_id_d1g1" />     
+                                <input type="hidden" value="<?= D1G1_BRANDING ?>" name="plugin_id" />  
+                                <input type="hidden" value="<?= D1G1_BRANDING?>" name="plugin_id_d1g1" />                                                        
                                 <?php $this->get_form_fields($formID); 
                                 if ($formID == 'update_report') {
                                   
@@ -168,7 +168,7 @@ if (!class_exists('WDS_Front_Form')) {
          *
          * 	@param $arg = fce define_arg_form();
          *
-         * 	@author Wedesin
+         * 	@author digihood
          * 	@return echo
          */
         public function get_form_fields($formID = null)
@@ -198,7 +198,7 @@ if (!class_exists('WDS_Front_Form')) {
             $validation_data = $this->session->getSession( $formID.'_validation' );
             if (isset($validation_data['allvalid']) && !$validation_data['allvalid']) {
                 ?>
-                <div class="notice notice-error wds-notice is-dismissible">
+                <div class="notice notice-error d1g1-notice is-dismissible">
                     <?php _e('Nastavení se nepodařilo uložit. Formulář obsahuje chyby. Zkontrolujte správnost vyplnění následujících položek.', TM_PLUGSEC); ?>
                     <button type="button" class="notice-dismiss"><span class="screen-reader-text">Skrýt toto upozornění.</span></button>
                 </div>
@@ -221,13 +221,13 @@ if (!class_exists('WDS_Front_Form')) {
                          * 	$idfield = isset($section['id']) ? $section['id'] : false;
 
                         *      if(isset($_SESSION[''.$idfield.'_save']) && $_SESSION[''.$idfield.'_save'] == 'success' ){
-                        *     echo '<div class="notice notice-success wds-notice is-dismissible">
+                        *     echo '<div class="notice notice-success d1g1-notice is-dismissible">
                         *    <p>Nastavení bylo uloženo.</p>
                         *   <button type="button" class="notice-dismiss"><span class="screen-reader-text">Skrýt toto upozornění.</span></button>
                         *</div>';
                         *    }else 
                         *   {
-                        *    echo '           <div class="notice notice-error wds-notice is-dismissible">
+                        *    echo '           <div class="notice notice-error d1g1-notice is-dismissible">
                         *    <p>Nastavení se nepodařilo uložit. Zkontrolujte správnost vyplnění následujících položek:</p>
                         *    <ul>
                         *        <li>položka 1</li>
@@ -343,10 +343,10 @@ if (!class_exists('WDS_Front_Form')) {
             // switch to get correct input name
             switch ($saveAs) {
                 case 'meta':
-                    $newName = 'wds_meta[' . $name . ']';
+                    $newName = 'd1g1_meta[' . $name . ']';
                     break;
                 case 'taxonomy':
-                    $newName = 'wds_taxonomy[' . $name . ']';
+                    $newName = 'd1g1_taxonomy[' . $name . ']';
                     break;
                 case 'post_title':
                 case 'post_content':
@@ -519,7 +519,7 @@ if (!class_exists('WDS_Front_Form')) {
                     }
 
                     echo '<div class="input-group">';
-                    echo '<span class="input-group-label">' . wds_get_svg(WDS_BRANDURL . "assets/icons/link-line.svg") . '</span>';
+                    echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDURL . "assets/icons/link-line.svg") . '</span>';
                     echo  $floating_label_start;
 
                     echo '<input type="url" value="' . $value . '" name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" />';
@@ -545,16 +545,16 @@ if (!class_exists('WDS_Front_Form')) {
                     }
                     
                     echo '<div class="input-group">';
-                    echo '<span class="input-group-label">' . wds_get_svg(WDS_BRANDURL . "assets/icons/link-line.svg") . '</span>';
+                    echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDURL . "assets/icons/link-line.svg") . '</span>';
                     echo  $floating_label_start;
 
-                    echo '<input type="url" id="wds-media-url" value="' . $value . '" name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" />';
+                    echo '<input type="url" id="d1g1-media-url" value="' . $value . '" name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" />';
 
                     if ($label)  echo '<label for="' . $name . '">' . $label . $required . '</label>';
 
                     echo $floating_label_end ;
 
-                    echo '<a href="#" id="wds-media-upload" class="button">' . wds_get_svg(WDS_BRANDURL . "assets/icons/upload-cloud-line.svg") . 'Nahrát</a>';
+                    echo '<a href="#" id="d1g1-media-upload" class="button">' . d1g1_get_svg(D1G1_BRANDURL . "assets/icons/upload-cloud-line.svg") . 'Nahrát</a>';
 
 
                     echo '</div>';
@@ -564,7 +564,7 @@ if (!class_exists('WDS_Front_Form')) {
                     if ($value) {
                         echo '<p><div class=upload-img-preview>';
                         echo '<img src="' . $value . '" width="300" height="200" alt="alt">';
-                        echo '<a href="#" class="button white icon">' . wds_get_svg(WDS_BRANDURL . "assets/icons/trash-line.svg") . 'Odstranit</a>';
+                        echo '<a href="#" class="button white icon">' . d1g1_get_svg(D1G1_BRANDURL . "assets/icons/trash-line.svg") . 'Odstranit</a>';
                         echo '</div></p>';
                     }
 
@@ -779,7 +779,7 @@ if (!class_exists('WDS_Front_Form')) {
                     }
 
                     echo '<div class="input-group">';
-                    echo '<span class="input-group-label">' . wds_get_svg(WDS_BRANDURL . $icon) . '</span>';
+                    echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDURL . $icon) . '</span>';
                     echo $floating_label_start;
                     echo '<input type="' . $type . '" id="' . $name . '" name="' . $name . '" value="' . $value . '">';
                     if ($label)  echo '<label for="' . $name . '">' . $label . $required . '</label>';
@@ -818,7 +818,7 @@ if (!class_exists('WDS_Front_Form')) {
 
                     echo '<div class="info-block' . $warning . '">';
 
-                    echo '<span class="icon">' . wds_get_svg(WDS_BRANDURL . $icon) . '</span>';
+                    echo '<span class="icon">' . d1g1_get_svg(D1G1_BRANDURL . $icon) . '</span>';
 
                     if ($headline) echo '<h3>' . $headline . '</h3>';
                     if ($description) echo '<p>' . $description . '</p>';
@@ -844,10 +844,10 @@ if (!class_exists('WDS_Front_Form')) {
         public function save_form()
         {
             $inputs = filter_input_array(INPUT_POST);
-            if (!isset($inputs['form_id_wds']) || $inputs['form_id_wds'] == '') {
+            if (!isset($inputs['form_id_d1g1']) || $inputs['form_id_d1g1'] == '') {
                 return;
             }
-            $formID = $inputs['form_id_wds'];
+            $formID = $inputs['form_id_d1g1'];
             $this->form_ID = $formID;
             if (isset($inputs['nonce_' . $formID]) && wp_verify_nonce($inputs['nonce_' . $formID], $formID)) {
                 //validace polí
@@ -857,7 +857,7 @@ if (!class_exists('WDS_Front_Form')) {
                     exit;
                 }
                 //honeypot pole
-                if ((isset($inputs['wds_meta']['name']) && $inputs['wds_meta']['name'] !== "") || (isset($inputs['wds_meta']['surname']) && $inputs['wds_meta']['surname'] !== "")) {
+                if ((isset($inputs['d1g1_meta']['name']) && $inputs['d1g1_meta']['name'] !== "") || (isset($inputs['d1g1_meta']['surname']) && $inputs['d1g1_meta']['surname'] !== "")) {
                     exit;
                 }
 
@@ -898,7 +898,7 @@ if (!class_exists('WDS_Front_Form')) {
                         }
                         //vyhodit hodnoty, které se nemají uložit
                         if(isset($metas['_wp_http_referer'])) unset($metas['_wp_http_referer']);
-                        if(isset($metas['form_id_wds'])) unset($metas['form_id_wds']);
+                        if(isset($metas['form_id_d1g1'])) unset($metas['form_id_d1g1']);
                         if(isset($metas['submit'])) unset($metas['submit']);
                         if(isset($metas['nonce_' . $formID])) unset($metas['nonce_' . $formID]);
 
@@ -995,7 +995,7 @@ if (!class_exists('WDS_Front_Form')) {
                         $value = isset($inputs[$name]) ? $inputs[$name] : null;
                         break;
                     /*case 'taxonomy':
-                        $value = isset($inputs['wds_taxonomy'][$name]) ? $inputs['wds_taxonomy'][$name] : null;
+                        $value = isset($inputs['d1g1_taxonomy'][$name]) ? $inputs['d1g1_taxonomy'][$name] : null;
                         break;
                     case 'post_title':
                     case 'post_content':
@@ -1279,14 +1279,14 @@ if (!class_exists('WDS_Front_Form')) {
          *
          * @param $data - array načtení polí z forms builderu
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         function get_html_form_cpt($data){
             global $post;
             if ($data){
                 ?>
-                <div class="wds-admin">
+                <div class="d1g1-admin">
                     <div class="form-section">
                         <?php
                         foreach ($data as $field) {
@@ -1297,7 +1297,7 @@ if (!class_exists('WDS_Front_Form')) {
                                 $value = ($post && isset($post->ID) ? get_post_meta($post->ID, $name, true) : "");
                                 ?>
                                 <div class="form-item">
-                                    <p><label for="<?= $name ?>" class="wds_post_meta_label"><?= $label ?></label></p>
+                                    <p><label for="<?= $name ?>" class="d1g1_post_meta_label"><?= $label ?></label></p>
                                     <?php 
                                     $this->get_input_html($type, $name, $value,$field); ?>
                                 </div>
@@ -1316,13 +1316,13 @@ if (!class_exists('WDS_Front_Form')) {
          * Ukládání polí do meta v cpt
          *
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         function save_cpt_meta(){
             global $post;
             if ($post && isset($post->post_type) && !empty($post->post_type)){
-                $builder = new formsBuilderWDS_brand;
+                $builder = new formsBuilderD1G1_brand;
                 $all_fields = $builder->get_fields_cpt_form($post->post_type);
                 if (!empty($all_fields)) {
                     foreach ($all_fields as $field) {
@@ -1338,19 +1338,19 @@ if (!class_exists('WDS_Front_Form')) {
         /**
          * Odeslat email s aktualizací
          *
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         function send_update_email($inputs, $formID){
-            $mail = get_option('_wds_WDSBRAND_brand_emails_settings_send_to_email',false);
+            $mail = get_option('_d1g1_D1G1BRAND_brand_emails_settings_send_to_email',false);
             if (empty($mail)) {
                 $mail = get_option( 'admin_email' );
             }
             $content = $this->update_email_content($inputs);
-            $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@wedesin.cz">jan@wedesin.cz</a>', WDS_BRANDING);
-            $subject = get_option('_wds_WDSBRAND_brand_emails_settings_license_email_subject','');
-            if (empty($subject)) $subject = __('Aktualizovali jsme váš web', WDS_BRANDING);
-            $email = new \WdsSendEmailBrand;
+            $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@wedesin.cz">jan@wedesin.cz</a>', D1G1_BRANDING);
+            $subject = get_option('_d1g1_D1G1BRAND_brand_emails_settings_license_email_subject','');
+            if (empty($subject)) $subject = __('Aktualizovali jsme váš web', D1G1_BRANDING);
+            $email = new \d1g1SendEmailBrand;
             //zde zprovoznit emaily
             $text = $email->email_content('Aktualizace webu', array($content),$footer );
             //uložení aktualizace
@@ -1366,14 +1366,14 @@ if (!class_exists('WDS_Front_Form')) {
         }
 
         public function save_update_data($inputs){
-            $update_list = get_option('_wds_list', []);
+            $update_list = get_option('_d1g1_list', []);
             $new = $this->update_list($inputs);
             if($new) {
                 $update_list[strtotime('now')] = array(
                     'user'=> get_current_user_id(),
                     'update'=> $new
                 );
-                update_option('_wds_list',$update_list);
+                update_option('_d1g1_list',$update_list);
                 return true;
             } else{
                 return false;
@@ -1388,19 +1388,19 @@ if (!class_exists('WDS_Front_Form')) {
             $content = '';
             if(isset($inputs['up_wp']) && !empty($inputs['up_wp'])) {
                 if ($wp_version){
-                    $content .= __('Wordpress aktualizován na verzi', 'WDSBRAND').' '. $wp_version.'<br>';
+                    $content .= __('Wordpress aktualizován na verzi', 'D1G1BRAND').' '. $wp_version.'<br>';
                 }else {
-                    $content .= __('Wordpress aktualizován na nejnovější verzi', 'WDSBRAND').'<br>';
+                    $content .= __('Wordpress aktualizován na nejnovější verzi', 'D1G1BRAND').'<br>';
                 } 
             }
             if(isset($inputs['up_theme']) && !empty($inputs['up_theme'])) {
-                $content .= __('Šablona byla aktualizován na nejnovější verzi', 'WDSBRAND').'<br>';
+                $content .= __('Šablona byla aktualizován na nejnovější verzi', 'D1G1BRAND').'<br>';
             }
             if(isset($inputs['up_settings']) && !empty($inputs['up_settings'])) {
-                $content .= __('Na webu jsme aktualizovali nastavení webu (zabezpečení, zálohy, php, nastavení eshopu)', 'WDSBRAND').'<br>';
+                $content .= __('Na webu jsme aktualizovali nastavení webu (zabezpečení, zálohy, php, nastavení eshopu)', 'D1G1BRAND').'<br>';
             }
             if(isset($inputs['up_plugins']) && !empty($inputs['up_plugins'])) {
-                $content .= '<p><b>'. __('Aktualizované pluginy', 'WDSBRAND').':</b></p>';
+                $content .= '<p><b>'. __('Aktualizované pluginy', 'D1G1BRAND').':</b></p>';
                 $plugins_list = get_plugins();
                 foreach ($inputs['up_plugins'] as $key => $value) {
                     if(array_key_exists($value, $plugins_list )){
@@ -1408,14 +1408,14 @@ if (!class_exists('WDS_Front_Form')) {
                             $name = (isset($plugins_list[$value]['Name'])? $plugins_list[$value]['Name'] : '');
                             $version = (isset($plugins_list[$value]['Version'])? $plugins_list[$value]['Version'] : '');
                             if ($name && $version) {
-                                $content .= $name . ' '. __('Aktualizováno na verzi', 'WDSBRAND'). ' '. $version. '<br>';
+                                $content .= $name . ' '. __('Aktualizováno na verzi', 'D1G1BRAND'). ' '. $version. '<br>';
                             }
                         }
                     }
                 }
             }
             if(isset($inputs['up_content']) && !empty($inputs['up_content'])) {
-                $content .= '<p><b>'.__('Poznámka k aktualizaci', 'WDSBRAND').'</b></p>';
+                $content .= '<p><b>'.__('Poznámka k aktualizaci', 'D1G1BRAND').'</b></p>';
                 $content .= '<div>'.$inputs['up_content'].'</div>';
             }
             return $content;
@@ -1432,11 +1432,11 @@ if (!class_exists('WDS_Front_Form')) {
         }
 
         public function update_email_content($inputs) {
-            $text = get_option('_wds_WDSBRAND_brand_emails_settings_mail_text_license_wds',false);
-            $content = __('Dobrý den', 'WDSBRAND').',<br><br>';
-            $content .= __('právě jsme aktualizovali Váš web', 'WDSBRAND').' <a href="'.get_home_url().'">'.$this->url_without_http().'</a>.<br><br>';
+            $text = get_option('_d1g1_D1G1BRAND_brand_emails_settings_mail_text_license_d1g1',false);
+            $content = __('Dobrý den', 'D1G1BRAND').',<br><br>';
+            $content .= __('právě jsme aktualizovali Váš web', 'D1G1BRAND').' <a href="'.get_home_url().'">'.$this->url_without_http().'</a>.<br><br>';
             if ($text) $content .= $text;
-            $content .= '<h3>'.__('Přehled aktualizací:', 'WDSBRAND').'</h3>';
+            $content .= '<h3>'.__('Přehled aktualizací:', 'D1G1BRAND').'</h3>';
             $content .= $this->update_list($inputs);
             return $content;
 
@@ -1444,5 +1444,5 @@ if (!class_exists('WDS_Front_Form')) {
 
     }
 
-    new \pluginbrandslug\framework\forms_core\WDS_Front_Form;
+    new \pluginbrandslug\framework\forms_core\D1G1_Front_Form;
 }

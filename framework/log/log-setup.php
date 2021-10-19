@@ -1,14 +1,14 @@
 <?php 
 
-if( ! class_exists( 'logSetupWDS') )
+if( ! class_exists( 'logSetupD1G1') )
 {
-	class logSetupWDS
+	class logSetupD1G1
 	{
 
 		public function __construct()
 		{
-            add_action( 'init',  [$this, 'new_folder_wds_log'] );
-            add_action( 'admin_menu',  [$this, 'admin_page_wds_log'] );
+            add_action( 'init',  [$this, 'new_folder_d1g1_log'] );
+            add_action( 'admin_menu',  [$this, 'admin_page_d1g1_log'] );
         }
 
 		/**
@@ -16,16 +16,16 @@ if( ! class_exists( 'logSetupWDS') )
          *
          * @param none
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
-        public function admin_page_wds_log() {
+        public function admin_page_d1g1_log() {
             add_submenu_page(
-                'wds-plugins',                              
-                    __( 'Wedesin Log', TM_PLUGSEC ),                    
-                    __('WDS Log', TM_PLUGSEC),               
+                'd1g1-plugins',                              
+                    __( 'Digihood Log', TM_PLUGSEC ),                    
+                    __('D1G1 Log', TM_PLUGSEC),               
                     'manage_options',                           
-                    'wds-logs',                              
+                    'd1g1-logs',                              
                     array( $this, 'my_admin_page_contents' )
             );
         }
@@ -34,12 +34,12 @@ if( ! class_exists( 'logSetupWDS') )
          *
          * @param none
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
-        public function get_wds_log_folder() {
+        public function get_d1g1_log_folder() {
             $upload_dir = wp_upload_dir();
-            $return = $upload_dir['basedir'] . '/wds-logs';
+            $return = $upload_dir['basedir'] . '/d1g1-logs';
             return $return;
         }
 
@@ -48,7 +48,7 @@ if( ! class_exists( 'logSetupWDS') )
          *
          * @param none
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
         function my_admin_page_contents() {
@@ -60,11 +60,11 @@ if( ! class_exists( 'logSetupWDS') )
                     $default_tab = null;
                     $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
                     ?>
-                    <a href="?page=wds-logs" class="nav-tab <?= ($tab===null ? 'nav-tab-active' : '')?>">
+                    <a href="?page=d1g1-logs" class="nav-tab <?= ($tab===null ? 'nav-tab-active' : '')?>">
                         <?= __('Přehled logů', TM_PLUGSEC) ?>
                     </a>
                     <?php 
-                        do_action('wds_plugin_log_header_content');
+                        do_action('d1g1_plugin_log_header_content');
                     ?>
                 </nav>
                 <div class="tab-content">
@@ -76,15 +76,15 @@ if( ! class_exists( 'logSetupWDS') )
                                         <h3 class="box-title"><?php _e( 'Záznamy logu', 'plan' ); ?></h3>
                                     </div>
                                     <div class="box-body">
-                                        <?= __('V jednotlivých záložkách naleznete záznamy logů pro Vaše wds pluginy. 
-                                        Máte-li problém a potřebujete poradit s chybou, zkopírujte tento log do excelu a ten nám zašlete. Nebo můžete poslat přímo soubor, který naleznete na Vašem ftp ve složce wp-content/uploads/wds-log/')?>
+                                        <?= __('V jednotlivých záložkách naleznete záznamy logů pro Vaše d1g1 pluginy. 
+                                        Máte-li problém a potřebujete poradit s chybou, zkopírujte tento log do excelu a ten nám zašlete. Nebo můžete poslat přímo soubor, který naleznete na Vašem ftp ve složce wp-content/uploads/d1g1-log/')?>
                                     </div>
                                 </div>                 
                             </div>
                         </div>
                         <div style="clear:both;"></div>  
                     <?php } else { 
-                        do_action('wds_plugin_log_tab_content');
+                        do_action('d1g1_plugin_log_tab_content');
                     }
                     ?>
                 </div>
@@ -98,14 +98,14 @@ if( ! class_exists( 'logSetupWDS') )
          *
          * @param none
          * 
-         * @author Wedesin
+         * @author digihood
          * @return true/false
          */ 
-        public function new_folder_wds_log() {
+        public function new_folder_d1g1_log() {
 
             $upload = wp_upload_dir();
             $upload_dir = $upload['basedir'];
-            $upload_dir = $upload_dir . '/wds-logs';
+            $upload_dir = $upload_dir . '/d1g1-logs';
             if (! is_dir($upload_dir)) {
                 mkdir( $upload_dir, 0700 );
             }
@@ -113,10 +113,10 @@ if( ! class_exists( 'logSetupWDS') )
 
     }
 
-    new logSetupWDS;
+    new logSetupD1G1;
 
 }
 //přidáme další soubory
-include_once( WDS_BRANDPATH . 'components/log-content.php'); 
+include_once( D1G1_BRANDPATH . 'components/log-content.php'); 
 //use log\functions;
-include_once( WDS_BRANDPATH . 'framework/log/log-functions.php'); 
+include_once( D1G1_BRANDPATH . 'framework/log/log-functions.php'); 

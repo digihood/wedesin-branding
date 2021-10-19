@@ -74,7 +74,7 @@ jQuery(function ($) {
 //TODO #5 Zprovoznění scryptu pro více formulářových polí
 //TODO #6
 jQuery(document).ready(function($){
-  $('#wds-media-upload').click(function(e) {
+  $('#d1g1-media-upload').click(function(e) {
       e.preventDefault();
       var image = wp.media({ 
           title: 'Upload Image',
@@ -89,7 +89,7 @@ jQuery(document).ready(function($){
           console.log(uploaded_image);
           var image_url = uploaded_image.toJSON().url;
           // Let's assign the url value to the input field
-          $('#wds-media-url').val(image_url);
+          $('#d1g1-media-url').val(image_url);
       });
   });
 });

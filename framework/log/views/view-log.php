@@ -1,5 +1,5 @@
 <?php 
-//use components\log2\wedesinLogSettings;
+//use components\log2\d1g1LogSettings;
 ?>
 
 <div class="wrap">
@@ -13,7 +13,7 @@
                 
                 /*$idoklad_log = iDoklad_Log::get_instance();
                 echo $idoklad_log->render_table();*/
-                $settings = new \pluginbrandslug\framework\log_functions\wedesinLog;
+                $settings = new \pluginbrandslug\framework\log_functions\d1g1Log;
                 echo $settings->get_print_log($viewfile);
               
                 ?>

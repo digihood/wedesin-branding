@@ -9,11 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-if( ! class_exists( 'WdsSendEmailBrand' ) )
+if( ! class_exists( 'd1g1SendEmailBrand' ) )
 
 {
 
-    class WdsSendEmailBrand
+    class d1g1SendEmailBrand
     {
 
       private $background;
@@ -30,10 +30,10 @@ if( ! class_exists( 'WdsSendEmailBrand' ) )
         $this->settings_css();
       }
       public function settings_css() {
-        $this->background = get_option('_wds_WDSBRAND_brand_emails_settings_footer_bg_color','#414b55') ;
+        $this->background = get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_bg_color','#414b55') ;
         $this->fontColorText = '#151B24';
         $this->fontColorLink = '#03acff';
-        $this->fontColorFooter = get_option('_wds_WDSBRAND_brand_emails_settings_footer_color','#03acff');
+        $this->fontColorFooter = get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_color','#03acff');
         $this->fontSize = '12px';
         $this->lineHeight = '16px';
         $this->fontFamily = 'Arial, sans-serif';
@@ -75,8 +75,8 @@ if( ! class_exists( 'WdsSendEmailBrand' ) )
         $body="",
         $footer=""
         ){
-          $img_default = WDS_BRANDURL . 'assets/img/wedesin-logo-cz.png';
-          $img = (get_option('_wds_WDSBRAND_brand_emails_settings_header_logo') ? get_option('_wds_WDSBRAND_brand_emails_settings_header_logo') : $img_default);
+          $img_default = D1G1_BRANDURL . 'assets/img/d1g1-logo-cz.png';
+          $img = (get_option('_d1g1_D1G1BRAND_brand_emails_settings_header_logo') ? get_option('_d1g1_D1G1BRAND_brand_emails_settings_header_logo') : $img_default);
 
           $return ='<!DOCTYPE html>
               <html lang="cs">

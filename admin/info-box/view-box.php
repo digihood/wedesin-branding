@@ -2,16 +2,16 @@
 /**
  * Zobrazení Rest API dat v adminu
  * 
- * @author Wedesin
+ * @author digihood
  */ 
 namespace pluginbrandslug\admin\info_box\view;
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
-if( ! class_exists( 'viewAdminBoxWDS' ) )
+if( ! class_exists( 'viewAdminBoxD1G1' ) )
 {
     
-	class viewAdminBoxWDS
+	class viewAdminBoxD1G1
 	{
 
 		public function __construct()
@@ -23,11 +23,11 @@ if( ! class_exists( 'viewAdminBoxWDS' ) )
 		 *
 		 * @param none
 		 * 
-		 * @author Wedesin
+		 * @author digihood
 		 * @return string
 		 */
 	
-        public function wedesin_dashboard_widget_display($type){
+        public function d1g1_dashboard_widget_display($type){
 			$this->display_box($type);
 		}
 		/**
@@ -35,23 +35,23 @@ if( ! class_exists( 'viewAdminBoxWDS' ) )
 		 *
 		 * @param type (default: plugins)
 		 * 
-		 * @author Wedesin
+		 * @author digihood
 		 * @return string
 		 */
 
 		private function display_box($type="plugins") { 
 			$lang = get_bloginfo('language');
-			$rApi = new \pluginbrandslug\admin\info_box\call\getRestApiRequestWDS;
+			$rApi = new \pluginbrandslug\admin\info_box\call\getRestApiRequestD1G1;
 			$data = $rApi->get_data($lang, $type);
             if($data) {
 				echo '<div class="card'.($type == 'plugins' ? ' info' : '').'">';
 
 					if ($type == 'pluginsnews'){ 
-						echo 	'<h2 style="margin-top:0; line-height: 24px">' .__("Novinky na webu WeDesIn", WDS_BRANDING).'</h2>';
+						echo 	'<h2 style="margin-top:0; line-height: 24px">' .__("Novinky na webu Wedesin", D1G1_BRANDING).'</h2>';
 					}
 					?>
 
-					<div class="wedesin-widget">
+					<div class="d1g1-widget">
 					<?php 
 						foreach ($data as $post) {
 							if($post){
@@ -72,6 +72,6 @@ if( ! class_exists( 'viewAdminBoxWDS' ) )
 }
 
 if( is_admin() )
-	new \pluginbrandslug\admin\info_box\view\viewAdminBoxWDS;
+	new \pluginbrandslug\admin\info_box\view\viewAdminBoxD1G1;
 
 

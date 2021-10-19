@@ -6,11 +6,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-if( ! class_exists( 'wedesinLog' ) )
+if( ! class_exists( 'd1g1Log' ) )
 
 {
 
-	class wedesinLog
+	class d1g1Log
 
 	{
 		//hook functions
@@ -24,12 +24,12 @@ if( ! class_exists( 'wedesinLog' ) )
      *
      * @param none
      * 
-     * @author Wedesin
+     * @author digihood
      * @return true/false
      */ 
     public function add_log($file, $event, $message, $note="" ) { 
-        $settings = new \logSetupWDS;
-        $folder = $settings->get_wds_log_folder();
+        $settings = new \logSetupD1G1;
+        $folder = $settings->get_d1g1_log_folder();
         $filename = $folder . '/'. $file . '.log';
         if(is_array($message) || is_object($message )) {
             $message = json_encode($message); 
@@ -47,13 +47,13 @@ if( ! class_exists( 'wedesinLog' ) )
      *
      * @param none
      * 
-     * @author Wedesin
+     * @author digihood
      * @return true/false
      */ 
     public function get_print_log($file) {
       $type = isset($_GET['tab']) ? $_GET['tab'] : 'default';
-      $settings = new \logSetupWDS;
-      $folder = $settings->get_wds_log_folder();
+      $settings = new \logSetupD1G1;
+      $folder = $settings->get_d1g1_log_folder();
       $filename = $folder . '/'. $file . '.log';
       if ($filename) {
           $current = file_get_contents($file);
@@ -66,6 +66,6 @@ if( ! class_exists( 'wedesinLog' ) )
   }  
   }
 
-	new \pluginbrandslug\framework\log_functions\wedesinLog;
+	new \pluginbrandslug\framework\log_functions\d1g1Log;
 
 }

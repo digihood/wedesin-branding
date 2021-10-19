@@ -4,16 +4,16 @@
  * Vlastní styly pluginu
  *
  * 
- * @author Wedesin
+ * @author digihood
  */ 
 
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-if ( !class_exists('CustomScriptsStylesWDS') ) {
+if ( !class_exists('CustomScriptsStylesD1G1') ) {
 
-    class CustomScriptsStylesWDS {
+    class CustomScriptsStylesD1G1 {
 
         /**
          * 
@@ -34,7 +34,7 @@ if ( !class_exists('CustomScriptsStylesWDS') ) {
             add_action( 'wp_footer', [$this, 'admin_bar_branding']);
 
             //add login style
-			add_action( 'login_enqueue_scripts', [$this,'wedesin_login_stylesheet'] );
+			add_action( 'login_enqueue_scripts', [$this,'d1g1_login_stylesheet'] );
         
         }
     
@@ -43,14 +43,14 @@ if ( !class_exists('CustomScriptsStylesWDS') ) {
 		 *
 		 * @param none
 		 * 
-		 * @author Wedesin
+		 * @author digihood
 		 * @return echo/false
 		 */ 
         public function add_admin_scripts( ) {
     
             //Register style
-            $admin_style = filemtime(  WDS_BRANDPATH . 'assets/styles/wedesin-admin.css' );
-            wp_enqueue_style( 'wedesin-admin', WDS_BRANDURL . 'assets/styles/wedesin-admin.css', array( ), $admin_style, 'all' );
+            $admin_style = filemtime(  D1G1_BRANDPATH . 'assets/styles/d1g1hood-admin.css' );
+            wp_enqueue_style( 'd1g1-admin', D1G1_BRANDURL . 'assets/styles/d1g1hood-admin.css', array( ), $admin_style, 'all' );
                         
         }
 
@@ -59,14 +59,14 @@ if ( !class_exists('CustomScriptsStylesWDS') ) {
 		 *
 		 * @param none
 		 * 
-		 * @author Wedesin
+		 * @author digihood
 		 * @return echo/false
 		 */ 
 		public function admin_bar_branding( ) { ?>
 			<style>
 			#wpadminbar #wp-admin-bar-wp-logo>.ab-item .ab-icon:before {
 				content: ' ' !important;
-				background: url( <?php echo plugins_url(); ?>/wedesin-branding/assets/img/wedesin-logo-icon.png) no-repeat !important;
+				background: url( <?php echo plugins_url(); ?>/wedesin-branding/assets/img/d1g1-logo-icon.png) no-repeat !important;
 				width: 22px !important;
 				height: 22px !important;
 				display: block;
@@ -86,12 +86,12 @@ if ( !class_exists('CustomScriptsStylesWDS') ) {
 		}
 
         //add login stylesheet
-		public function wedesin_login_stylesheet() { 
+		public function d1g1_login_stylesheet() { 
 
-			if ( is_eng_wds( ) ) {
-				$img_url =  WDS_BRANDURL . '/assets/img/wedesin-logo-en.png';
+			if ( is_eng_d1g1( ) ) {
+				$img_url =  D1G1_BRANDURL . '/assets/img/d1g1-logo-en.png';
 			} else {
-				$img_url =  WDS_BRANDURL . '/assets/img/wedesin-logo-cz.png';
+				$img_url =  D1G1_BRANDURL . '/assets/img/d1g1-logo-cz.png';
 			}
 
 			?>
@@ -203,6 +203,6 @@ if ( !class_exists('CustomScriptsStylesWDS') ) {
 		<?php } 
     
     }
-    new CustomScriptsStylesWDS;
+    new CustomScriptsStylesD1G1;
 
 }

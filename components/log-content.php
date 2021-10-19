@@ -5,8 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 
 }
-if (!class_exists('wedesinLogSettings')){
-        class wedesinLogSettings
+if (!class_exists('d1g1LogSettings')){
+        class d1g1LogSettings
         {
             public $LogFile;
 
@@ -15,8 +15,8 @@ if (!class_exists('wedesinLogSettings')){
             {
                 //spuštní
                 add_action('admin_init', [$this, 'get_log_file'] );
-                add_action('wds_plugin_log_tab_content', [$this, 'add_tab'] );
-                add_action('wds_plugin_log_header_content', [$this, 'add_header'] );
+                add_action('d1g1_plugin_log_tab_content', [$this, 'add_tab'] );
+                add_action('d1g1_plugin_log_header_content', [$this, 'add_header'] );
                 add_action( 'init',  [$this, 'test__log'] );
 
             }
@@ -25,11 +25,11 @@ if (!class_exists('wedesinLogSettings')){
              *
              * @param none
              * 
-             * @author Wedesin
+             * @author digihood
              * @return true/false
              */ 
             public function add_log($event, $message, $note="") {
-                $log = new \pluginbrandslug\framework\log_functions\wedesinLog;
+                $log = new \pluginbrandslug\framework\log_functions\d1g1Log;
                 $file = $this->get_plugin_folder_name();
                 $log->add_log( $file, $event, $message, $note);
             }
@@ -39,7 +39,7 @@ if (!class_exists('wedesinLogSettings')){
              *
              * @param none
              * 
-             * @author Wedesin
+             * @author digihood
              * @return true/false
              */ 
             public function test__log() {
@@ -55,14 +55,14 @@ if (!class_exists('wedesinLogSettings')){
             }
 
             public function get_log_file($file="") {
-                $settings= new \logSetupWDS;
+                $settings= new \logSetupD1G1;
                 if (empty($file)) $file = $this->get_plugin_folder_name();
-                $this->LogFile = $settings->get_wds_log_folder() .'/'.$file.'.log';
+                $this->LogFile = $settings->get_d1g1_log_folder() .'/'.$file.'.log';
             }
             public function the_log_file($file="") {
-                $settings= new \logSetupWDS;
+                $settings= new \logSetupD1G1;
                 if (empty($file)) $file = $this->get_plugin_folder_name();
-                return $this->LogFile = $settings->get_wds_log_folder() .'/'.$file.'.log';
+                return $this->LogFile = $settings->get_d1g1_log_folder() .'/'.$file.'.log';
             }
 
             public function get_plugin_folder_name(){
@@ -80,14 +80,14 @@ if (!class_exists('wedesinLogSettings')){
              *
              * @param none
              * 
-             * @author Wedesin
+             * @author digihood
              * @return true/false
              */ 
             public function add_header( ) { 
                 $default_tab = null;
                 $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
                 ?>
-                <a href="?page=wds-logs&tab=<?= $this->get_plugin_folder_name() ?>" class="nav-tab <?= ($tab===$this->get_plugin_folder_name() ? 'nav-tab-active' : '')?>">
+                <a href="?page=d1g1-logs&tab=<?= $this->get_plugin_folder_name() ?>" class="nav-tab <?= ($tab===$this->get_plugin_folder_name() ? 'nav-tab-active' : '')?>">
                     <?= $this->get_plugin_folder_name() ?>
                 </a>
             <?php }
@@ -97,7 +97,7 @@ if (!class_exists('wedesinLogSettings')){
              *
              * @param none
              * 
-             * @author Wedesin
+             * @author digihood
              * @return true/false
              */ 
          
@@ -114,7 +114,7 @@ if (!class_exists('wedesinLogSettings')){
              *
              * @param none
              * 
-             * @author Wedesin
+             * @author digihood
              * @return true/false
              */ 
             public function is_log_file_exists($file="") { 
@@ -128,7 +128,7 @@ if (!class_exists('wedesinLogSettings')){
              *
              * @param none
              * 
-             * @author Wedesin
+             * @author digihood
              * @return true/false
              */ 
             public function the_log_excerpt_admin($file="") { 
@@ -137,11 +137,11 @@ if (!class_exists('wedesinLogSettings')){
                 if($this->is_log_file_exists($file)) {
                     $viewfile = $fileLog;
                     if ($_GET['tab'] == $this->get_plugin_folder_name() ) { 
-                        include_once( WDS_BRANDPATH . 'framework/log/views/view-log.php' );
+                        include_once( D1G1_BRANDPATH . 'framework/log/views/view-log.php' );
 
                     }
                 }
             }
         }
-        new   \pluginbrandslug\component\log_content\wedesinLogSettings;
+        new   \pluginbrandslug\component\log_content\d1g1LogSettings;
     }
