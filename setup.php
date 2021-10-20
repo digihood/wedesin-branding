@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Plugin Name: WeDesIn Branding(D1G1)
+* Plugin Name: WeDesIn Branding
 * Description: WeDesIn branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
 * Version: 2.2.0
 * Author: WeDesIn
