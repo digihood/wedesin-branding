@@ -72,9 +72,9 @@ if (!class_exists('submenuContentD1G1')) {
                 ?>
                 <div class="row">
                     <div class="column content">
-                        <nav class="nav-tab-wrapper">
-                            <a href="?page=d1g1_brand&tab=send_report" class="nav-tab <?php if ($tab === 'send_report') : ?>nav-tab-active<?php endif; ?>"> <?php echo d1g1_get_svg(D1G1_BRANDURL . "assets/icons/upload-cloud-line.svg"); ?>Odeslat Report</a>
+                        <nav class="nav-tab-wrapper"> 
                             <a href="?page=d1g1_brand&tab=updates_list" class="nav-tab <?php if ($tab === 'updates_list') : ?>nav-tab-active<?php endif; ?>"> <?php echo d1g1_get_svg(D1G1_BRANDURL . "assets/icons/calendar-line.svg"); ?>Přehled aktualizací</a>
+                                <a href="?page=d1g1_brand&tab=send_report" class="nav-tab <?php if ($tab === 'send_report') : ?>nav-tab-active<?php endif; ?>"> <?php echo d1g1_get_svg(D1G1_BRANDURL . "assets/icons/upload-cloud-line.svg"); ?>Odeslat Report</a>
                             <?php
                                 $mailingForm = $builder->get_fields_form("brand_emails_settings");
                             if (!empty($mailingForm)){

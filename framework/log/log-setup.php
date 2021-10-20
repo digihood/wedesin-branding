@@ -22,8 +22,8 @@ if( ! class_exists( 'logSetupD1G1') )
         public function admin_page_d1g1_log() {
             add_submenu_page(
                 'd1g1-plugins',                              
-                    __( 'Digihood Log', TM_PLUGSEC ),                    
-                    __('D1G1 Log', TM_PLUGSEC),               
+                    __( 'WDS Log', TM_PLUGSEC ),                    
+                    __('WDS Log', TM_PLUGSEC),               
                     'manage_options',                           
                     'd1g1-logs',                              
                     array( $this, 'my_admin_page_contents' )

@@ -28,8 +28,8 @@ if( ! class_exists( 'mainMenuD1G1' ) )
 
             if (!isset( $GLOBALS['admin_page_hooks']['d1g1-plugins']) || empty( $GLOBALS['admin_page_hooks']['d1g1-plugins'] ) ) {
                 add_menu_page(
-                    __( 'D1G1 Plugins', TM_PLUGSEC ),
-                    __( 'D1G1 Plugins', TM_PLUGSEC ),
+                    __( 'WDS Plugins', TM_PLUGSEC ),
+                    __( 'WDS Plugins', TM_PLUGSEC ),
                     'manage_options',
                     'd1g1-plugins',
                     array( $this, 'my_admin_page_contents' ),
