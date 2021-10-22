@@ -1,5 +1,5 @@
 <?php
-
+namespace pluginbrandslug;
 /**
 * Plugin Name: WeDesIn Branding
 * Description: WeDesIn branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
@@ -65,12 +65,12 @@ $DemandingPlugin = new DemandingPlugin();
 ********************************/
 
 
-include_once( D1G1_BRANDPATH . 'framework/autoload.php'); 
+include_once( D1G1_BRANDPATH . 'autoload.php'); 
 
 
 
 // Nastavení utomatické kontroly auktualizací 
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+$myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
 	'https://github.com/WeDesIn/wedesin-branding',
 	__FILE__,
 	'wedesin-branding'

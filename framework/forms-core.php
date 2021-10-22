@@ -5,43 +5,28 @@ if (!defined('ABSPATH')) {
 }
 
 if (!class_exists('D1G1_Front_Form')) {
-    class D1G1_Front_Form
+    class D1G1_Front_Form 
     {
 
         private $fields;
         private $session;
         private $prefix;
         private $form_ID;
+        private $validation;
 
         public function __construct($field_list = [])
         {
             $this->fields = $field_list;
             $this->prefix = '_d1g1_'.D1G1_BRANDING.'_';
 
-            add_action('wp_ajax_d1g1_frontend_form_dropzone_handle_dropped_files', [$this, 'handle_dropped_files_callback'], 10, 1);
-            add_action('wp_ajax_nopriv_d1g1_frontend_form_dropzone_handle_dropped_files', [$this, 'handle_dropped_files_callback'], 10, 1);
-
-            add_action('wp_ajax_d1g1_frontend_form_dropzone_handle_deleted_files', [$this, 'handle_deleted_files_callback'], 10, 1);
-            add_action('wp_ajax_nopriv_d1g1_frontend_form_dropzone_handle_deleted_files', [$this, 'handle_deleted_files_callback'], 10, 1);
-
-            add_action('wp_ajax_d1g1_frontend_form_dropzone_get_files', [$this, 'get_files_callback'], 10, 1);
-            add_action('wp_ajax_nopriv_d1g1_frontend_form_dropzone_get_files', [$this, 'get_files_callback'], 10, 1);
+        
             //ukládání metadat do kuponu (licence)
-            //add_action('save_post', [$this, 'save_cpt_meta']);
+            add_action('save_post', [$this, 'save_cpt_meta']);
 
             $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
-            if(session_status() == PHP_SESSION_NONE){
-                session_start();
-            }
-           
-           
+            $this->validation = new \pluginbrandslug\framework\form_validation\D1G1validform;
+            
         }
-        function __destruct() {
-            if(!session_status() == PHP_SESSION_NONE){
-                session_destroy();
-            }
-            }
-
 
         private function check_if_fields_has($var)
         {
@@ -80,18 +65,11 @@ if (!class_exists('D1G1_Front_Form')) {
                             <form method="post" id="<?= $formID ?>_form" class="d1g1-form" action="<?php // the_permalink(); 
                                                                                                                     ?>" enctype="multipart/form-data" novalidate data-abide>
                                 <?php wp_nonce_field( $formID, 'nonce_' . $formID ); ?>
-                                <input type="hidden" value="<?=$formID?>" name="form_id_d1g1" />     
-                                <input type="hidden" value="<?= D1G1_BRANDING ?>" name="plugin_id" />  
-                                <input type="hidden" value="<?= D1G1_BRANDING?>" name="plugin_id_d1g1" />                                                        
-                                <?php $this->get_form_fields($formID); 
-                                if ($formID == 'update_report') {
-                                  
-                                    $button_text = 'Odeslat hlášení';
-                                }else {
-                                    $button_text ="";
-                                }
-                                
-                                submit_button($button_text); ?>
+                                <input type="hidden" value="<?=$formID?>" name="form_id_d1g1" />
+                                <input type="hidden" value="<?= D1G1_BRANDING?>" name="plugin_id_d1g1" />                                                             
+                                <?php $this->get_form_fields($formID); ?>
+
+                                <?php  submit_button(); ?>
 
                             </form>
                         </div>
@@ -173,9 +151,9 @@ if (!class_exists('D1G1_Front_Form')) {
          */
         public function get_form_fields($formID = null)
         {
-
+           
             if (empty($this->fields)) {
-                die('Fields must be set.');
+                die('Fields must be set..');
             }
 
             // get index
@@ -193,18 +171,23 @@ if (!class_exists('D1G1_Front_Form')) {
                 die('Fields contain more than 1 featured image.');
             }
             
-           
             $this->form_ID = $formID;
             $validation_data = $this->session->getSession( $formID.'_validation' );
-            if (isset($validation_data['allvalid']) && !$validation_data['allvalid']) {
-                ?>
-                <div class="notice notice-error d1g1-notice is-dismissible">
-                    <?php _e('Nastavení se nepodařilo uložit. Formulář obsahuje chyby. Zkontrolujte správnost vyplnění následujících položek.', TM_PLUGSEC); ?>
-                    <button type="button" class="notice-dismiss"><span class="screen-reader-text">Skrýt toto upozornění.</span></button>
-                </div>
-                <?php
+            $save_progress = $this->session->getSession( $formID.'_save' );
+            if($this->fields[0]['save_option'] !== 'send_mail'){
+                if (isset($validation_data['allvalid']) && !$validation_data['allvalid']) {
+            
+
+                // $this->validation->d1g1_notice_form('error');
+
+                } else if ( $save_progress == 'success') {
+                
+                // $this->validation->d1g1_notice_form('success');
+
+                }
             }
-            //preprint($validation_data);
+            
+           
             foreach ($this->fields as $section) {
 
                 $section_headline = isset($section['headline']) ? $section['headline'] : false;
@@ -215,30 +198,6 @@ if (!class_exists('D1G1_Front_Form')) {
 
                 if ($section_headline) echo '<h2>' . $section_headline . '</h2>';
                 if ($section_description) echo '<p>' . $section_description . '</p>';
-              
-              
-                        /**
-                         * 	$idfield = isset($section['id']) ? $section['id'] : false;
-
-                        *      if(isset($_SESSION[''.$idfield.'_save']) && $_SESSION[''.$idfield.'_save'] == 'success' ){
-                        *     echo '<div class="notice notice-success d1g1-notice is-dismissible">
-                        *    <p>Nastavení bylo uloženo.</p>
-                        *   <button type="button" class="notice-dismiss"><span class="screen-reader-text">Skrýt toto upozornění.</span></button>
-                        *</div>';
-                        *    }else 
-                        *   {
-                        *    echo '           <div class="notice notice-error d1g1-notice is-dismissible">
-                        *    <p>Nastavení se nepodařilo uložit. Zkontrolujte správnost vyplnění následujících položek:</p>
-                        *    <ul>
-                        *        <li>položka 1</li>
-                        *        <li>položka 2</li>
-                        *        <li>položka 3</li>
-                        *    </ul>
-                        *    <button type="button" class="notice-dismiss"><span class="screen-reader-text">Skrýt toto upozornění.</span></button>
-                        *</div>';
-                        *   }
-                        */
-                
 
                 //Pole formuláře v sekcích
                 foreach ($section as $item => $field) {
@@ -247,7 +206,7 @@ if (!class_exists('D1G1_Front_Form')) {
                         echo '<div class="row xl">';
                         $row = $field;
                         foreach ($row as $column) {
-
+                           
                             //preprint($column);
                             echo '<div class="column">';
 
@@ -265,7 +224,7 @@ if (!class_exists('D1G1_Front_Form')) {
                                     if ($type == 'hidden') {
 
                                         $value = isset($subfield['value']) ? $subfield['value'] : $this->get_data($name);
-                                        $this->get_input_html($type, $name, $value, $subfield, $is_valid);
+                                        $this->get_input_html($type, $name, $value, $subfield, $is_valid, $this->form_ID);
                                     } else { 
                                         $is_valid = isset($validation_data[$name]['valid']) ? $validation_data[$name]['valid'] : $is_valid; ?>
                                         <div class="form-item <?php echo $name; ?>">
@@ -278,7 +237,8 @@ if (!class_exists('D1G1_Front_Form')) {
                                             } else {
                                                 $value = "";
                                             }
-                                            $this->get_input_html($type, $name, $value, $subfield, $is_valid); ?>
+                                            //preprint($value);
+                                            $this->get_input_html($type, $name, $value, $subfield, $is_valid, $this->form_ID); ?>
 
                                         </div>
 
@@ -295,7 +255,6 @@ if (!class_exists('D1G1_Front_Form')) {
                     }
                     $type = isset($field['type']) ? $field['type'] : false;
                     $name = isset($field['name']) ? $field['name'] : false;
-                    $idfield = isset($field['id']) ? $field['id'] : false;
 
                     if ($name && $type) {
 
@@ -304,7 +263,7 @@ if (!class_exists('D1G1_Front_Form')) {
                         //nejdřív přidáme skrytá pole
                         if ($type == 'hidden') {
                             $value = isset($field['value']) ? $field['value'] : $this->get_data($name);
-                            $this->get_input_html($type, $name, $value, $field, $is_valid);
+                            $this->get_input_html($type, $name, $value, $field, $is_valid, $this->form_ID);
                         } else { 
                             $is_valid = isset($validation_data[$name]['valid']) ? $validation_data[$name]['valid'] : $is_valid; ?>
 
@@ -320,7 +279,7 @@ if (!class_exists('D1G1_Front_Form')) {
                                 } else {
                                     $value = "";
                                 }
-                                $this->get_input_html($type, $name, $value, $field, $is_valid); ?>
+                                $this->get_input_html($type, $name, $value, $field, $is_valid, $this->form_ID); ?>
 
                             </div>
                         <?php
@@ -334,36 +293,11 @@ if (!class_exists('D1G1_Front_Form')) {
             $this->session->removeSession($formID . '_validation');
         }
 
-        /*
-        public function get_field_name($name, $saveAs = null, $type = null)
+      
+
+        public function get_input_html($type, $name, $value, $args = [], $is_valid = true, $form)
         {
-
-            $name = $type == 'gallery' ? 'gallery_' . $name : $name;
-
-            // switch to get correct input name
-            switch ($saveAs) {
-                case 'meta':
-                    $newName = 'd1g1_meta[' . $name . ']';
-                    break;
-                case 'taxonomy':
-                    $newName = 'd1g1_taxonomy[' . $name . ']';
-                    break;
-                case 'post_title':
-                case 'post_content':
-                case 'post_excerpt':
-                    $newName = $saveAs;
-                    break;
-                default:
-                    $newName = $name;
-            }
-
-            return $newName;
-        }
-        */
-
-
-        public function get_input_html($type, $name, $value, $args = [], $is_valid = true)
-        {
+            $gethtml = new \pluginbrandslug\framework\gethtmlform\d1g1GetHtmlform;
             $multiple = isset($args['multiple']) && $args['multiple'] == true ? 'multiple' : false;
             $atts = isset($args['required']) && $args['required'] == true ? 'required="required"' : '';
             $atts .= $multiple ? ' multiple' : '';
@@ -428,334 +362,51 @@ if (!class_exists('D1G1_Front_Form')) {
                 case 'password':
                 case 'text':
                 case 'hidden':
-
-                    $id_val = str_replace(']', '', str_replace('[', '', $name));
-
-                    if ($description) echo '<p>' . $description . '</p>';
-
-                    if ($type != "hidden" && !$is_valid) {
-
-                        $er_mess = __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain');
-                        if ($type == "email") $er_mess = __('Prosíme, zadejte platný email.', 'textdomain');
-                        echo '<p class="form-error">' . $er_mess . '</p>';
-                    }
-
-                    echo '<p>' . $floating_label_start;
-
-                    echo '<input type="' . $type . '" value="' . $value . '" name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" id="' . $id_val . '"/>';
-                    if ($label)  echo '<label for="' . $name . '">' . $label . $required . '</label>';
-
-                    echo $floating_label_end . '</p>';
-
-                    if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
+                    
+                    $gethtml->getcaseform( $type ,$name, $value, $args , $is_valid);
 
                     break;
 
                 case 'select':
-                    $options = isset($args['options']) ? $args['options'] : [];
-
-
-
-                    if (!empty($options)) {
-
-                        if ($description) echo '<p>' . $description . '</p>';
-
-                        if (!$is_valid) {
-                            echo '<span class="form-error">' . __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain') . '</span>';
-                        }
-
-                        echo $floating_label_start;
-
-                        echo '<select name="' . $name . '" ' . $atts . ' class="selectize ' . $class . '" placeholder="' . $placeholder . '" id="' . $name . '">';
-                        foreach ($options as $option_key => $option_name) {
-                            echo '<option value="' . $option_key . '" ' . ($option_key == $value ? 'selected="selected"' : '') . '>' . $option_name . '</option>';
-                        }
-                        echo '</select>';
-
-                        if ($label)  echo '<label for="' . $name . '">' . $label . $required . '</label>';
-
-                        echo $floating_label_end;
-
-                        if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
-
-                        //todo #3 Selectize.js zprovoznění vloženého scryptu s možnostmi výběru
-                        $selectize = isset($args['selectize']) ? $args['selectize'] : [];
-                        if (!empty($selectize)) {
-                            
-                            echo '<script>$("#' . $name . '").selectize({';
-                            
-                            foreach ($selectize as $selectize_key => $selectize_value) {
-                                echo $selectize_key . ': ' . $selectize_value . ',';
-                            }
-
-                            echo '});</script>';
-
-                        }
-
-                        
-                    }
+                    $gethtml->getcaseform( $type,$name, $value, $args , $is_valid);
                     break;
 
-                /*case 'gallery':
-                    echo '<div id="media-uploader-' . $name . '" data-target="' . $name . '" data-limit="' . $limit . '" class="dropzone ' . $class . '"></div>';
-                    echo '<input type="hidden" name="' . $name . '" value="' . $value . '" ' . $atts . ' />';
-
-                    if (!empty($placeholder)) echo '<p>' . $placeholder . '</p>';
-
-                    
-                    tady message sama nevyskočí
-                    if ( $is_required ) {
-                        echo '<span class="form-error">' . __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain') .'</span>';
-                    }
-                    
-                    break;*/
-
                 case 'url':
-
-                    if ($description) echo '<p>' . $description . '</p>';
-
-                    if (!$is_valid) {
-                        echo '<span class="form-error">' . __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain') . '</span>';
-                    }
-
-                    echo '<div class="input-group">';
-                    echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDURL . "assets/icons/link-line.svg") . '</span>';
-                    echo  $floating_label_start;
-
-                    echo '<input type="url" value="' . $value . '" name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" />';
-
-                    if ($label)  echo '<label for="' . $name . '">' . $label . $required . '</label>';
-
-                    echo $floating_label_end ;
-                    echo '</div>';
-
-                    if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
-
+                    $gethtml->getcaseform($type,$name, $value, $args , $is_valid );
                     break;
 
                 case 'image':
-                    //echo '<div id="media-uploader-' . $name . '" data-target="' . $name . '" data-limit="1" class="dropzone ' . $class . '"></div>';
-                    //echo '<input type="hidden" name="' . $name . '" value="' . $value . '" ' . $atts . ' />';
-                    //if (!empty($placeholder)) echo '<p>' . $placeholder . '</p>';
-
-                    if ($description) echo '<p>' . $description . '</p>';
-
-                    if (!$is_valid) {
-                        echo '<span class="form-error">' . __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain') . '</span>';
-                    }
-                    
-                    echo '<div class="input-group">';
-                    echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDURL . "assets/icons/link-line.svg") . '</span>';
-                    echo  $floating_label_start;
-
-                    echo '<input type="url" id="d1g1-media-url" value="' . $value . '" name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" />';
-
-                    if ($label)  echo '<label for="' . $name . '">' . $label . $required . '</label>';
-
-                    echo $floating_label_end ;
-
-                    echo '<a href="#" id="d1g1-media-upload" class="button">' . d1g1_get_svg(D1G1_BRANDURL . "assets/icons/upload-cloud-line.svg") . 'Nahrát</a>';
-
-
-                    echo '</div>';
-
-                    if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
-                    
-                    if ($value) {
-                        echo '<p><div class=upload-img-preview>';
-                        echo '<img src="' . $value . '" width="300" height="200" alt="alt">';
-                        echo '<a href="#" class="button white icon">' . d1g1_get_svg(D1G1_BRANDURL . "assets/icons/trash-line.svg") . 'Odstranit</a>';
-                        echo '</div></p>';
-                    }
+                    $gethtml->getcaseform( $type,$name, $value, $args , $is_valid );
 
                     break;
 
                 case 'radio':
                 case 'radio_large':
-
-                    $options = isset($args['options']) ? $args['options'] : [];
-
-                    if ($type == 'radio_large') {
-                        $class = 'radio-large ' . $class;
-                    }
-
-                    if (!empty($options)) {
-
-                        if ($description) echo '<p>' . $description . '</p>';
-
-                        if (!$is_valid) {
-                            echo '<span class="form-error">' . __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain') . '</span>';
-                        }
-
-                        echo '<div class="radio-wrap">';
-
-                        //echo '<input type="' . $type . '" value=""  name="' . $name .'" checked class="hide"> ';
-                        foreach ($options as $option_key => $option_name) {
-                            if ($option_key != '' && $option_name != '') {
-                                $checked = $option_key == $value ? 'checked' : '';
-
-                                echo '<label class="radio ' . $class . '">';
-                                echo '<input type="radio" value="' . $option_key . '"  name="' . $name . '" ' . $checked . ' ' . $atts . '> ';
-                                echo '<span class="checkmark"></span>';
-
-                                if ($type == 'radio_large') echo '<h3>';
-                                echo is_array($option_name)?  $option_name[0] :  $option_name ;
-                                if ($type == 'radio_large') echo '</h3>';
-                                echo is_array($option_name)? '<p class="help-text">' . $option_name[1] . '</p>' : '' ;
-
-                                echo '</label>';
-                            }
-                        }
-
-                        echo '</div>';
-
-                        if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
-
-                    }
+                  $gethtml->getcaseform( $type,$name, $value, $args, $is_valid  );
+                   
                     break;
 
                 case 'checkbox':
                 case 'checkbox_large':
-                    //$checked = (!empty($value) ? 'checked' : "");
-                    if ($type == 'checkbox_large') {
-                        $class = 'checkbox-large ' . $class;
-                    }
-                    $options = isset($args['options']) ? $args['options'] : [];
-                    $value = ($this->get_data($name) ? $this->get_data($name) : 0);
-                    if (empty($options)){
-                        $options[$name] = $label;
-                    }
-                    if ($label && $options)  {
-                        foreach ($options as $val => $text) {
-                            $checked = ($value && in_array($val,$value) ? 'checked' : "");
-                            echo '<label class="checkbox ' . $class . '">';
-                            echo '<input type="checkbox" value="' . $val . '"  name="' . $name. '['/*.$val*/ .']' . '" ' . $checked . ' ' . $atts . '>';
-                            echo '<span class="checkmark"></span>';
-                            if ($type == 'checkbox_large') echo '<h3>';
-                            echo  $text . $required ;
-                            if ($type == 'checkbox_large') echo '</h3>';
-                            echo '</label>';
-                        }
-                    };
-
-                    if (!$is_valid) {
-                        echo '<span class="form-error">' . __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain') . '</span>';
-                    }
-
-                    if ($description) echo '<p>' . $description . '</p>';
-
-                    if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
-
+                   $gethtml->getcaseform( $type,$name, $value, $args , $is_valid,$form);
                     break;
 
                 case 'switch':
-                    $value = ($this->get_data($name) == 1 ? 0 : 1);
-                    $checked = ($this->get_data($name) == 1 ? 'checked' : "");
-                    if ($label)  {
-                        echo '<label class="switch">';
-                        echo '<input type="checkbox" value="'.$value.'"  name="' . $name . '" ' . $checked . ' ' . $atts . '>';
-                        echo '<span class="slider"></span>';
-                        echo '<h3>' . $label . $required . '</h3></label>';
-                    };
-
-                    if (!$is_valid) {
-                        echo '<span class="form-error">' . __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain') . '</span>';
-                    }
-
-                    if ($description) echo '<p>' . $description . '</p>';
-
-                    if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
-
+                    $gethtml->getcaseform( $type,$name, $value, $args , $is_valid ,$form);
                     break;
 
                 case 'textarea':
-
-                    if ($description) echo '<p>' . $description . '</p>';
-
-                    if (!$is_valid) {
-                        echo '<span class="form-error">' . __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain') . '</span>';
-                    }
-
-                    echo $floating_label_start;
-
-                    echo '<textarea type="' . $type . '"  name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" />' . $value . '</textarea>';
-                    if ($label)  echo '<label for="' . $name . '">' . $label . $required . '</label>';
-                    echo $floating_label_end;
-
-                    if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
-
+                    $gethtml->getcaseform( $type,$name, $value, $args , $is_valid );
+                   
                     break;
 
                 case 'range':
-                    $max = isset($args['max']) ? 'max="' . $args['max'] . '" ' : '';
-                    $min = isset($args['min']) ? 'min="' . $args['min'] . '" ' : '';
-                    $step = isset($args['step']) ? 'step="' . $args['step'] . '" ' : '';
-                    $show_attr = isset($args['show_attr']) ? $args['show_attr'] : false;
-                    $unit = isset($args['unit']) ? $args['unit'] : '';
-                    $wrap_class = $unit ? 'val-right-large' : 'val-right';
-                    $wrap_class = $show_attr == true ? $wrap_class . ' show-attr' : $wrap_class;
-                    // přidání validace a uložení změny jednotek
-                    $validation_data = $this->session->getSession( $this->form_ID.'_validation' );
-                    $unit_value = ( $validation_data[$name.'_unit']['value'] ? $validation_data[$name.'_unit']['value'] : "");
-                    $unit_value = (empty($unit_value) && $this->get_data($name.'_unit') ? $this->get_data($name.'_unit') : $unit_value);
-
-
-                        if ($label) echo '<p>' . $label . $required . '</p>';
-    
-                        if (!$is_valid) {
-                            echo '<span class="form-error">' . __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain') . '</span>';
-                        }
-    
-                        if ($description) echo '<p>' . $description . '</p>';
-
-                        echo '<div class="range-wrap ' . $wrap_class . '">';
-                        echo '<input name="' . $name . '" type="range" class="range" ' . $max . $min . $step . ' value="' . $value . '">';
-                        if ($unit) echo '<div class="input-group">';
-                        echo '<input class="outval small" type="number" ' . $max . $min . $step . ' value="' . $value . '" source="[name=' . $name . ']">';
-                        if (is_array($unit)){
-                            echo '<div class="select-button small"><select name="'.$name.'_unit">';
-                            foreach ($unit as $unit_key => $unit_name) {
-                                echo '<option value="' . $unit_key . '" '.($unit_key == $unit_value ? 'selected="selected"' : '').'>' . $unit_name . '</option>';
-                            }
-                            echo '</select></div>';
-                        } else {
-                            echo '<span class="input-group-label">' . $unit . '</span>';
-                        }
-                        if ($unit) echo '</div>';
-                        echo '</div>';
-    
-                        if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
-    
+                    $gethtml->getcaseform( $type,$name, $value, $args , $is_valid );
                         break;
 
                 case 'editor':
-
-                    //$class = $name;
-                    $settings =   array(
-                        'wpautop' => true, // use wpautop?
-                        'media_buttons' => false, // show insert/upload button(s)
-                        'textarea_name' => $name, // set the textarea name to something different, square brackets [] can be used here
-                        'textarea_rows' => get_option('default_post_edit_rows', 10), // rows="..."
-                        'tabindex' => '',
-                        'editor_css' => '', //  extra styles for both visual and HTML editors buttons,
-                        'editor_class' => $class, // add extra class(es) to the editor textarea
-                        'teeny' => false, // output the minimal editor config used in Press This
-                        'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
-                        'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
-                    );
-
-                    if ($description) echo '<p>' . $description . '</p>';
-
-                    $editor_id = str_replace(']', '', str_replace('[', '', $name));
-                    wp_editor($value, $editor_id, $settings);
-
-                    if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
-
-                    if (isset($args['length']) && $args['length']) {
-                        echo "<p>Počet znaků: <span class='word-count' data-fieldname='" . $name . "' id='word-length-" . $name . "'>" . $this->valid_leght_string($value) . "</span>  / " . $args['length'] . '</p>';
-                    }
-
-                    //$editor_counter++;
+                    $gethtml->getcaseform( $type,$name, $value, $args , $is_valid );
+                  
                     break;
 
                 case 'date':
@@ -764,75 +415,23 @@ if (!class_exists('D1G1_Front_Form')) {
                 case 'month':
                 case 'week':
 
-                    /*if ($type == 'date') {
-                        $now = date("Y-m-d");
-                        (empty($value) ? $value = $now : '');
-                        $value = date("Y-m-d", strtotime($value));
-                    }*/
-
-                    $icon = $type == 'time' ? "assets/icons/clock-line.svg" : "assets/icons/calendar-line.svg";
-
-                    if ($description) echo '<p>' . $description . '</p>';
-                    
-                    if (!$is_valid) {
-                        echo '<span class="form-error">' . __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain') . '</span>';
-                    }
-
-                    echo '<div class="input-group">';
-                    echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDURL . $icon) . '</span>';
-                    echo $floating_label_start;
-                    echo '<input type="' . $type . '" id="' . $name . '" name="' . $name . '" value="' . $value . '">';
-                    if ($label)  echo '<label for="' . $name . '">' . $label . $required . '</label>';
-                    echo $floating_label_end;
-                    echo '</div>';
-
-                    if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
+                    $gethtml->getcaseform( $type,$name, $value, $args , $is_valid );
 
                     break;
 
                 case 'color':
 
-                    $default = isset($args['value']) ? $args['value'] : '';
-
-                    if ($label)  echo '<p>' . $label . $required . '</p>';
-                    if ($description) echo '<p>' . $description . '</p>';
-
-                    if (!$is_valid) {
-                        echo '<span class="form-error">' . __('Toto pole je vyžadované, prosíme, vyplňte ho.', 'textdomain') . '</span>';
-                    }
-
-                    echo '<p><input type="text" class="color-picker" data-alpha-enabled="true" data-default-color="' . $default . '" id="' . $name . '" name="' . $name . '" value="' . $value . '"></p>';
-
-                    if ($help_text) echo '<p class="help-text">' . $help_text . '</p>';
-
+                    $gethtml->getcaseform( $type,$name, $value, $args , $is_valid );
                     break;
 
                 case 'info_box':
                 case 'warning_box':
-                    // Box s informací nebo varováním
-
-                    $headline = isset($args['headline']) ? $args['headline'] : false;
-                    $warning = $type == 'warning_box' ? ' warning' : '';
-                    $icon = $type == 'warning_box' ? 'assets/icons/warning-standard-line.svg' : 'assets/icons/info-standard-line.svg';
-
-
-                    echo '<div class="info-block' . $warning . '">';
-
-                    echo '<span class="icon">' . d1g1_get_svg(D1G1_BRANDURL . $icon) . '</span>';
-
-                    if ($headline) echo '<h3>' . $headline . '</h3>';
-                    if ($description) echo '<p>' . $description . '</p>';
-
-                    echo '</div>';
+                    $gethtml->getcaseform( $type,$name, $value, $args , $is_valid );
                     break;
 
                 case 'html':
-                    // Vlasní html obsah
-
-                    $content = isset($args['content']) ? $args['content'] : false;
-
-                    echo $content;
-
+                  
+                    $gethtml->getcaseform( $type,$name, $value, $args , $is_valid );
                     break;
 
                 default:
@@ -842,15 +441,19 @@ if (!class_exists('D1G1_Front_Form')) {
         }
 
         public function save_form()
-        {
+        { 
+            
             $inputs = filter_input_array(INPUT_POST);
             if (!isset($inputs['form_id_d1g1']) || $inputs['form_id_d1g1'] == '') {
                 return;
             }
+           // preprint($inputs);
             $formID = $inputs['form_id_d1g1'];
             $this->form_ID = $formID;
+            //die();
             if (isset($inputs['nonce_' . $formID]) && wp_verify_nonce($inputs['nonce_' . $formID], $formID)) {
                 //validace polí
+              //  die('test některých polí');
                 if (!$this->validate_fields($inputs, $formID)) {
                     $this->session->addSession($formID . '_save', 'fail');
                     wp_safe_redirect($inputs['_wp_http_referer']);
@@ -860,83 +463,84 @@ if (!class_exists('D1G1_Front_Form')) {
                 if ((isset($inputs['d1g1_meta']['name']) && $inputs['d1g1_meta']['name'] !== "") || (isset($inputs['d1g1_meta']['surname']) && $inputs['d1g1_meta']['surname'] !== "")) {
                     exit;
                 }
-
+                
                 if (isset($this->fields) && isset($this->fields[0])) {
-
+                    //preprint($this->fields);
+                   //die(); 
                     // zde můžeme upravovat jak se má soubor zpracovávat
                     if (array_key_exists('save_option',$this->fields[0])){
-                        if($this->fields[0]['save_option'] == 'send_mail'){
-                            $result = $this->send_update_email($inputs, $formID);              
-                            if ($result) {
-                                $this->session->addSession($formID . '_submit_res', 'true');                                                          
-                            } else {
-                                $this->session->addSession($formID . '_submit_res', 'false');
-                            }
+                        
+                        do_action('d1g1_form_save_option_hook', $formID , $inputs , $this->fields );
 
-                            //$newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);  
-                            wp_safe_redirect($inputs['_wp_http_referer']);
-                            exit();
-                        }
-
+                        wp_safe_redirect($inputs['_wp_http_referer']);
                     //defaultní zpracování formuláře
                     }else {
-
+                         
                         $metas = $inputs;
                         $validation_data = $this->session->getSession( $this->form_ID.'_validation' );
-
+                      
                         // Doplnění dat z odškrtnutých checkboxů
+                        
                         foreach ($validation_data as $input_name => $input_data) {
-                            if ( isset($input_data['type']) && (
-                                $input_data['type'] == 'checkbox' || 
-                                $input_data['type'] == 'switch' || 
-                                $input_data['type'] == 'checkbox_large' )
-                            ){
-                                if (empty($input_data['value']) ) {
-                                    $metas[$input_name] = 0;
+                                if ( isset($input_data['type']) && (
+                                    $input_data['type'] == 'checkbox' || 
+                                    $input_data['type'] == 'switch' || 
+                                    $input_data['type'] == 'checkbox_large' )
+                                    
+                                ){
+                                    if (empty($input_data['value']) ) {
+                                        
+                                        $metas[$input_name] = 0;
+                                    }
                                 }
-                            }
                         }
+                       
                         //vyhodit hodnoty, které se nemají uložit
                         if(isset($metas['_wp_http_referer'])) unset($metas['_wp_http_referer']);
                         if(isset($metas['form_id_d1g1'])) unset($metas['form_id_d1g1']);
                         if(isset($metas['submit'])) unset($metas['submit']);
                         if(isset($metas['nonce_' . $formID])) unset($metas['nonce_' . $formID]);
-
+                         
                         //zde budeme zpracovávat ukládání hodnot
-                        if ($metas && !empty($metas)) {
-                            foreach ($metas as $meta_key => $meta_value) {
-                               
-                                if($meta_key)
-                                    $this->save_data($meta_key, $meta_value);
-                            }
-                            // remove field validation data
-                            $this->session->removeSession($formID . '_validation');
-                            // add "all good and saved" notice
-                            $this->session->addSession($formID . '_save', 'success');
-                            $newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);
-                            wp_safe_redirect($newUrl);
-                            exit;
-                        }
-                    }
-
-                }
+                            if ($metas && !empty($metas)) {
+                                
+                                foreach ($metas as $meta_key => $meta_value) {
+                                
+                                    if($meta_key)
+                                        $this->save_data($meta_key, $meta_value);
+                                    
+                                }
+                                // remove field validation data
+                                $this->session->removeSession($formID . '_validation');
+                                // add "all good and saved" notice
+                                $this->session->addSession($formID . '_save', 'success');
+                                $newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);
+                                wp_safe_redirect($newUrl);
+                                exit;
+                                } 
+                    }  
+                    
+                }   
                 $this->session->addSession($formID . '_save', 'fail');
                 wp_safe_redirect($inputs['_wp_http_referer']);
                 exit;
                 die('Nastala chyba');
             }
         }
-
         public function save_data($key, $value) {
             $id = ($this->form_ID ? $this->form_ID : 'default');
             $pref = $this->prefix;
             $name = $pref. $id.'_'. $key;
             update_option($name, $value, false);
         }
-        public function get_data($key) {
-            $id = ($this->form_ID ? $this->form_ID : 'default');
+        public function get_data($key,$form = '') {
+            if($form !== ''){
+                $id = $form;
+            }else{
+                $id = ($this->form_ID ? $this->form_ID : 'default');
+            }
             $pref = $this->prefix;
-            $name = $pref. $id.'_'. $key;
+            $name = $pref. $id.'_'. $key;  
             $value = get_option($name, false);
             return $value;
         }
@@ -944,11 +548,12 @@ if (!class_exists('D1G1_Front_Form')) {
         public function validate_fields($inputs, $formID)
         {
             if (empty($this->fields)) {
-                die('Fields must be set.');
+              //  preprint($this->fields);
+                die('Fields must be set...');
             }
             $fields_all = $this->fields; // všechny pole formuláře
             $ffv = []; // pole určené k validaci
-            //preprint($this->fields);
+           
             $allvalid = true;
 
             $validated = [];
@@ -1007,56 +612,24 @@ if (!class_exists('D1G1_Front_Form')) {
                 }
 
                 if ($required) {
-                    if (is_array($value)) {
-                        if (empty($value)) {
-                            $valid = false;
-                            $msg = 'Povinné pole';
-                            $allvalid = false;
-                        }
-                    } else {
-                        if ($value == '' || !$value) {
-                            $valid = false;
-                            $msg = 'Povinné pole';
-
-                            $allvalid = false;
-                        }
-                    }
+                   $this->validation->d1g1_if_required($value);
+                   
                 }
 
                 if (isset($field['length'])) {
-                    $num = $this->valid_leght_string($value);
-
-                    if ($num > $field['length']) {
-                        $valid = false;
-                        $msg = 'Příliš mnoho znaků (' . $num . ')';
-                        $allvalid = false;
-                    }
+                   $this->validation->d1g1_length_valid($value);
                 }
 
                 //validate emails
                 if ($type == 'email') {
 
-                    if (!empty($value)) {
+                   $this->validation->d1g1_email_valid($value);
 
-                        if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                            $valid = false;
-                            $msg = 'Pole není email';
-                            $allvalid = false;
-                        }
-                    }
                 }
                 //validate range unit
                 if ($type == 'range') {
-                    $unit = (isset($inputs[$name.'_unit']) ? $inputs[$name.'_unit'] : '');
-                    if (!empty($unit)) {
-                        if (!filter_var($unit, FILTER_VALIDATE_EMAIL)) {
-                            $validated[$name.'_unit'] = [
-                                'value' => $inputs[$name.'_unit'],
-                                'valid' => true,
-                                'msg' => "",
-                            ];
-                        }
-                    }
+                  $this->validation->d1g1_range_valid($input,$name);
+                
                 }
 
                 $validated[$name] = [
@@ -1071,247 +644,8 @@ if (!class_exists('D1G1_Front_Form')) {
             return $allvalid;
         }
 
-        public function handle_dropped_files_callback()
-        {
-            status_header(200);
-
-            $upload_dir = wp_upload_dir();
-            $upload_path = $upload_dir['path'] . DIRECTORY_SEPARATOR;
-            $num_files = count($_FILES['file']['tmp_name']);
-
-            $newupload = 0;
-
-            if (!empty($_FILES)) {
-                $files = $_FILES;
-
-                foreach ($files as $file) {
-
-                    /* UPLOAD DO MÉDIÍ WORDPRESSU
-                    $newfile = array (
-                        'name' => $file['name'],
-                        'type' => $file['type'],
-                        'tmp_name' => $file['tmp_name'],
-                        'error' => $file['error'],
-                        'size' => $file['size']
-                    );
-
-                    $_FILES = array('upload'=>$newfile);
-                    */
-
-                    $upload_folder_path = WP_CONTENT_DIR . '/order-files';
-
-                    if (!file_exists($upload_folder_path)) {
-                        mkdir($upload_folder_path);
-                    }
-
-                    //preprint( $file );
-                    $temp = $_FILES['photo']['tmp_name'];
-                    $data = $file['name'];
-                    $extten = "." . substr($data, strrpos($data, '.') + 1);
-                    $file_name = substr($data, 0, strrpos($data, '.'));
-                    $finalpath = $upload_folder_path . '/' . $file_name .  $extten;
-
-                    //oprava opakovaných souborů
-                    if (file_exists($finalpath)) {
-
-                        for ($i = 1; $i < 999; $i++) {
-
-                            $finalpath = $upload_folder_path . '/' . $file_name . "-" . $i .  $extten;
-
-                            if (!file_exists($finalpath)) break;
-                        }
-                    }
-
-                    //UPLOAD DO MÉDIÍ WORDPRESSU $newupload = media_handle_upload( $file, 0 );*/                        
-                    if (move_uploaded_file($temp, $finalpath)) {
-                        $newupload = $finalpath;
-                    } else {
-                        $newupload = 0;
-                    }
-                }
-            }
-
-            echo $newupload;
-            die();
-        }
-
-        public function handle_deleted_files_callback()
-        {
-            if (isset($_REQUEST['media_id'])) {
-                $post_id = $_REQUEST['media_id'];
-
-                //$status = wp_delete_attachment($post_id, true);
-                $status = !unlink($post_id);
-
-                if ($status)
-                    echo json_encode(array('status' => 'OK'));
-                else
-                    echo json_encode(array('status' => 'FAILED'));
-            }
-
-            die();
-        }
-
-        public function get_files_callback()
-        {
-            $images = [];
-            $upload_dir = wp_upload_dir();
-            $upload_path = $upload_dir['basedir'] . DIRECTORY_SEPARATOR;
-            if (isset($_REQUEST['images'])) {
-                $image_ids = $_REQUEST['images'];
-                if ($image_ids) {
-                    foreach (explode(',', $image_ids) as $image_id) {
-                        $meta = wp_get_attachment_metadata($image_id);
-                        if ($meta) {
-                            $images[] = [
-                                'ID' => $image_id,
-                                'name' => get_the_title($image_id),
-                                'size' => filesize($upload_path . $meta['file']),
-                                'url' => wp_get_attachment_url($image_id),
-                            ];
-                        }
-                    }
-                }
-                echo json_encode($images);
-            } else {
-                echo json_encode(false);
-            }
-
-            die();
-        }
-        public function valid_leght_string($value) {
-            $strip = (strip_tags($value));
-            $strip = trim($strip);
-            $conversion_table = Array(
-                'ä'=>'a',
-                'Ä'=>'A',
-                'á'=>'a',
-                'Á'=>'A',
-                'à'=>'a',
-                'À'=>'A',
-                'ã'=>'a',
-                'Ã'=>'A',
-                'â'=>'a',
-                'Â'=>'A',
-                'č'=>'c',
-                'Č'=>'C',
-                'ć'=>'c',
-                'Ć'=>'C',
-                'ď'=>'d',
-                'Ď'=>'D',
-                'ě'=>'e',
-                'Ě'=>'E',
-                'é'=>'e',
-                'É'=>'E',
-                'ë'=>'e',
-                'Ë'=>'E',
-                'è'=>'e',
-                'È'=>'E',
-                'ê'=>'e',
-                'Ê'=>'E',
-                'í'=>'i',
-                'Í'=>'I',
-                'ï'=>'i',
-                'Ï'=>'I',
-                'ì'=>'i',
-                'Ì'=>'I',
-                'î'=>'i',
-                'Î'=>'I',
-                'ľ'=>'l',
-                'Ľ'=>'L',
-                'ĺ'=>'l',
-                'Ĺ'=>'L',
-                'ń'=>'n',
-                'Ń'=>'N',
-                'ň'=>'n',
-                'Ň'=>'N',
-                'ñ'=>'n',
-                'Ñ'=>'N',
-                'ó'=>'o',
-                'Ó'=>'O',
-                'ö'=>'o',
-                'Ö'=>'O',
-                'ô'=>'o',
-                'Ô'=>'O',
-                'ò'=>'o',
-                'Ò'=>'O',
-                'õ'=>'o',
-                'Õ'=>'O',
-                'ő'=>'o',
-                'Ő'=>'O',
-                'ř'=>'r',
-                'Ř'=>'R',
-                'ŕ'=>'r',
-                'Ŕ'=>'R',
-                'š'=>'s',
-                'Š'=>'S',
-                'ś'=>'s',
-                'Ś'=>'S',
-                'ť'=>'t',
-                'Ť'=>'T',
-                'ú'=>'u',
-                'Ú'=>'U',
-                'ů'=>'u',
-                'Ů'=>'U',
-                'ü'=>'u',
-                'Ü'=>'U',
-                'ù'=>'u',
-                'Ù'=>'U',
-                'ũ'=>'u',
-                'Ũ'=>'U',
-                'û'=>'u',
-                'Û'=>'U',
-                'ý'=>'y',
-                'Ý'=>'Y',
-                'ž'=>'z',
-                'Ž'=>'Z',
-                'ź'=>'z',
-                'Ź'=>'Z'
-              );
-        $return = strtr($strip, $conversion_table);
-        $return = str_replace( array("\r", "\n"), '', $return );
-        $num = strlen($return);
-
-        return $num;
-        }
-        /**
-         * Zobrazování formuláře pro cpt
-         *
-         * @param $data - array načtení polí z forms builderu
-         * 
-         * @author digihood
-         * @return true/false
-         */ 
-        function get_html_form_cpt($data){
-            global $post;
-            if ($data){
-                ?>
-                <div class="d1g1-admin">
-                    <div class="form-section">
-                        <?php
-                        foreach ($data as $field) {
-                            if ($field && is_array($field)) {
-                                $type = $field['type'];
-                                $name = $field['name'];
-                                $label = $field['label'];
-                                $value = ($post && isset($post->ID) ? get_post_meta($post->ID, $name, true) : "");
-                                ?>
-                                <div class="form-item">
-                                    <p><label for="<?= $name ?>" class="d1g1_post_meta_label"><?= $label ?></label></p>
-                                    <?php 
-                                    $this->get_input_html($type, $name, $value,$field); ?>
-                                </div>
-                                <?php
-                                
-
-                            }
-                        }?>
-                    </div>
-                </div>
-                <?php
-            }
-
-        }
+   
+       
         /**
          * Ukládání polí do meta v cpt
          *
@@ -1322,7 +656,7 @@ if (!class_exists('D1G1_Front_Form')) {
         function save_cpt_meta(){
             global $post;
             if ($post && isset($post->post_type) && !empty($post->post_type)){
-                $builder = new formsBuilderD1G1_brand;
+                $builder = new \pluginbrandslug\framework\forms_builder\formsBuilderD1G1;
                 $all_fields = $builder->get_fields_cpt_form($post->post_type);
                 if (!empty($all_fields)) {
                     foreach ($all_fields as $field) {
@@ -1335,113 +669,6 @@ if (!class_exists('D1G1_Front_Form')) {
 
             }
         }
-        /**
-         * Odeslat email s aktualizací
-         *
-         * @author digihood
-         * @return true/false
-         */ 
-        function send_update_email($inputs, $formID){
-            $mail = get_option('_d1g1_D1G1BRAND_brand_emails_settings_send_to_email',false);
-            if (empty($mail)) {
-                $mail = get_option( 'admin_email' );
-            }
-            $content = $this->update_email_content($inputs);
-            $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@wedesin.cz">jan@wedesin.cz</a>', D1G1_BRANDING);
-            $subject = get_option('_d1g1_D1G1BRAND_brand_emails_settings_license_email_subject','');
-            if (empty($subject)) $subject = __('Aktualizovali jsme váš web', D1G1_BRANDING);
-            $email = new \d1g1SendEmailBrand;
-            //zde zprovoznit emaily
-            $text = $email->email_content('Aktualizace webu', array($content),$footer );
-            //uložení aktualizace
-            $this->save_update_data($inputs);
-            if ($this->save_update_data($inputs)) {
-                $email->send_client_emails($mail, $subject ,$text);
-                $this->session->addSession($formID . '_save', 'success');
-            } else {
-                $this->session->addSession($formID . '_save', 'fail');
-            }
-            wp_safe_redirect($inputs['_wp_http_referer']);
-            exit;
-        }
-
-        public function save_update_data($inputs){
-            $update_list = get_option('_d1g1_list', []);
-            $new = $this->update_list($inputs);
-            if($new) {
-                $update_list[strtotime('now')] = array(
-                    'user'=> get_current_user_id(),
-                    'update'=> $new
-                );
-                update_option('_d1g1_list',$update_list);
-                return true;
-            } else{
-                return false;
-            }
-
-
-
-        }
-        
-        public function update_list($inputs) {
-            global $wp_version;
-            $content = '';
-            if(isset($inputs['up_wp']) && !empty($inputs['up_wp'])) {
-                if ($wp_version){
-                    $content .= __('Wordpress aktualizován na verzi', 'D1G1BRAND').' '. $wp_version.'<br>';
-                }else {
-                    $content .= __('Wordpress aktualizován na nejnovější verzi', 'D1G1BRAND').'<br>';
-                } 
-            }
-            if(isset($inputs['up_theme']) && !empty($inputs['up_theme'])) {
-                $content .= __('Šablona byla aktualizován na nejnovější verzi', 'D1G1BRAND').'<br>';
-            }
-            if(isset($inputs['up_settings']) && !empty($inputs['up_settings'])) {
-                $content .= __('Na webu jsme aktualizovali nastavení webu (zabezpečení, zálohy, php, nastavení eshopu)', 'D1G1BRAND').'<br>';
-            }
-            if(isset($inputs['up_plugins']) && !empty($inputs['up_plugins'])) {
-                $content .= '<p><b>'. __('Aktualizované pluginy', 'D1G1BRAND').':</b></p>';
-                $plugins_list = get_plugins();
-                foreach ($inputs['up_plugins'] as $key => $value) {
-                    if(array_key_exists($value, $plugins_list )){
-                        if (isset($plugins_list[$value])){
-                            $name = (isset($plugins_list[$value]['Name'])? $plugins_list[$value]['Name'] : '');
-                            $version = (isset($plugins_list[$value]['Version'])? $plugins_list[$value]['Version'] : '');
-                            if ($name && $version) {
-                                $content .= $name . ' '. __('Aktualizováno na verzi', 'D1G1BRAND'). ' '. $version. '<br>';
-                            }
-                        }
-                    }
-                }
-            }
-            if(isset($inputs['up_content']) && !empty($inputs['up_content'])) {
-                $content .= '<p><b>'.__('Poznámka k aktualizaci', 'D1G1BRAND').'</b></p>';
-                $content .= '<div>'.$inputs['up_content'].'</div>';
-            }
-            return $content;
-
-        }
-        public function url_without_http() {
-            $http = substr(get_home_url(), 0, 5);
-                if ($http == 'https'){
-                    return str_replace('https://','',''.get_home_url().'');
-                }else {
-                    return str_replace('http://','',''.get_home_url().'');
-                }
-
-        }
-
-        public function update_email_content($inputs) {
-            $text = get_option('_d1g1_D1G1BRAND_brand_emails_settings_mail_text_license_d1g1',false);
-            $content = __('Dobrý den', 'D1G1BRAND').',<br><br>';
-            $content .= __('právě jsme aktualizovali Váš web', 'D1G1BRAND').' <a href="'.get_home_url().'">'.$this->url_without_http().'</a>.<br><br>';
-            if ($text) $content .= $text;
-            $content .= '<h3>'.__('Přehled aktualizací:', 'D1G1BRAND').'</h3>';
-            $content .= $this->update_list($inputs);
-            return $content;
-
-        }
-
     }
 
     new \pluginbrandslug\framework\forms_core\D1G1_Front_Form;

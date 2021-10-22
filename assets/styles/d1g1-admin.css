@@ -149,6 +149,7 @@ body .d1g1-notice a:hover {
 ========================================= */
 .d1g1-admin .form-section {
   border-bottom: 1px solid var(--grey);
+  margin:30px;
 }
 .d1g1-admin .form-item {
   position: relative;
@@ -410,6 +411,7 @@ min-width: 60px;
 @media screen and (max-width: 782px) {
     .wp-core-ui .d1g1-admin  .button {
         margin-bottom: 0;
+       
     }
 }
 /* switch */
@@ -947,6 +949,7 @@ input[type="range"]::-ms-thumb {
     position: absolute;
     z-index: 5;
 }
+
 
 .d1g1-admin .wp-picker-container .wp-color-result.button {
     min-height: 50px;

@@ -47,13 +47,21 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
         return $css;
       }
       public function text_settings(){
+     
         $text = array(
           'footer_copy'=> '© '. date('Y') .' <a href="https://wedesin.cz" target="_blank">WeDesIn</a>',
-          'footer_text'=> 'Tento email byl odeslán z webu '. get_home_url()
-        );
+          'footer_text'=> 'Tento email byl odeslán z webu <a href="'. get_home_url().'">'. $this->url_without().'</a>');
         return $text;
       }
   
+      public function url_without(){
+        $http = substr(get_home_url(), 0, 5);
+        if ($http == 'https'){
+            return str_replace('https://','',''.get_home_url().'');
+        }else {
+            return str_replace('http://','',''.get_home_url().'');
+        }
+      }
       function change_headers($args) {
   
         $mailheader = "Reply-To: jan@wedesin.cz\r\n";
@@ -92,14 +100,14 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
               <table  border="0" cellpadding="0" cellspacing="0" width="100%">
                   <tr>
                       <td>
-                          <div align="center" style="padding: 20px 15px 0px 15px;">
+                          <div align="center" style="padding: 15px 15px 0px 15px;">
                               <table style="background: #ffffff;" border="0" cellpadding="0" cellspacing="0" width="600" class="wrapper">
                                   <tr>
                                       <td style="padding: 30px;" class="logo">
                                           <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                               <tr>
                                                   <td bgcolor="" width="600" align="center">
-                                                    <a href="'.home_url().'"><img src="'.$img .'" width="200" height="auto" style="width: 200px; height:auto;"></a>
+                                                    <a href="'.home_url().'"><img src="'.$img .'" width="300" height="auto" style="width: 300px; height:auto;"></a>
                                                   </td>
                                               </tr>
                                           </table>
@@ -115,8 +123,8 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
                       <td align="center" class="section-padding">
                           <table border="0" cellpadding="0" cellspacing="0" width="600" class="responsive-table">
                               <tr>
-                                  <td bgcolor="#ffffff" style="padding: 20px ; font-size: '.$this->fontSize.'; line-height: '.$this->lineHeight.'; font-family:'.$this->fontFamily.'; color: '.$this->fontColorText.';">
-                                  <div style="padding: 20px;">
+                                  <td bgcolor="#ffffff" style="padding: 10px ; font-size: '.$this->fontSize.'; line-height: '.$this->lineHeight.'; font-family:'.$this->fontFamily.'; color: '.$this->fontColorText.';">
+                                  <div style="padding: 10px;">
                                       <table  width="100%" border="0" cellspacing="0" cellpadding="0">';
                                           if (!empty($title) ) {
                                             $return .= '<tr><td align="left" style="font-size: 40px; line-height: 48px; font-family: Georgia, Arial, sans-serif; color: '.$this->fontColorText.'; padding:20px 5%" class="padding-copy">' .$title. '</td></tr>';

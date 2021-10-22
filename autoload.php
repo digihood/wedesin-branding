@@ -2,6 +2,9 @@
 /*******************************
 /          Framework           *
 ********************************/
+/*******************************
+/          Framework           *
+********************************/
 
 include_once( D1G1_BRANDPATH . 'framework/styles-scripts.php');  
 include_once( D1G1_BRANDPATH . 'framework/main-menu.php');  
@@ -9,9 +12,15 @@ include_once( D1G1_BRANDPATH . 'framework/log/log-setup.php');
 include_once( D1G1_BRANDPATH . 'framework/forms-builder.php'); 
 include_once( D1G1_BRANDPATH . 'framework/sessions.php'); 
 include_once( D1G1_BRANDPATH . 'framework/cookies.php'); 
-include_once( D1G1_BRANDPATH . 'framework/forms-core.php');
+include_once( D1G1_BRANDPATH . 'framework/form-validation.php');
+ 
+include_once( D1G1_BRANDPATH . 'components/d1g1-function.php'); 
+
+
+
 include_once( D1G1_BRANDPATH . 'framework/helpers.php'); 
 include_once( D1G1_BRANDPATH . 'framework/forms-core.php');  
+include_once( D1G1_BRANDPATH . 'framework/get-html-form.php');
 include_once( D1G1_BRANDPATH . 'framework/emails.php'); 
 include_once( D1G1_BRANDPATH . 'framework/plugin-update-checker/plugin-update-checker.php'); 
 /*******************************
