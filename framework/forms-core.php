@@ -69,7 +69,17 @@ if (!class_exists('D1G1_Front_Form')) {
                                 <input type="hidden" value="<?= D1G1_BRANDING?>" name="plugin_id_d1g1" />                                                             
                                 <?php $this->get_form_fields($formID); ?>
 
-                                <?php  submit_button(); ?>
+                                <?php
+                                //preprint ($formID);
+                                // zde zařídit text tlačítka 
+                                if ($formID == 'update_report') {
+                                    $button_text = 'Odeslat hlášení';
+                                } else {
+                                    $button_text = "";
+                                }
+                                submit_button($button_text); 
+                                ?>
+                              
 
                             </form>
                         </div>

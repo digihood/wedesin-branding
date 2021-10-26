@@ -131,6 +131,7 @@ if( ! class_exists( 'getRestApiRequestD1G1' ) )
 			// Pokud $img_response['body'] je vyplnený a není prazdný poté se decoduje a vratí URL obrazku 
 				if (isset($img_response['body']) && !empty($img_response['body']) ) { 
 					$api_img = json_decode( $img_response['body'] ); 
+
 					if ($api_img->media_details->sizes->medium->source_url){ 		
 						return $api_img->media_details->sizes->medium->source_url;
 					} else {

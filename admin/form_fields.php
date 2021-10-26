@@ -101,6 +101,7 @@ if( ! class_exists( 'PluginField' ) )
 						'headline' => 'Jádro WP',
 						'description' => 'Co z WP bylo aktualizováno?',
 						'save_option' => 'send_mail',
+						'button_text' => 'send_report',
 						[
 							'type' => 'checkbox',
 							'name' => 'up_wp',

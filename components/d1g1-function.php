@@ -78,7 +78,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@wedesin.cz">jan@wedesin.cz</a>', D1G1_BRANDING);
             $subject = get_option('_d1g1_D1G1BRAND_brand_emails_settings_license_email_subject','');
             if (empty($subject)) $subject = __('Aktualizovali jsme váš web', D1G1_BRANDING);
-            $email = new \d1g1SendEmailBrand;
+            $email = new \pluginbrandslug\framework\emails\d1g1SendEmailBrand;
             //zde zprovoznit emaily
             $text = $email->email_content('Aktualizace webu', array($content),$footer );
             //uložení aktualizace
