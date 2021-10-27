@@ -67,6 +67,21 @@ if( ! class_exists( 'D1G1FormFunction' ) )
                 }
                 
              }
+
+
+        function d1g1_settings_email($settings = []){
+            $settings = [
+                'footer_bg_color'        => get_option('_d1g1_'.D1G1_BRANDING.'_brand_emails_settings_footer_bg_color',false),
+                'footer_color'           => get_option('_d1g1_'.D1G1_BRANDING.'_brand_emails_settings_footer_color', false),
+                'header_logo'            => get_option('_d1g1_'.D1G1_BRANDING.'_brand_emails_settings_header_logo', false),
+                'reply_to_email'         => get_option('_d1g1_'.D1G1_BRANDING.'_brand_emails_settings_reply_to_email', false),
+                'license_email_subject'  => get_option('_d1g1_'.D1G1_BRANDING.'_brand_emails_settings_license_email_subject', false),
+                'send_to_email'          => get_option('_d1g1_'.D1G1_BRANDING.'_brand_emails_settings_send_to_email', false),
+                'Links_color'            => get_option('_d1g1_'.D1G1_BRANDING.'_brand_emails_settings_Links_color', false)   
+            ];
+            return $settings;
+
+        }
          
 
         function send_update_email($inputs, $formID){
@@ -74,13 +89,17 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             if (empty($mail)) {
                 $mail = get_option( 'admin_email' );
             }
+            $colors = $this->d1g1_settings_email();
             $content = $this->update_email_content($inputs);
-            $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@wedesin.cz">jan@wedesin.cz</a>', D1G1_BRANDING);
+            $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@wedesin.cz" style="color:'.$colors['Links_color'].';">jan@wedesin.cz</a>', D1G1_BRANDING);
             $subject = get_option('_d1g1_D1G1BRAND_brand_emails_settings_license_email_subject','');
             if (empty($subject)) $subject = __('Aktualizovali jsme váš web', D1G1_BRANDING);
-            $email = new \pluginbrandslug\framework\emails\d1g1SendEmailBrand;
+           
+            $email = new \pluginbrandslug\framework\emails\d1g1SendEmailBrand($this->d1g1_settings_email());
+           
             //zde zprovoznit emaily
             $text = $email->email_content('Aktualizace webu', array($content),$footer );
+           
             //uložení aktualizace
             $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
             $this->save_update_data($inputs);
@@ -161,9 +180,10 @@ if( ! class_exists( 'D1G1FormFunction' ) )
         }
 
         public function update_email_content($inputs) {
+         $colors = $this->d1g1_settings_email();
             $text = get_option('_d1g1_D1G1BRAND_brand_emails_settings_mail_text_license_d1g1',false);
             $content = __('Dobrý den', 'D1G1BRAND').',<br><br>';
-            $content .= __('právě jsme aktualizovali Váš web', 'D1G1BRAND').' <a href="'.get_home_url().'">'.$this->url_without_http().'</a>.<br><br>';
+            $content .= __('právě jsme aktualizovali Váš web', 'D1G1BRAND').' <a href="'.get_home_url().'" style="color:'.$colors['Links_color'].';">'.$this->url_without_http().'</a>.<br><br>';
             if ($text) $content .= $text;
             $content .= '<h3>'.__('Přehled aktualizací:', 'D1G1BRAND').'</h3>';
             $content .= $this->update_list($inputs);

@@ -42,6 +42,16 @@ if( ! class_exists( 'PluginField' ) )
 									'value' => '#ff00dd', // rgba(30,30,30,0.64)
 									'saveAs' => 'meta',
 								]
+							],
+							[
+								[
+									'type' => 'color',
+									'name' => 'Links_color',
+									'label' => 'Barva textu odkazů',
+									'help_text' => 'Vyberte si barvu, kterou bude mít odkaz  v zápatí emailů',
+									'value' => '#2199e8', 
+									'saveAs' => 'meta',
+								]
 							]
 						],
                         [

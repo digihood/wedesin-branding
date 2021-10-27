@@ -19,25 +19,29 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
       private $background;
       private $fontColorText;
       private $fontColorFooter;
+      private $fontColorLinkText;
       private $fontSize;
       private $lineHeight;
       private $fontFamily;
       private $buttonColor;
+      private $settings;
   
-      public function __construct(){
+      public function __construct($settings = []){
         add_filter( 'wp_mail', [$this, 'change_headers'] );
         add_action( 'init', [$this,'email_test'] );
-        $this->settings_css();
+        $this->settings_css($settings);
       }
-      public function settings_css() {
-        $this->background = ( get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_bg_color') ? get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_bg_color')  : '#414b55');
+      public function settings_css($settings = []) {
+        $this->background = (isset($settings['footer_bg_color']) ? $settings['footer_bg_color'] : '#414b55' );
         $this->fontColorText = '#151B24';
         $this->fontColorLink = '#03acff';
-        $this->fontColorFooter = ( get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_color') ? get_option('_d1g1_D1G1BRAND_brand_emails_settings_footer_color') : '#99ff33');
+        $this->fontColorFooter = (isset($settings['footer_color']) ? $settings['footer_color'] : '#99ff33');
+        $this->fontColorLinkText = (isset($settings['Links_color']) ? $settings['Links_color'] : '#2199e8');
         $this->fontSize = '12px';
         $this->lineHeight = '16px';
         $this->fontFamily = 'Arial, sans-serif';
         $this->buttonColor = array('bg'=> '#B0EA91!important', 'color'=>'#151B24', 'hover'=> '#ffffff!important');
+        $this->settings = $settings;
       }
       public function default_font_style(){
         $css = 'font-size: '.$this->fontSize.'; 
@@ -49,8 +53,8 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
       public function text_settings(){
      
         $text = array(
-          'footer_copy'=> '© '. date('Y') .' <a href="https://wedesin.cz" target="_blank">WeDesIn</a>',
-          'footer_text'=> 'Tento email byl odeslán z webu <a href="'. get_home_url().'">'. $this->url_without().'</a>');
+          'footer_copy'=> '© '. date('Y') .' <a href="https://wedesin.cz" style="color:'.$this->fontColorLinkText.'; target="_blank">WeDesIn</a>',
+          'footer_text'=> 'Tento email byl odeslán z webu <a href="'. get_home_url().'" style="color:'.$this->fontColorLinkText.';" >'. $this->url_without().'</a>');
         return $text;
       }
   
@@ -183,7 +187,7 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
                                 </tr>
                                 <tr>
                                   <td align="center" valign="middle" style="font-size: '.$this->fontSize .'; line-height: '. $this->lineHeight.'; font-family: '.$this->fontFamily.'; padding: 15px 5px 15px 5px;">
-                                    <a href="'.home_url().'" target="_blank" style="color: '.$this->fontColorFooter.'; text-decoration: underline;">'.home_url().'</a>
+                                    <a href="'.home_url().'" target="_blank" style="color:'.$this->fontColorLinkText.'; text-decoration: underline;">'. $this->url_without().'</a>
                                   </td>
                                 </tr>
                             </table>
@@ -318,12 +322,13 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
       /* Test mailů
       ========================================================*/
       public function email_test() {
-        if ( isset($_GET['showmail']) &&$_GET['showmail']==2 ) {
-          echo $this->email_content( 'titleeeeeee', 'subtitle',array('test', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam sapien sem, ornare ac, nonummy non, lobortis a enim. Etiam egestas wisi a erat. Vivamus ac leo pretium faucibus. Maecenas sollicitudin. Morbi leo mi, nonummy eget tristique non, rhoncus non leo. Vivamus luctus egestas leo. Suspendisse sagittis ultrices augue. Etiam dui sem, fermentum vitae, sagittis id, malesuada in, quam. Nullam justo enim, consectetuer nec, ullamcorper ac, vestibulum in, elit. Aliquam ante. Aliquam erat volutpat. In convallis.'),
-          'foooooooter', 'https://wedestnttin.cz', 'ahoooooooooooj' );
-         echo 'eghsgeghs';
+        if ( isset($_GET['showmail']) &&$_GET['showmail']==1 ) {
+          echo $this->email_content( 'title','subtitle',array('test', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam sapien sem, ornare ac, nonummy non, lobortis a enim. Etiam egestas wisi a erat. Vivamus ac leo pretium faucibus. Maecenas sollicitudin. Morbi leo mi, nonummy eget tristique non, rhoncus non leo. Vivamus luctus egestas leo. Suspendisse sagittis ultrices augue. Etiam dui sem, fermentum vitae, sagittis id, malesuada in, quam. Nullam justo enim, consectetuer nec, ullamcorper ac, vestibulum in, elit. Aliquam ante. Aliquam erat volutpat. In convallis.'),
+          'footer', 'https://wedestnttin.cz', 'ahoooooooooooj' );
+         //echo 'eghsgeghs';
           die('semtugrgrg ');
         }
       }
     }
+
 }
