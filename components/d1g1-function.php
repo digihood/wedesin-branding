@@ -34,7 +34,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
         
          add_action( 'd1g1_form_save_option_hook', [$this,'d1g1_mail_send'],10,3);
 
-        
+         
         }
 
          /**
@@ -52,14 +52,13 @@ if( ! class_exists( 'D1G1FormFunction' ) )
                 $this->fields = $fields;
                 if($this->fields[0]['save_option'] == 'send_mail'){
                    // preprint($this->fields[0]['save_option']);
-                    //die();
+                  
+                 
                     $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;       
-                    $result = $this->send_update_email($inputs, $formID);              
-                    if ($result) {
-                        $this->session->addSession($formID . '_submit_res', 'true');                                                          
-                    } else {
-                        $this->session->addSession($formID . '_submit_res', 'false');
-                    }
+                   
+                    $result = $this->send_update_email($inputs, $formID); 
+                            
+                    
 
                     //$newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);  
                    // wp_safe_redirect($inputs['_wp_http_referer']);
@@ -103,12 +102,18 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             //uložení aktualizace
             $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
             $this->save_update_data($inputs);
+            
             if ($this->save_update_data($inputs)) {
                 $email->send_client_emails($mail, $subject ,$text);
+                
                 $this->session->addSession($formID . '_save', 'success');
+                
+               // die();
             } else {
                 $this->session->addSession($formID . '_save', 'fail');
             }
+            preprint($_SESSION);
+           
             wp_safe_redirect($inputs['_wp_http_referer']);
             exit;
         }

@@ -21,7 +21,7 @@ if( ! class_exists( 'sessionClassD1G1' ) )
 		{
             $this->default_mess_succ = __("Nastavení bylo úspěšně aktualizováno", D1G1_BRANDING);
             $this->default_mess_error = __("Nastavení se nepodařilo uložit. Zkuste to, prosím, znovu.", D1G1_BRANDING);
-
+            if(!session_id()) session_start();
         }
 
         /**
@@ -162,7 +162,7 @@ if( ! class_exists( 'sessionClassD1G1' ) )
                 if(empty($content)) $content = $this->default_message($type);
                 echo '<div class="notice '.$class.' d1g1-notice is-dismissible">'. 
                     '<p>'.$content.'</p>
-                    <button type="button" class="notice-dismiss"><span class="screen-reader-text">'.__("Skrýt toto upozornění.", D1G1_BRANDING).'</span></button>
+                    <button type="button" class="notice-dismiss"><span class="screen-reader-text">'.__('Skrýt toto upozornění.', D1G1_BRANDING).'</span></button>
                 </div>';
                 // echo '<div id="message" class="updated fade">';
 

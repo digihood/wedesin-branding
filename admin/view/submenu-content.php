@@ -32,9 +32,7 @@ if (!class_exists('submenuContentD1G1')) {
             $builder->display_form("test_form_all");
         }
 
-        function checkreport(){
-           
-        }
+       
 
         /**
          * Zobrazení ukázkového formuláře
@@ -46,7 +44,7 @@ if (!class_exists('submenuContentD1G1')) {
          */
         function my_admin_page_contents()
         {   
-
+            
             //Získat aktivní tab z parametru $_GET 
             $default_tab = 'updates_list';
             $builder = new \pluginbrandslug\framework\forms_builder\formsBuilderD1G1();
@@ -58,17 +56,31 @@ if (!class_exists('submenuContentD1G1')) {
                 <?php 
                 $sessions = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
 
-                //preprint($_SESSION);
+               
 
                 $sessins_list = [
-                    'brand_emails_settings_save' => [], 
+                    'brand_emails_settings_save' => [
+                        'fail' => __("Při ukládání nastavení došlo k chybě. Nastavení nebylo uloženo.<br> Vyplnili jste údaje?", D1G1_BRANDING),
+                        'success' =>  __("Nastavení uloženo", D1G1_BRANDING)
+                    ], 
                     'update_report_save' => [
                         'fail' => __("Při ukládání reportu došlo k chybě. Report nebyl odeslán.<br> Vyplnili jste údaje?", D1G1_BRANDING), 
                         'success' => __("Report uložen a odeslán", D1G1_BRANDING)
                     ]
                 ];
-                $sessions->display_notice($sessins_list);
-                settings_errors(); 
+                
+              
+                if($_SESSION['update_report_save']){
+                    $sessions->display_notice($sessins_list);
+                    settings_errors();
+                    $sessions->removeSession('update_report_save');
+                    
+                 }elseif($_SESSION['brand_emails_settings_save']){
+                    $sessions->display_notice($sessins_list);
+                    settings_errors();
+                    $sessions->removeSession('brand_emails_settings_save');
+                 }
+                
                 ?>
                 <div class="row">
                     <div class="column content">
@@ -127,7 +139,7 @@ if (!class_exists('submenuContentD1G1')) {
                 </div>
             </div>
        <?php 
-       session_destroy();
+    //   session_destroy();
 
         }
         

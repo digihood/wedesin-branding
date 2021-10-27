@@ -187,12 +187,12 @@ if (!class_exists('D1G1_Front_Form')) {
             if($this->fields[0]['save_option'] !== 'send_mail'){
                 if (isset($validation_data['allvalid']) && !$validation_data['allvalid']) {
             
-
-                // $this->validation->d1g1_notice_form('error');
+                    
+                 $this->validation->d1g1_notice_form('error');
 
                 } else if ( $save_progress == 'success') {
                 
-                // $this->validation->d1g1_notice_form('success');
+                 $this->validation->d1g1_notice_form('success');
 
                 }
             }
@@ -463,7 +463,8 @@ if (!class_exists('D1G1_Front_Form')) {
             //die();
             if (isset($inputs['nonce_' . $formID]) && wp_verify_nonce($inputs['nonce_' . $formID], $formID)) {
                 //validace polí
-              //  die('test některých polí');
+               
+             // die('test některých polí');
                 if (!$this->validate_fields($inputs, $formID)) {
                     $this->session->addSession($formID . '_save', 'fail');
                     wp_safe_redirect($inputs['_wp_http_referer']);
@@ -483,9 +484,10 @@ if (!class_exists('D1G1_Front_Form')) {
                         do_action('d1g1_form_save_option_hook', $formID , $inputs , $this->fields );
 
                         wp_safe_redirect($inputs['_wp_http_referer']);
+                        exit;
                     //defaultní zpracování formuláře
                     }else {
-                         
+                       
                         $metas = $inputs;
                         $validation_data = $this->session->getSession( $this->form_ID.'_validation' );
                       
@@ -510,7 +512,7 @@ if (!class_exists('D1G1_Front_Form')) {
                         if(isset($metas['form_id_d1g1'])) unset($metas['form_id_d1g1']);
                         if(isset($metas['submit'])) unset($metas['submit']);
                         if(isset($metas['nonce_' . $formID])) unset($metas['nonce_' . $formID]);
-                         
+                        
                         //zde budeme zpracovávat ukládání hodnot
                             if ($metas && !empty($metas)) {
                                 
@@ -528,14 +530,17 @@ if (!class_exists('D1G1_Front_Form')) {
                                 wp_safe_redirect($newUrl);
                                 exit;
                                 } 
-                    }  
-                    
-                }   
+                            }  
+                          
+                          
+                }  
+                 
                 $this->session->addSession($formID . '_save', 'fail');
                 wp_safe_redirect($inputs['_wp_http_referer']);
                 exit;
                 die('Nastala chyba');
             }
+        
         }
         public function save_data($key, $value) {
             $id = ($this->form_ID ? $this->form_ID : 'default');
