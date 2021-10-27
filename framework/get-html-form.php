@@ -360,7 +360,8 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
             }
             
             echo '<div class="input-group">';
-            echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_URLSLUG . "assets/icons/link-line.svg") . '</span>';
+           // echo get_plugin_directory_uri();
+            echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg") . '</span>';
             echo  $floating_label_start;
 
             echo '<input type="url" id="d1g1-media-url" value="' . $value . '" name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" />';
@@ -369,7 +370,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
 
             echo $floating_label_end ;
 
-            echo '<a href="#" id="d1g1-media-upload" class="button">' . d1g1_get_svg(D1G1_URLSLUG . "assets/icons/upload-cloud-line.svg") . 'Nahrát</a>';
+            echo '<a href="#" id="d1g1-media-upload" class="button">' . d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/upload-cloud-line.svg") . 'Nahrát</a>';
 
 
             echo '</div>';
@@ -379,7 +380,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
             if ($value) {
                 echo '<p><div class=upload-img-preview>';
                 echo '<img src="' . $value . '" width="300" height="200" alt="alt">';
-                echo '<a href="#" class="button white icon">' . d1g1_get_svg(D1G1_URLSLUG . "assets/icons/trash-line.svg") . 'Odstranit</a>';
+                echo '<a href="#" class="button white icon">' . d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/trash-line.svg") . 'Odstranit</a>';
                 echo '</div></p>';
             }
         }

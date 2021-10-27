@@ -69,7 +69,7 @@ if (!class_exists('submenuContentD1G1')) {
                     ]
                 ];
                 
-              
+            
                 if($_SESSION['update_report_save']){
                     $sessions->display_notice($sessins_list);
                     settings_errors();

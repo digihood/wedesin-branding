@@ -105,15 +105,15 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             
             if ($this->save_update_data($inputs)) {
                 $email->send_client_emails($mail, $subject ,$text);
-                
+              //  preprint($text);
+                //die();
                 $this->session->addSession($formID . '_save', 'success');
                 
-               // die();
+               
             } else {
                 $this->session->addSession($formID . '_save', 'fail');
             }
-            preprint($_SESSION);
-           
+            
             wp_safe_redirect($inputs['_wp_http_referer']);
             exit;
         }

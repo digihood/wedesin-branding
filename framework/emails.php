@@ -53,7 +53,7 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
       public function text_settings(){
      
         $text = array(
-          'footer_copy'=> '© '. date('Y') .' <a href="https://wedesin.cz" style="color:'.$this->fontColorLinkText.'; target="_blank">WeDesIn</a>',
+          'footer_copy'=> '© '. date('Y') .' <a href="https://wedesin.cz" style="color:'.$this->fontColorLinkText.';" target="_blank">WeDesIn</a>',
           'footer_text'=> 'Tento email byl odeslán z webu <a href="'. get_home_url().'" style="color:'.$this->fontColorLinkText.';" >'. $this->url_without().'</a>');
         return $text;
       }
