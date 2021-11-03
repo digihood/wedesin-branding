@@ -98,15 +98,14 @@ if( ! class_exists( 'D1G1FormFunction' ) )
            
             //zde zprovoznit emaily
             $text = $email->email_content('Aktualizace webu', array($content),$footer );
-           
+          
             //uložení aktualizace
             $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
             $this->save_update_data($inputs);
             
             if ($this->save_update_data($inputs)) {
                 $email->send_client_emails($mail, $subject ,$text);
-              //  preprint($text);
-                //die();
+                
                 $this->session->addSession($formID . '_save', 'success');
                 
                

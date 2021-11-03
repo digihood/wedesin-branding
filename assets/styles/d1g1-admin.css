@@ -153,7 +153,6 @@ body .d1g1-notice a:hover {
 }
 .d1g1-admin .form-item {
   position: relative;
-  padding-left: 26px;
   margin: 20px 0;
 }
 
@@ -546,11 +545,18 @@ min-width: 60px;
   transform: translateX(10px);
 }
 
-/* radio */
-.d1g1-admin .radio-wrap {
-  margin-top: 10px;
+.d1g1-admin   .checkbox-large h3 {
+  position:relative;
+  left:46px;
 }
 
+
+/* radio */
+.d1g1-admin .radio-wrap {
+  position:relative;
+  left: 46px;
+  margin-top: 10px;
+}
 .d1g1-admin .radio {
   cursor: pointer;
   -webkit-user-select: none;

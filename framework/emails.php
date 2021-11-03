@@ -177,7 +177,7 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
                             <table style="background: '.$this->background.'; color:'.$this->fontColorFooter.';" width="600" border="0" cellspacing="0" cellpadding="0" align="center" class="responsive-table">';
                                 $return .='<tr>
                                     <td align="center" valign="middle" style="font-size: '.$this->fontSize .'; line-height: '. $this->lineHeight.'; font-family: '.$this->fontFamily.'; padding: 15px 5px 0px 5px;">
-                                    '. $text['footer_copy'].'
+                                    
                                     </td>
                                 </tr>
                                 <tr>
@@ -187,7 +187,7 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
                                 </tr>
                                 <tr>
                                   <td align="center" valign="middle" style="font-size: '.$this->fontSize .'; line-height: '. $this->lineHeight.'; font-family: '.$this->fontFamily.'; padding: 15px 5px 15px 5px;">
-                                    <a href="'.home_url().'" target="_blank" style="color:'.$this->fontColorLinkText.'; text-decoration: underline;">'. $this->url_without().'</a>
+                                  '. $text['footer_copy'].'
                                   </td>
                                 </tr>
                             </table>
@@ -322,7 +322,8 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
       /* Test mailů
       ========================================================*/
       public function email_test() {
-        if ( isset($_GET['showmail']) &&$_GET['showmail']==1 ) {
+        if ( isset($_GET['showmail']) &&$_GET['showmail']==2 ) {
+          preprint($settings['footer_color']);
           echo $this->email_content( 'title','subtitle',array('test', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam sapien sem, ornare ac, nonummy non, lobortis a enim. Etiam egestas wisi a erat. Vivamus ac leo pretium faucibus. Maecenas sollicitudin. Morbi leo mi, nonummy eget tristique non, rhoncus non leo. Vivamus luctus egestas leo. Suspendisse sagittis ultrices augue. Etiam dui sem, fermentum vitae, sagittis id, malesuada in, quam. Nullam justo enim, consectetuer nec, ullamcorper ac, vestibulum in, elit. Aliquam ante. Aliquam erat volutpat. In convallis.'),
           'footer', 'https://wedestnttin.cz', 'ahoooooooooooj' );
          //echo 'eghsgeghs';
@@ -330,5 +331,5 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
         }
       }
     }
-
+    new d1g1SendEmailBrand;
 }
