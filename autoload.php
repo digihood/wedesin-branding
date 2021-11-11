@@ -8,7 +8,8 @@
 
 include_once( D1G1_BRANDPATH . 'framework/styles-scripts.php');  
 include_once( D1G1_BRANDPATH . 'framework/main-menu.php');  
-include_once( D1G1_BRANDPATH . 'framework/log/log-setup.php');  
+include_once( D1G1_BRANDPATH . 'framework/monolog/log-setup.php');  
+include_once( D1G1_BRANDPATH . 'components/log-content.php');
 include_once( D1G1_BRANDPATH . 'framework/forms-builder.php'); 
 include_once( D1G1_BRANDPATH . 'framework/sessions.php'); 
 include_once( D1G1_BRANDPATH . 'framework/cookies.php'); 
@@ -40,5 +41,15 @@ include_once( D1G1_BRANDPATH . 'admin/info-box/restapi-call.php');
 include_once( D1G1_BRANDPATH . 'components/email-content.php'); 
 include_once( D1G1_BRANDPATH . 'components/admin-update.php'); 
 include_once( D1G1_BRANDPATH . 'components/styles-scripts.php');
-include_once( D1G1_BRANDPATH . 'components/custom-functions.php'); 
+include_once( D1G1_BRANDPATH . 'components/custom-functions.php');
+
+
+/*******************************
+/         Logs MONOLOG         *
+********************************/
+
+include_once( D1G1_BRANDPATH . 'framework/monolog/logs-functions.php');
+if(!class_exists('Monolog\Logger')){  
+    include_once( D1G1_BRANDPATH . 'vendor/autoload.php');
+}
 ?>

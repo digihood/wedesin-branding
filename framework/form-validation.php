@@ -373,15 +373,15 @@ if( ! class_exists( 'D1G1validform' ) )
             if($notice == 'error'){
                 ?>
                 <div class="notice notice-error d1g1-notice is-dismissible">
-                <?= '<p>'.__('Nastavení se nepodařilo uložit. Formulář obsahuje chyby. Zkontrolujte správnost vyplnění následujících položek.', TM_PLUGSLUG). '</p>'?>
-                <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?=''. __('Skrýt toto upozornění.', TM_PLUGSLUG). ''?></span></button>
+                <?= '<p>'.__('Nastavení se nepodařilo uložit. Formulář obsahuje chyby. Zkontrolujte správnost vyplnění následujících položek.', TM_PLUGSEC). '</p>'?>
+                <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?=''. __('Skrýt toto upozornění.', TM_PLUGSEC). ''?></span></button>
                 </div>
             <?php 
             }elseif ($notice == 'success'){
                 ?>
                 <div class="notice notice-success d1g1-notice is-dismissible">
-               <?= '<p>'. __('Nastavení bylo uloženo.', TM_PLUGSLUG) . '</p>' ?>
-               <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?=''. __('Skrýt toto upozornění.', TM_PLUGSLUG). ''?></span></button>
+               <?= '<p>'. __('Nastavení bylo uloženo.', TM_PLUGSEC) . '</p>' ?>
+               <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?=''. __('Skrýt toto upozornění.', TM_PLUGSEC). ''?></span></button>
                </div>
            <?php
             }

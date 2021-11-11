@@ -1,147 +1,99 @@
 <?php 
-namespace pluginbrandslug\component\log_content;
+namespace pluginbrandslug\components\log_content;
 if ( ! defined( 'ABSPATH' ) ) {
 
   exit;
 
 }
 if (!class_exists('d1g1LogSettings')){
-        class d1g1LogSettings
+
+    class d1g1LogSettings{
+        public $LogFile;
+
+        //konstruktor
+        public function __construct()
         {
-            public $LogFile;
-
-            //konstruktor
-            public function __construct()
-            {
-                //spuštní
-                add_action('admin_init', [$this, 'get_log_file'] );
-                add_action('d1g1_plugin_log_tab_content', [$this, 'add_tab'] );
-                add_action('d1g1_plugin_log_header_content', [$this, 'add_header'] );
-                add_action( 'init',  [$this, 'test__log'] );
-
-            }
-            /**
-             * Funkce zapíše log do souboru pro tento plugin
-             *
-             * @param none
-             * 
-             * @author digihood
-             * @return true/false
-             */ 
-            public function add_log($event, $message, $note="") {
-                $log = new \pluginbrandslug\framework\log_functions\d1g1Log;
-                $file = $this->get_plugin_folder_name();
-                $log->add_log( $file, $event, $message, $note);
-            }
-
-            /**
-             * Zapíše zprávu do logu TEST
-             *
-             * @param none
-             * 
-             * @author digihood
-             * @return true/false
-             */ 
-            public function test__log() {
-                if ( isset($_GET['test_log']) && $_GET['test_log'] == 2  ) {
-                $this->add_log(     
-                    'ahoj',
-                    'testuji si tu uložení',
-                    'blabla'
-                );
+            //spuštní
         
-                die('tu');
-                }
-            }
+            add_action('d1g1_plugin_log_tab_content', [$this, 'add_tab'] );
+            add_action('d1g1_plugin_log_header_content', [$this, 'add_header'] );
+          //  add_action( 'init',  [$this, 'test__log'] );
 
-            public function get_log_file($file="") {
-                $settings= new \logSetupD1G1;
-                if (empty($file)) $file = $this->get_plugin_folder_name();
-                $this->LogFile = $settings->get_d1g1_log_folder() .'/'.$file.'.log';
-            }
-            public function the_log_file($file="") {
-                $settings= new \logSetupD1G1;
-                if (empty($file)) $file = $this->get_plugin_folder_name();
-                return $this->LogFile = $settings->get_d1g1_log_folder() .'/'.$file.'.log';
-            }
+        }
 
-            public function get_plugin_folder_name(){
-                $filename = "";
-                $basename = plugin_basename( __FILE__ ); 
-                if ($basename) {
-                    $name = explode('/',$basename);
-                    $filename = $name[0];
-                }
-                return $filename;
-            }
 
-            /**
-             * Přidá záložku logu pro tento plugin
-             *
-             * @param none
-             * 
-             * @author digihood
-             * @return true/false
-             */ 
-            public function add_header( ) { 
-                $default_tab = null;
-                $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
-                ?>
-                <a href="?page=d1g1-logs&tab=<?= $this->get_plugin_folder_name() ?>" class="nav-tab <?= ($tab===$this->get_plugin_folder_name() ? 'nav-tab-active' : '')?>">
-                    <?= $this->get_plugin_folder_name() ?>
-                </a>
-            <?php }
-
-            /**
-             * Přidá záložku logu pro tento plugin
-             *
-             * @param none
-             * 
-             * @author digihood
-             * @return true/false
-             */ 
-         
-                public function add_tab( ) {
-                    $tab = isset($_GET['tab']) ? $_GET['tab'] : '';
-                    $file = $this->LogFile;
-                    if ($tab) $file = $tab;
-                    $this->the_log_excerpt_admin($file);
-                }
-            
-
-            /**
-             * Zkontroluje, jestli existuje soubor s logem
-             *
-             * @param none
-             * 
-             * @author digihood
-             * @return true/false
-             */ 
-            public function is_log_file_exists($file="") { 
-                $fileLog = $this->LogFile;
-                if ($file) $fileLog = $this->the_log_file($file);
-                return file_exists($fileLog);
-            }
-
-            /**
-             * Výpis logu do admina 
-             *
-             * @param none
-             * 
-             * @author digihood
-             * @return true/false
-             */ 
-            public function the_log_excerpt_admin($file="") { 
-                $fileLog = $this->LogFile;
-                if ($file) $fileLog = $this->the_log_file($file);
-                if($this->is_log_file_exists($file)) {
-                    $viewfile = $fileLog;
-                    if ($_GET['tab'] == $this->get_plugin_folder_name() ) { 
-                        include_once( D1G1_BRANDPATH . 'framework/log/views/view-log.php' );
-
-                    }
-                }
+        /**
+         * Zapíše zprávu do logu TEST
+         *
+         * @param none
+         * 
+         * @author digihood
+         * @return true/false
+         */ 
+        public function test__log() {
+            if ( isset($_GET['test_log']) && $_GET['test_log'] == 2  ) {
+            $this->add_log(     
+                'ahoj',
+                'testuji si tu uložení',
+                'blabla'
+            );
+    
+            die('tu');
             }
         }
-        new   \pluginbrandslug\component\log_content\d1g1LogSettings;
+
+
+        /**
+         * Přidá záložku logu pro tento plugin
+         *
+         * @param none
+         * 
+         * @author digihood
+         * @return true/false
+         */ 
+        public function add_header( ) { 
+            $plugin_data = get_plugin_data( D1G1_BRANDPATH . 'setup.php' );
+            $plugin_name = $plugin_data['Name'];
+
+            $default_tab = null;
+            $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
+            ?>
+            
+            <a href="?page=d1g1-logs&tab=<?= D1G1_BRANDING ?>" class="nav-tab <?= ($tab=== D1G1_BRANDING ? 'nav-tab-active' : '')?>">
+                <?php echo $plugin_name; ?>
+            </a>
+        <?php }
+
+        /**
+         * Přidá záložku logu pro tento plugin
+         *
+         * @param none
+         * 
+         * @author digihood
+         * @return true/false
+         */ 
+        public function add_tab( ) {
+            $tab = isset($_GET['tab']) ? $_GET['tab'] : '';
+            $file = $this->LogFile;
+            if ($tab) $file = $tab;
+            $this->the_log_excerpt_admin();
+        }
+
+        /**
+         * Výpis logu do admina 
+         *
+         * @param none
+         * 
+         * @author digihood
+         * @return true/false
+         */ 
+        public function the_log_excerpt_admin() { 
+      
+                if ($_GET['tab'] == D1G1_BRANDING ) { 
+            
+                    include_once( D1G1_BRANDPATH. 'framework/monolog/views/view-log.php' );
+                }
+        }
     }
+}
+new \pluginbrandslug\components\log_content\d1g1LogSettings;

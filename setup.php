@@ -33,6 +33,12 @@ define( 'TM_PLUGSEC', 'd1g1_plugins' );
 define( 'D1G1_BRANDPATH', plugin_dir_path( __FILE__ ) );
 define( 'D1G1_BRANDURL', plugin_dir_url( __FILE__ ) );
 define( 'D1G1_BRANDING', 'D1G1BRAND' );
+define( 'D1G1_LFILEDIR_BRAND','d1g1-wedesin-logs');
+// Nastavení automatické kontroly auktualizací 
+// D1G1_GITHUBURL example : https://github.com/WeDesIn/wedesin-branding
+// D1G1_GITHUBREP example : wedesin-branding
+define( 'D1G1_GITHUBURL_BRAND', 'hhttps://github.com/WeDesIn/wedesin-branding');
+define( 'D1G1_GITHUBREP_BRAND', 'wedesin-branding');
 
 /*******************************
 /     Plugin requirements      *
@@ -41,7 +47,7 @@ require( D1G1_BRANDPATH . 'framework/plugin-requirements.php');
 
 class DemandingPlugin extends \pluginbrandslug\requirements\d1g1PluginRequirements {
  
-    const PLUGIN_NAME = "digihood WC Video";
+    const PLUGIN_NAME = "WeDesIn Branding";
  
     public function __construct() {
         $this->add_activation_hooks( __FILE__ );
@@ -69,13 +75,14 @@ include_once( D1G1_BRANDPATH . 'autoload.php');
 
 
 
-// Nastavení utomatické kontroly auktualizací 
-$myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
-	'https://github.com/WeDesIn/wedesin-branding',
-	__FILE__,
-	'wedesin-branding'
-);
-//Set the branch that contains the stable release.
-$myUpdateChecker->setBranch('master');
-//Optional: If you're using a private repository, specify the access token like this:
-$myUpdateChecker->setAuthentication('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');
+if(D1G1_GITHUBURL_BRAND && D1G1_GITHUBREP_BRAND){
+    $myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
+        D1G1_GITHUBURL_BRAND,
+        __FILE__,
+        D1G1_GITHUBREP_BRAND
+    );
+    //Set the branch that contains the stable release.
+    $myUpdateChecker->setBranch('master');
+    //Optional: If you're using a private repository, specify the access token like this:
+    $myUpdateChecker->setAuthentication('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');
+}

@@ -316,7 +316,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
             }
 
             echo '<div class="input-group">';
-            echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_URLSLUG . "assets/icons/link-line.svg") . '</span>';
+            echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDURL . "assets/icons/link-line.svg") . '</span>';
             echo  $floating_label_start;
 
             echo '<input type="url" value="' . $value . '" name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" />';
@@ -724,7 +724,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
                     }
 
                     echo '<div class="input-group">';
-                    echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_URLSLUG . $icon) . '</span>';
+                    echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDURL . $icon) . '</span>';
                     echo $floating_label_start;
                     echo '<input type="' . $type . '" id="' . $name . '" name="' . $name . '" value="' . $value . '">';
                     if ($label)  echo '<label for="' . $name . '">' . $label . $required . '</label>';
@@ -789,7 +789,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
 
              echo '<div class="info-block' . $warning . '">';
 
-             echo '<span class="icon">' . d1g1_get_svg(D1G1_URLSLUG . $icon) . '</span>';
+             echo '<span class="icon">' . d1g1_get_svg(D1G1_BRANDURL . $icon) . '</span>';
 
              if ($headline) echo '<h3>' . $headline . '</h3>';
              if ($description) echo '<p>' . $description . '</p>';

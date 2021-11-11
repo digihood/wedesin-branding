@@ -103,8 +103,13 @@ if (!class_exists('submenuContentD1G1')) {
                             ?>
                                     <h2>Odeslat hlášení o aktualizaci</h2>
                                     <p>Formulář pro vyplnění hlášení o aktualizaci</p>
-                                    <?php if (!empty($mailingForm)){
+                                    
+                                    <?php 
+                                  
+                                    if (!empty($mailingForm)){
                                         $builder->display_form("update_report");
+
+                                    
                                     }?>
                                 <?php
                                     break;
