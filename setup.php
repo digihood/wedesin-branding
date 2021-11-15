@@ -3,7 +3,7 @@ namespace pluginbrandslug;
 /**
 * Plugin Name: WeDesIn Branding
 * Description: WeDesIn branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
-* Version: 2.3.0
+* Version: 2.3.1
 * Author: WeDesIn
 * Author URI: https://www.wedesin.cz/
 * Requires at least: 3.0.
