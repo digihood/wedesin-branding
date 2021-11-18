@@ -28,7 +28,7 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
   
       public function __construct($settings = []){
         add_filter( 'wp_mail', [$this, 'change_headers'] );
-        add_action( 'init', [$this,'email_test'] );
+        //add_action( 'init', [$this,'email_test'] );
         $this->settings_css($settings);
       }
       public function settings_css($settings = []) {
@@ -331,5 +331,5 @@ if( ! class_exists( 'd1g1SendEmailBrand' ) )
         }
       }
     }
-    new d1g1SendEmailBrand;
+    //new d1g1SendEmailBrand;
 }
