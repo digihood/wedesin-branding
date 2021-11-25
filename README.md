@@ -2,7 +2,7 @@
 # Wedesin Branding
 
 
-**Requires at least:** WordPress 4
+**Requires at least:** WordPress 5
 **Tested up to:** WordPress 5.8  
 **Requires PHP:** 7.0.0
 
@@ -22,4 +22,4 @@
 
 
 ## Changelog
-
+Change log <a href="https://github.com/WeDesIn/wedesin-branding/releases">here</a>
