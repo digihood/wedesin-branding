@@ -105,7 +105,10 @@ if (!class_exists('submenuContentD1G1')) {
                                     <p>Formulář pro vyplnění hlášení o aktualizaci</p>
                                     
                                     <?php 
-                                  
+                                   $new = new \brand\framework\d1g1_plugins\d1g1plugins;
+
+                                   $test = $new->rest_api_post('pluginsnews');
+                                   preprint($test);
                                     if (!empty($mailingForm)){
                                         $builder->display_form("update_report");
 

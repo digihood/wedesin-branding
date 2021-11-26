@@ -17,6 +17,7 @@ include_once( D1G1_BRANDPATH . 'framework/get-html-form.php');
 include_once( D1G1_BRANDPATH . 'framework/emails.php'); 
 include_once( D1G1_BRANDPATH . 'framework/plugin-update-checker/plugin-update-checker.php'); 
 include_once( D1G1_BRANDPATH . 'framework/monolog/logs-functions.php');
+include_once( D1G1_BRANDPATH . 'framework/d1g1-plugins.php');
 //admin
 include_once( D1G1_BRANDPATH . 'admin/sub-menu.php');  
 include_once( D1G1_BRANDPATH . 'admin/form_fields.php'); 

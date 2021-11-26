@@ -9,7 +9,7 @@ namespace pluginbrandslug;
 * Author URI: https://www.wedesin.cz/
 * Requires at least: 3.0.
 * Tested up to: 5.8.
-* Text Domain: wds-branding
+* Text Domain: wedesin-branding
 * License: GPL2 or higher
 */
 
