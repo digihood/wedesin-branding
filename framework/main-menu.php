@@ -90,7 +90,7 @@ if( ! class_exists( 'mainMenuD1G1' ) )
                              //   echo '<li><a href="'.menu_page_url($key[2], false).'">'.$key[3].'</a></li>';
                            // }
                         } 
-                        $test = d1g1_get_plugins('all');
+                        $test = d1g1_get_plugins('active');
                         //preprint($test);
                         $show = $this->d1g1_show_wedesin_plugin($test);
                                   
@@ -107,8 +107,8 @@ if( ! class_exists( 'mainMenuD1G1' ) )
         public function d1g1_show_wedesin_plugin($data){
             foreach($data as $value){    
                 echo '<div class="plugin-card">';
-                echo '<h2 style="line-height: 24px">' .__(''.$value['name'].'', D1G1_BRANDING).'</h2>';
-                echo '<h4 '.($value['activated'] == 'true' ? 'style="position:relative; top:-44px; color:green; margin:10px; float:right;"' : 'style="position:relative; top:-44px; color:red; margin:10px; float:right;"').'>'.($value['activated'] == 'true' ? 'Active' : 'Deactive').'</h4>';
+                echo '<p class="h2" style="display:inline-block; line-height: 24px">' .__(''.$value['name'].'', D1G1_BRANDING).'</h2>';
+                echo '<p class="h4" style="display:inline-block; color:green; margin-right:10px; float:right; line-height: 24px"'.($value['activated'] == 'true' ?  : 'style="color:red;"').'>'.($value['activated'] == 'true' ? 'Active' : 'Deactive').'</h4>';
                 echo '<div class="d1g1-widget">';
                 echo '<p>Author : '.$value['author'].'</p>';
                 echo '<p>Description : '.$value['description'].'</p>';
