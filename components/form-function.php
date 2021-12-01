@@ -55,11 +55,16 @@ if( ! class_exists( 'D1G1FormFunction' ) )
                   
                  
                     $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;       
-                   
+                    $log = new \pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
+                 
+                    $array = [
+                        'fields' => $inputs['form_id_d1g1'],
+                        'content' => $inputs['up_content']
+                    ];
+                    $log->d1g1_add_log('Form-function','INFO','Odeslane informace o  aktualizaci', $array);       
+                 
                     $result = $this->send_update_email($inputs, $formID); 
-                            
                     
-
                     //$newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);  
                    // wp_safe_redirect($inputs['_wp_http_referer']);
                     exit();

@@ -27,6 +27,20 @@ if ( !function_exists('preprint') ) {
 
 }
 
+    /**
+     * d1g1 get option 
+     *
+     * @param $form_prefix 
+     * @param $meta_name 
+     * @author digihood
+     * @return echo string
+     */ 
+if ( !function_exists('d1g1_get_option') ) {
+    function d1g1_get_option($form_prefix, $meta_name){
+        $option = get_option ('_d1g1_' . D1G1_BRANDING . '_' . $form_prefix . '_' . $meta_name);
+        return $option;
+    }
+}
 /**
  * Vrátí správnou délku stringu
  *
@@ -135,78 +149,4 @@ if ( !function_exists('valid_leght_string') ) {
 
 }
 
-/**
- * get wedesin plugins
- *
- * @param $lang string
- * 
- * @author digihood
- * @return echo string
- */ 
 
-if ( !function_exists('d1g1_get_plugins') ) {
-
-    function d1g1_get_plugins($what = '') {
-        $plugins = get_plugins();
-       switch($what):
-        default:
-       case 'all':
-            foreach($plugins as $plugin){
-                if($plugin['AuthorName'] == 'WeDesIn'){
-                    $active = is_plugin_active( ''.$plugin['TextDomain'].'/setup.php' );
-                    $data[] = [
-                        'name' => $plugin['Name'],
-                        'version' => $plugin['Version'],
-                        'description' => $plugin['Description'],
-                        'author' => $plugin['Author'],
-                        'activated' => ($active == true ?  'true' : 'false')
-                    ];
-                } 
-            }
-            return $data;   
-            break;
-        case 'active':
-            foreach($plugins as $plugin){
-                if($plugin['AuthorName'] == 'WeDesIn'){
-                    $inactive = is_plugin_active( ''.$plugin['TextDomain'].'/setup.php' );
-                    if($inactive == true){
-                        $data[] = [
-                            'name' => $plugin['Name'],
-                            'version' => $plugin['Version'],
-                            'description' => $plugin['Description'],
-                            'author' => $plugin['Author'],
-                            'activated' => true
-                        ];
-                    }
-                }
-            }
-            return $data;
-            break;
-        case 'inactive':
-            
-                foreach($plugins as $plugin){
-                    if($plugin['AuthorName'] == 'WeDesIn'){
-                        $inactive = is_plugin_inactive( ''.$plugin['TextDomain'].'/setup.php' );
-                        if($inactive == true){
-                            $data[] = [
-                                'name' => $plugin['Name'],
-                                'version' => $plugin['Version'],
-                                'description' => $plugin['Description'],
-                                'author' => $plugin['Author'],
-                                'activated' => false
-                            ];
-                        }
-                    }
-                }
-            return $data;
-            break;
-        endswitch;
-
-    }
-
-
-
-
-
-
-}

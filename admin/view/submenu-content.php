@@ -85,13 +85,13 @@ if (!class_exists('submenuContentD1G1')) {
                 <div class="row">
                     <div class="column content">
                         <nav class="nav-tab-wrapper"> 
-                            <a href="?page=d1g1_brand&tab=updates_list" class="nav-tab <?php if ($tab === 'updates_list') : ?>nav-tab-active<?php endif; ?>"> <?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/info-standard-line.svg"); ?>Přehled aktualizací</a>
-                                <a href="?page=d1g1_brand&tab=send_report" class="nav-tab <?php if ($tab === 'send_report') : ?>nav-tab-active<?php endif; ?>"> <?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/upload-cloud-line.svg"); ?>Odeslat Report</a>
+                            <a href="?page=<?= D1G1_BRANDING ?>&tab=updates_list" class="nav-tab <?php if ($tab === 'updates_list') : ?>nav-tab-active<?php endif; ?>"> <?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/info-standard-line.svg"); ?>Přehled aktualizací</a>
+                                <a href="?page=<?= D1G1_BRANDING ?>&tab=send_report" class="nav-tab <?php if ($tab === 'send_report') : ?>nav-tab-active<?php endif; ?>"> <?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/upload-cloud-line.svg"); ?>Odeslat Report</a>
                             <?php
                                 $mailingForm = $builder->get_fields_form("brand_emails_settings");
                             if (!empty($mailingForm)){
                                 ?>
-                                <a href="?page=d1g1_brand&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg"); ?>Nastavení e-mailu</a>
+                                <a href="?page=<?= D1G1_BRANDING ?>&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg"); ?>Nastavení e-mailu</a>
                                 <?php 
                             } ?>
                         </nav>
@@ -101,14 +101,15 @@ if (!class_exists('submenuContentD1G1')) {
                                 default:
                                
                             ?>
+
                                     <h2>Odeslat hlášení o aktualizaci</h2>
                                     <p>Formulář pro vyplnění hlášení o aktualizaci</p>
                                     
                                     <?php 
-                                   $new = new \brand\framework\d1g1_plugins\d1g1plugins;
+                                 $class = new \pluginbrandslug\framework\d1g1_plugins\d1g1plugins;
+                                 $test = $class->d1g1_comparison_plugins();  
 
-                                   $test = $new->rest_api_post('pluginsnews');
-                                   preprint($test);
+                                 preprint($test);
                                     if (!empty($mailingForm)){
                                         $builder->display_form("update_report");
 

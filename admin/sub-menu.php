@@ -46,7 +46,7 @@ if( ! class_exists( 'subMenuD1G1' ) )
                     __( 'Branding', TM_PLUGSEC ),                    
                     __('Branding', TM_PLUGSEC),               
                     'manage_options',                           
-                    'd1g1_brand',                              
+                    D1G1_BRANDING,                              
                     [$subcontent, 'my_admin_page_contents'],          
                 ]
             ];
