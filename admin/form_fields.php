@@ -155,6 +155,74 @@ if( ! class_exists( 'PluginField' ) )
 					]
 					];
 
+			}elseif ($formID == 'feedback'){
+				$userdata = get_userdata(get_current_user_id());
+				$username = $userdata->user_login;
+				$useremail = $userdata->user_email;
+				$dateregister = $userdata->user_registered;
+				$userroles = $userdata->roles[0];
+				$userphone = get_user_meta(get_current_user_id(),'billing_phone',true);
+			
+				
+
+				$fields=[
+					[
+						'headline' => 'Zpetná vazba ',
+						'description' => 'Váš názor je pro nás důležitý. Chtěli bychom vás poprosit o zpětnou reakci.',
+						'save_option' => 'send_feedback',
+						
+						[
+							'type' => 'text',
+							'name' => 'feedback_subject',
+							'saveAs' => 'meta',
+							'required' => false,
+							'label' => 'Předmět',
+						],
+						[
+							'type' => 'editor',
+							'name' => 'feedback_content',
+							'saveAs' => 'meta',
+							'required' => true,
+							'label' => 'Obsah',
+						],
+						[
+							'type' => 'hidden',
+							'name' => 'username',
+							'saveAs' => 'meta',
+							'required' => false,
+							'value' => $username
+						],
+						[
+							'type' => 'hidden',
+							'name' => 'usermail',
+							'saveAs' => 'meta',
+							'required' => false,
+							'value' => $useremail
+						],
+						[
+							'type' => 'hidden',
+							'name' => 'dateregister',
+							'saveAs' => 'meta',
+							'required' => false,
+							'value' => $dateregister
+						],
+						[
+							'type' => 'hidden',
+							'name' => 'userroles',
+							'saveAs' => 'meta',
+							'required' => false,
+							'value' => $userroles
+						],
+						[
+							'type' => 'hidden',
+							'name' => 'userphone',
+							'saveAs' => 'meta',
+							'required' => false,
+							'value' => $userphone
+						],
+					]
+				];
+				
 			}
 			
 			return $fields;

@@ -94,6 +94,9 @@ if (!class_exists('submenuContentD1G1')) {
                                 <a href="?page=<?= D1G1_BRANDING ?>&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg"); ?>Nastavení e-mailu</a>
                                 <?php 
                             } ?>
+                            <a href="?page=<?= D1G1_BRANDING ?>&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg"); ?>Nastavení e-mailu</a>
+                                <a href="?page=<?= D1G1_BRANDING ?>&tab=feedback" class="nav-tab <?php if ($tab === 'feedback') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/info-standard-line.svg"); ?>feedback</a>
+                                
                         </nav>
                         <div class="content-box">
                             <?php switch ($tab):
@@ -131,7 +134,11 @@ if (!class_exists('submenuContentD1G1')) {
                                 case 'updates_list':
                                     $this->the_updates_list();
                                     break;
-
+                                case 'feedback':
+                                
+                                    $builder->display_form("feedback");
+                                    break;
+    
                             endswitch; ?>
                         </div>
                     </div>
