@@ -7,10 +7,9 @@
 **Requires PHP:** 7.0.0
 
 
-
-
-
 ## Description
+Plugin pro klienty <a href="https://whitehill.company/" target="_blank">Whitehill s.r.o.</a> a <a href="https://wedesin.cz" target="_blank">WeDesIn</a>.
+Plugin umožňuje snadnou správu, odesílání reportu o aktualizacích a také mění barvy administrace WP.
 
 
 ## Frequently Asked Questions
@@ -19,7 +18,8 @@
 
 ## Copyright
 
-
+© 2016 - 2021, <a href="https://wedesin.cz" target="_blank">WeDesIn</a>
 
 ## Changelog
 
+https://github.com/WeDesIn/wedesin-branding/releases
