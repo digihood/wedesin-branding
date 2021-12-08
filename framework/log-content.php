@@ -1,5 +1,5 @@
 <?php 
-namespace pluginbrandslug\components\log_content;
+namespace pluginbrandslug\framework\log_content;
 if ( ! defined( 'ABSPATH' ) ) {
 
   exit;
@@ -96,4 +96,4 @@ if (!class_exists('d1g1LogSettings')){
         }
     }
 }
-new \pluginbrandslug\components\log_content\d1g1LogSettings;
+new d1g1LogSettings;
