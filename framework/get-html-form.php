@@ -70,11 +70,11 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
                 case 'number':
                 case 'password':
                 case 'text':
-                    $this->get_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text );
+                    $this->get_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text , $label);
                     break;
                 case 'hidden': 
 
-                    $this->get_hidden_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text );
+                    $this->get_hidden_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text, $label );
             
                 break;
                 case 'select': 
@@ -89,7 +89,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
                 break;
                 case 'image': 
                     
-                    $this->get_image_input($description, $is_valid, $floating_label_start, $value , $name , $placeholder , $atts, $class ,$label , $required, $help_Text);
+                    $this->get_image_input($description, $is_valid, $floating_label_start, $value , $name , $placeholder , $atts, $class ,$label , $required, $help_text , $floating_label_end);
 
                 break;
                 case 'radio':
@@ -101,7 +101,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
                 case 'checkbox':
                 case 'checkbox_large': 
 
-                    $this->get_checkbox_large_input($args, $type, $name, $label, $class,$required, $is_valid, $description, $help_text , $form);
+                    $this->get_checkbox_large_input($args, $type, $name, $label, $class,$required, $is_valid, $description,  $help_text , $form ,$atts);
 
                 break;
                 case 'switch': 
@@ -172,7 +172,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          * @return echo
          */ 
 
-        private function get_hidden_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text  ) {
+        private function get_hidden_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text , $label  ) {
             $id_val = str_replace(']', '', str_replace('[', '', $name));
             if ($description) echo '<p>' . $description . '</p>';
             echo '<p>' . $floating_label_start;
@@ -202,7 +202,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          * @return true/false
          */ 
 
-        private function get_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text  ) {
+        private function get_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text , $label  ) {
             $id_val = str_replace(']', '', str_replace('[', '', $name));
 
                 if ($description) echo '<p>' . $description . '</p>';
@@ -348,7 +348,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          * @return echo 
          */ 
 
-        private function get_image_input($description, $is_valid, $floating_label_start, $value , $name , $placeholder , $atts, $class ,$label , $required, $help_Text){
+        private function get_image_input($description, $is_valid, $floating_label_start, $value , $name , $placeholder , $atts, $class ,$label , $required, $help_text , $floating_label_end){
             //echo '<div id="media-uploader-' . $name . '" data-target="' . $name . '" data-limit="1" class="dropzone ' . $class . '"></div>';
             //echo '<input type="hidden" name="' . $name . '" value="' . $value . '" ' . $atts . ' />';
             //if (!empty($placeholder)) echo '<p>' . $placeholder . '</p>';
@@ -462,7 +462,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          * @return echo
          */ 
 
-        private function get_checkbox_large_input($args, $type, $name, $label, $class,$required, $is_valid, $description, $help_text ,$form){
+        private function get_checkbox_large_input($args, $type, $name, $label, $class,$required, $is_valid, $description,  $help_text ,$form , $atts = ''){
             $label = isset($args['label']) ? $args['label'] : false;
             //$checked = (!empty($value) ? 'checked' : "");
             if ($type == 'checkbox_large') {

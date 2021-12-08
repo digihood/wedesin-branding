@@ -70,11 +70,13 @@ if (!class_exists('D1G1_Front_Form')) {
                                 <?php $this->get_form_fields($formID); ?>
 
                                 <?php
-                                //preprint ($formID);
+                              //  preprint ($formID);
                                 // zde zařídit text tlačítka 
                                 if ($formID == 'update_report') {
                                     $button_text = 'Odeslat hlášení';
-                                } else {
+                                }elseif($formID == 'feedback'){
+                                    $button_text = 'Odeslat hlášení';
+                                }else {
                                     $button_text = "";
                                 }
                                 submit_button($button_text); 
@@ -184,7 +186,7 @@ if (!class_exists('D1G1_Front_Form')) {
             $this->form_ID = $formID;
             $validation_data = $this->session->getSession( $formID.'_validation' );
             $save_progress = $this->session->getSession( $formID.'_save' );
-            if($this->fields[0]['save_option'] !== 'send_mail'){
+            if(isset($this->fields[0]['save_option']) && $this->fields[0]['save_option'] !== 'send_mail'){
                 if (isset($validation_data['allvalid']) && !$validation_data['allvalid']) {
             
                     

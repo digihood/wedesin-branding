@@ -6,13 +6,9 @@
 .box-button {
     position:absolute;
     right:30px;
-    top:163px;
+    top:98px;
     margin:10px;
 }
-
-
-
-
 </style>
 <div class="wrap">
     <div class="col-12">

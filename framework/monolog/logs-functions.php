@@ -149,29 +149,32 @@ if( ! class_exists( 'd1g1_monolog' ) )
          */ 
        public function d1g1_get_log_file(){
             $directory = $this->d1g1_get_log_folder();
-            $data = file_get_contents(''. $directory .'/'. D1G1_BRANDING .'.json');
-            $datas = $this->json_split_objects($data);
-         
-            include_once( 'views/table-header.php' );
-            foreach($datas as $row){
-                $someArray = json_decode( $row,true );
-               // preprint($someArray);
-               $showtime = $this->d1g1_setup_time($someArray['datetime']);
-            echo '<tr>';
-            echo '<td>'.$showtime.'</td>';
-            echo '<td>'.$someArray['channel'].'</td>';
-            echo '<td><b>'.$someArray['level_name'].'</b></td>';
-            echo '<td>'.$someArray['message'].'</td>';
-         
-                foreach($someArray['context'] as $rows=>$context){
+            $file = $directory .'/'. D1G1_BRANDING .'.json';
+            if(file_exists($file)){
+                $data = file_get_contents($directory .'/'. D1G1_BRANDING .'.json');
+                $datas = $this->json_split_objects($data);
+            
+                include_once( 'views/table-header.php' );
+                foreach($datas as $row){
+                    $someArray = json_decode( $row,true );
+                // preprint($someArray);
+                $showtime = $this->d1g1_setup_time($someArray['datetime']);
+                echo '<tr>';
+                echo '<td>'.$showtime.'</td>';
+                echo '<td>'.$someArray['channel'].'</td>';
+                echo '<td><b>'.$someArray['level_name'].'</b></td>';
+                echo '<td>'.$someArray['message'].'</td>';
+            
+                    foreach($someArray['context'] as $rows=>$context){
+                        
+                        echo ($context ? '<td>'.$rows.'   : <b>'.$context.'</b><br></td>' : '');
                     
-                    echo ($context ? '<td>'.$rows.'   : <b>'.$context.'</b><br></td>' : '');
-                
-                    //preprint($context);
-                    //preprint($rows);
-                
+                        //preprint($context);
+                        //preprint($rows);
+                    
+                    }
+            
                 }
-        
             }
             include_once( 'views/table-footer.php' );
         }

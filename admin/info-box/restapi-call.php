@@ -132,7 +132,7 @@ if( ! class_exists( 'getRestApiRequestD1G1' ) )
 				if (isset($img_response['body']) && !empty($img_response['body']) ) { 
 					$api_img = json_decode( $img_response['body'] ); 
 
-					if ($api_img->media_details->sizes->medium->source_url){ 		
+					if (isset($api_img->media_details->sizes->medium->source_url) && $api_img->media_details->sizes->medium->source_url){ 		
 						return $api_img->media_details->sizes->medium->source_url;
 					} else {
 								

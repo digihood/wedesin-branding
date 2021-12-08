@@ -55,24 +55,20 @@ if( ! class_exists( 'D1G1FormFunction' ) )
                   
                  
                     $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;       
-                    $log = new \pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
-                 
-                    $array = [
-                        'fields' => $inputs['form_id_d1g1'],
-                        'content' => $inputs['up_content']
-                    ];
-                    $log->d1g1_add_log('Form-function','INFO','Odeslane informace o  aktualizaci', $array);       
-                 
+                   
                     $result = $this->send_update_email($inputs, $formID); 
+                         
                     
+
                     //$newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);  
                    // wp_safe_redirect($inputs['_wp_http_referer']);
                     exit();
                 }
-                if($this->fields[0]['save_option'] == 'send_feedback'){
+
+                if(isset($this->fields[0]['save_option']) && $this->fields[0]['save_option'] == 'send_feedback'){
                     $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
                     $plugin = get_plugin_data(D1G1_BRANDPATH . '/setup.php');
-                    
+
                     $result = $this->send_feedback_email($inputs, $formID,$plugin);              
                     if ($result) {
                         $this->session->addSession($formID . '_submit_res', 'true');                                                          
@@ -122,7 +118,8 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             
             if ($this->save_update_data($inputs)) {
                 $email->send_client_emails($mail, $subject ,$text);
-                
+                $log = new \pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
+                $log->d1g1_add_log('branding','INFO','tab', $inputs); 
                 $this->session->addSession($formID . '_save', 'success');
                 
                
@@ -130,40 +127,6 @@ if( ! class_exists( 'D1G1FormFunction' ) )
                 $this->session->addSession($formID . '_save', 'fail');
             }
             
-            wp_safe_redirect($inputs['_wp_http_referer']);
-            exit;
-        }
-
-        function send_feedback_email($inputs, $formID,$plugin){
-            $mail = get_option('_d1g1_'.D1G1_BRANDING.'_emails_settings_send_to_email',false);
-            if (empty($mail)) {
-                $mail = get_option( 'admin_email' );
-            }
-            
-            $colors = $this->d1g1_settings_email();
-            $content = $this->feedback_content($inputs,$plugin);
-            $footer = __('', D1G1_BRANDING);
-            $subject = __('Feedback na plugin  ' . $plugin['Name'] . '', D1G1_BRANDING);
-            if ($inputs['feedback_subject']) {
-                $subject = $inputs['feedback_subject'];
-            }
-            
-          
-            $email = new \pluginbrandslug\framework\emails\D1G1SendEmailBrand($this->d1g1_settings_email());
-            //zde zprovoznit emaily
-             
-           
-            $text = $email->email_content('Feedback', array($content),$footer );
-          
-            //uložení aktualizace
-            $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
-          
-            if ($inputs) {
-                $email->send_client_emails($mail, $subject ,$text);
-                $this->session->addSession($formID . '_save', 'success');
-            } else {
-                $this->session->addSession($formID . '_save', 'fail');
-            }
             wp_safe_redirect($inputs['_wp_http_referer']);
             exit;
         }
@@ -244,6 +207,39 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             $content .= $this->update_list($inputs);
             return $content;
 
+        }
+        function send_feedback_email($inputs, $formID,$plugin){
+            $mail = get_option('_d1g1_'.D1G1_BRANDING.'_emails_settings_send_to_email',false);
+            if (empty($mail)) {
+                $mail = get_option( 'admin_email' );
+            }
+            
+            $colors = $this->d1g1_settings_email();
+            $content = $this->feedback_content($inputs,$plugin);
+            $footer = __('', D1G1_BRANDING);
+            $subject = __('Feedback na plugin  ' . $plugin['Name'] . '', D1G1_BRANDING);
+            if ($inputs['feedback_subject']) {
+                $subject = $inputs['feedback_subject'];
+            }
+            
+          
+            $email = new \pluginbrandslug\framework\emails\D1G1SendEmailBrand($this->d1g1_settings_email());
+            //zde zprovoznit emaily
+             
+           
+            $text = $email->email_content('Feedback', array($content),$footer );
+          
+            //uložení aktualizace
+            $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
+          
+            if ($inputs) {
+                $email->send_client_emails($mail, $subject ,$text);
+                $this->session->addSession($formID . '_save', 'success');
+            } else {
+                $this->session->addSession($formID . '_save', 'fail');
+            }
+            wp_safe_redirect($inputs['_wp_http_referer']);
+            exit;
         }
 
         public function feedback_content($inputs,$plugin) {

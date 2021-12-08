@@ -70,12 +70,12 @@ if (!class_exists('submenuContentD1G1')) {
                 ];
                 
             
-                if($_SESSION['update_report_save']){
+                if(isset($_SESSION['update_report_save']) && $_SESSION['update_report_save'] ){
                     $sessions->display_notice($sessins_list);
                     settings_errors();
                     $sessions->removeSession('update_report_save');
                     
-                 }elseif($_SESSION['brand_emails_settings_save']){
+                 }elseif(isset($_SESSION['brand_emails_settings_save']) && $_SESSION['brand_emails_settings_save'] ){
                     $sessions->display_notice($sessins_list);
                     settings_errors();
                     $sessions->removeSession('brand_emails_settings_save');
@@ -92,11 +92,10 @@ if (!class_exists('submenuContentD1G1')) {
                             if (!empty($mailingForm)){
                                 ?>
                                 <a href="?page=<?= D1G1_BRANDING ?>&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg"); ?>Nastavení e-mailu</a>
+                                <a href="?page=<?= D1G1_BRANDING ?>&tab=feedback" class="nav-tab <?php if ($tab === 'feedback') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/info-standard-line.svg"); ?>Zpetná vazba</a>
+
                                 <?php 
                             } ?>
-                            <a href="?page=<?= D1G1_BRANDING ?>&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg"); ?>Nastavení e-mailu</a>
-                                <a href="?page=<?= D1G1_BRANDING ?>&tab=feedback" class="nav-tab <?php if ($tab === 'feedback') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/info-standard-line.svg"); ?>feedback</a>
-                                
                         </nav>
                         <div class="content-box">
                             <?php switch ($tab):
@@ -104,15 +103,11 @@ if (!class_exists('submenuContentD1G1')) {
                                 default:
                                
                             ?>
-
                                     <h2>Odeslat hlášení o aktualizaci</h2>
                                     <p>Formulář pro vyplnění hlášení o aktualizaci</p>
                                     
                                     <?php 
-                                 $class = new \pluginbrandslug\framework\d1g1_plugins\d1g1plugins;
-                                 $test = $class->d1g1_comparison_plugins();  
-
-                                 preprint($test);
+                                  
                                     if (!empty($mailingForm)){
                                         $builder->display_form("update_report");
 
@@ -135,10 +130,11 @@ if (!class_exists('submenuContentD1G1')) {
                                     $this->the_updates_list();
                                     break;
                                 case 'feedback':
-                                
+
                                     $builder->display_form("feedback");
                                     break;
     
+
                             endswitch; ?>
                         </div>
                     </div>
