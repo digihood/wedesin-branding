@@ -34,8 +34,3 @@ include_once( D1G1_BRANDPATH . 'components/admin-update.php');
 include_once( D1G1_BRANDPATH . 'components/styles-scripts.php');
 include_once( D1G1_BRANDPATH . 'components/custom-functions.php');
 
-
-
-
-
-?>

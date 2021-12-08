@@ -149,11 +149,14 @@ body .d1g1-notice a:hover {
 ========================================= */
 .d1g1-admin .form-section {
   border-bottom: 1px solid var(--grey);
-  margin:30px;
 }
 .d1g1-admin .form-item {
   position: relative;
   margin: 20px 0;
+}
+
+.d1g1-admin .radio_large1 {
+  padding-left: 50px;
 }
 
 .d1g1-admin .form-item .switch {
@@ -231,7 +234,14 @@ body .d1g1-notice a:hover {
 /* floating label */
 .d1g1-admin .form-item .floating-label {
   position: relative;
-  display: block;
+  display: contents;
+}
+
+.d1g1-admin .floating-label label {
+  transform: translate(27px, -16px)!important;
+}
+.d1g1-admin .floating-label [for="datum"] {
+  transform: translate(27px, 18px)!important;
 }
 
 .d1g1-admin .form-item .floating-label input,
@@ -429,7 +439,7 @@ min-width: 60px;
   position: absolute;
   cursor: pointer;
   top: 0;
-  left: 26px;
+  left: 0;
   right: 0;
   bottom: 0;
   width: 44px;
@@ -541,9 +551,7 @@ min-width: 60px;
   display: block;
 }
 
-.d1g1-admin .checkbox-large .checkmark {
-  transform: translateX(10px);
-}
+
 
 .d1g1-admin   .checkbox-large h3 {
   position:relative;
@@ -554,7 +562,6 @@ min-width: 60px;
 /* radio */
 .d1g1-admin .radio-wrap {
   position:relative;
-  left: 46px;
   margin-top: 10px;
 }
 .d1g1-admin .radio {
@@ -829,6 +836,65 @@ input[type="range"]::-ms-thumb {
 .d1gi-widget p {
   margin: 0px;
 }
+
+/* plugins
+========================================= */
+
+.d1g1-admin .plugin-card {
+
+  background-color: white;
+  padding: 20px;
+  border: none;
+  border-radius: 4px;
+ 
+}
+.d1g1-admin .plugin-card .info {
+  background-color: var(--primary);
+}
+.d1g1-admin .plugin-card h3 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 0;
+}
+
+ .plugin-card h4 {
+  float: left;
+
+}
+.plugin-card .h4 {
+  margin-right:10px; 
+  float:right; 
+  line-height: 24px;
+  display:inline-block;
+  color:green; 
+  margin-right:10px; 
+
+}
+.plugin-card .h2 {
+ display:inline-block; 
+ line-height: 24px;
+
+}
+.plugin-card .title {
+  margin-right:10px; 
+  float:right; 
+  line-height: 24px;
+  display:inline-block;
+
+  margin-right:10px; 
+ }
+.plugin-card {
+  margin-left: 10px;
+  margin-top: 10px;
+  padding-left: 20px;
+}
+.plugins-list {
+height: 500px;
+
+
+
+}
 /* svg icons
 ========================================= */
 .d1g1-admin svg[width="36"] {
@@ -999,4 +1065,10 @@ input[type="range"]::-ms-thumb {
     box-shadow: none;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+.d1g1-plugins-list .plugin-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }

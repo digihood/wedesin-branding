@@ -71,7 +71,7 @@ $DemandingPlugin = new DemandingPlugin();
 ********************************/
 
 
-include_once( D1G1_BRANDPATH . 'autoload.php'); 
+include_once( D1G1_BRANDPATH . 'includes.php'); 
 
 
 
