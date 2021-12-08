@@ -208,58 +208,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             return $content;
 
         }
-        function send_feedback_email($inputs, $formID,$plugin){
-            $mail = get_option('_d1g1_'.D1G1_BRANDING.'_emails_settings_send_to_email',false);
-            if (empty($mail)) {
-                $mail = get_option( 'admin_email' );
-            }
-            
-            $colors = $this->d1g1_settings_email();
-            $content = $this->feedback_content($inputs,$plugin);
-            $footer = __('', D1G1_BRANDING);
-            $subject = __('Feedback na plugin  ' . $plugin['Name'] . '', D1G1_BRANDING);
-            if ($inputs['feedback_subject']) {
-                $subject = $inputs['feedback_subject'];
-            }
-            
-          
-            $email = new \pluginbrandslug\framework\emails\D1G1SendEmailBrand($this->d1g1_settings_email());
-            //zde zprovoznit emaily
-             
-           
-            $text = $email->email_content('Feedback', array($content),$footer );
-          
-            //uložení aktualizace
-            $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
-          
-            if ($inputs) {
-                $email->send_client_emails($mail, $subject ,$text);
-                $this->session->addSession($formID . '_save', 'success');
-            } else {
-                $this->session->addSession($formID . '_save', 'fail');
-            }
-            wp_safe_redirect($inputs['_wp_http_referer']);
-            exit;
-        }
-
-        public function feedback_content($inputs,$plugin) {
-            $colors = $this->d1g1_settings_email();
-            $content = __('Feedback z webu <a href="'.get_home_url().'"  style="color:'.$colors['Links_color'].';">'.$this->url_without_http().'</a> na plugin <b>'. $plugin['Name'] . '</b>'  , D1G1_BRANDING).'<br><br>';
-            $content .= __('Od uživatele : '. $inputs['username'], 'D1G1BRAND').'<br><br>';
-            $content .= __('Uživatelský email  : '. $inputs['usermail'], 'D1G1BRAND').'<br><br>';
-            if($inputs['userphone']){
-                $content .= __('Telefon uživatele : '. $inputs['userphone'], 'D1G1BRAND').'<br><br>';
-            }
-            $content .= __('Uživatel se registroval :'. $inputs['dateregister'], 'D1G1BRAND').'<br><br>';
-            $content .= __('Role uživatele  : '. $inputs['userroles'], 'D1G1BRAND').'<br><br>';
-            $content .= __('Plugin : '. $plugin['Name'], 'D1G1BRAND').'<br><br>';
-            $content .= __('Plugin Version  : '. $plugin['Version'], 'D1G1BRAND').'<br><br>';
-            if ($inputs) $content .= $text;
-            $content .= '<h3>'.__('feedback : ', 'D1G1BRAND').'</h3>';
-            $content .= $inputs['feedback_content'];
-            return $content;
-
-        }
+      
       
 
        

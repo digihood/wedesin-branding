@@ -92,8 +92,8 @@ if (!class_exists('submenuContentD1G1')) {
                             if (!empty($mailingForm)){
                                 ?>
                                 <a href="?page=<?= D1G1_BRANDING ?>&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg"); ?>Nastavení e-mailu</a>
-                                <a href="?page=<?= D1G1_BRANDING ?>&tab=feedback" class="nav-tab <?php if ($tab === 'feedback') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/info-standard-line.svg"); ?>Zpetná vazba</a>
-
+                              <?php /*  <a href="?page=<?= D1G1_BRANDING ?>&tab=feedback" class="nav-tab <?php if ($tab === 'feedback') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/info-standard-line.svg"); ?>Zpetná vazba</a>
+*/ ?>
                                 <?php 
                             } ?>
                         </nav>
@@ -131,7 +131,7 @@ if (!class_exists('submenuContentD1G1')) {
                                     break;
                                 case 'feedback':
 
-                                    $builder->display_form("feedback");
+                                  //  $builder->display_form("feedback");
                                     break;
     
 

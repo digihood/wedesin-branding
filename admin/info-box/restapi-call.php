@@ -116,6 +116,7 @@ if( ! class_exists( 'getRestApiRequestD1G1' ) )
 		 */
 
 		private function rest_api_img( $img_id ){
+			if( $img_id == 0 || empty($img_id) ) return '';
 			// defautní type pro media
 			$type = 'media';
 			try {
