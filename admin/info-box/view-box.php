@@ -52,21 +52,34 @@ if( ! class_exists( 'viewAdminBoxD1G1' ) )
 					?>
 
 					<div class="d1g1-widget">
-					<?php 
-						foreach ($data as $post) {
+						<?php foreach ($data as $post) {
 							if($post){
-								
-								echo '<h'.($type == 'plugins' ? '2' : '3').' '.($type == 'plugins' ? '>' : 'style="font-size:18px">') .' '.$post['title'].'</h'.($type == 'plugins' ? '2>' : '3>');
-								echo (!empty($post['content']) ? ''.$post['content'].'' : '');
-								echo (!empty($post['thumbnail']) ? '<img src="'.$post['thumbnail'].'" style="float:left; width:100%;height:auto;margin:5px 10px 10px 0;">' : '');
-								echo (!empty($post['button']) && !empty($post['button']['url']) && !empty($post['button']['text']) ? '<a href="'.$post['button']['url'].'" target="_blank" class="button button-primary">'.$post['button']['text'].'</a>' : '');
+								$this->get_widget($post,$type);
 							}
-						}
-					?>
+						} ?>
 					</div>
 					<?php
 				echo '</div>';
 			}
+		}
+		/**
+		 *  zobrazí obsah postu
+		 *
+		 * @param post
+		 * @param plugin
+		 * 
+		 * @author digihood
+		 * @return string
+		 */
+		private function get_widget($post, $type){
+			if ( !isset($post['title']) || !isset($post['content']) || empty($post['title']) || empty($post['content']) ) return;
+			$level = ($type == 'plugins' ? '2' : '3');
+			echo '<h'.$level.' '.($type == 'plugins' ? '>' : 'style="font-size:18px">') .' '.$post['title'].'</h'.$level. '>';
+			echo $post['content'];
+
+			echo (isset($post['thumbnail']) && !empty($post['thumbnail']) ? '<img src="'.$post['thumbnail'].'" style="width:100%;height:auto;margin:5px 10px 10px 0;">' : '');
+			if (!isset($post['button']['url']) || empty($post['button']['url']) || isset($post['button']['text']) || empty($post['button']['text'])) return;
+			echo '<a href="'.$post['button']['url'].'" target="_blank" class="button button-primary">'.$post['button']['text'].'</a>';
 		}
 	}
 }
