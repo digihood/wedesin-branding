@@ -3,7 +3,10 @@ namespace pluginbrandslug\framework\forms_core;
 if (!defined('ABSPATH')) {
     exit;
 }
-
+use pluginbrandslug\framework\sessions\sessionClassD1G1;
+use pluginbrandslug\framework\form_validation\D1G1validform;
+use pluginbrandslug\framework\gethtmlform\d1g1GetHtmlform;
+use pluginbrandslug\framework\forms_builder\formsBuilderD1G1;
 if (!class_exists('D1G1_Front_Form')) {
     class D1G1_Front_Form 
     {
@@ -23,8 +26,8 @@ if (!class_exists('D1G1_Front_Form')) {
             //ukládání metadat do kuponu (licence)
             add_action('save_post', [$this, 'save_cpt_meta']);
 
-            $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
-            $this->validation = new \pluginbrandslug\framework\form_validation\D1G1validform;
+            $this->session = new sessionClassD1G1;
+            $this->validation = new D1G1validform;
             
         }
 
@@ -70,18 +73,9 @@ if (!class_exists('D1G1_Front_Form')) {
                                 <?php $this->get_form_fields($formID); ?>
 
                                 <?php
-                              //  preprint ($formID);
-                                // zde zařídit text tlačítka 
-                                if ($formID == 'update_report') {
-                                    $button_text = 'Odeslat hlášení';
-                                }elseif($formID == 'feedback'){
-                                    $button_text = 'Odeslat hlášení';
-                                }else {
-                                    $button_text = "";
-                                }
-                                submit_button($button_text); 
-                                ?>
-                              
+                               do_action( 'd1g1_submit_button_form', $formID );
+                                has_action( 'd1g1_submit_button_form') ? '' : submit_button();
+                                 ?>
 
                             </form>
                         </div>
@@ -186,20 +180,16 @@ if (!class_exists('D1G1_Front_Form')) {
             $this->form_ID = $formID;
             $validation_data = $this->session->getSession( $formID.'_validation' );
             $save_progress = $this->session->getSession( $formID.'_save' );
-            if(isset($this->fields[0]['save_option']) && $this->fields[0]['save_option'] !== 'send_mail'){
-                if (isset($validation_data['allvalid']) && !$validation_data['allvalid']) {
-            
-                    
-                 $this->validation->d1g1_notice_form('error');
-
-                } else if ( $save_progress == 'success') {
+            if (isset($validation_data['allvalid']) && !$validation_data['allvalid']) {
                 
-                 $this->validation->d1g1_notice_form('success');
+                $this->validation->d1g1_notice_form('error');
 
-                }
+            } else if ( $save_progress == 'success') {
+              
+                $this->validation->d1g1_notice_form('success');
+                $this->session->removeSession($formID.'_save');
             }
-            
-           
+           // preprint($validation_data);
             foreach ($this->fields as $section) {
 
                 $section_headline = isset($section['headline']) ? $section['headline'] : false;
@@ -218,7 +208,7 @@ if (!class_exists('D1G1_Front_Form')) {
                         echo '<div class="row xl">';
                         $row = $field;
                         foreach ($row as $column) {
-                           
+
                             //preprint($column);
                             echo '<div class="column">';
 
@@ -249,7 +239,6 @@ if (!class_exists('D1G1_Front_Form')) {
                                             } else {
                                                 $value = "";
                                             }
-                                            //preprint($value);
                                             $this->get_input_html($type, $name, $value, $subfield, $is_valid, $this->form_ID); ?>
 
                                         </div>
@@ -309,7 +298,7 @@ if (!class_exists('D1G1_Front_Form')) {
 
         public function get_input_html($type, $name, $value, $args = [], $is_valid = true, $form)
         {
-            $gethtml = new \pluginbrandslug\framework\gethtmlform\d1g1GetHtmlform;
+            $gethtml = new d1g1GetHtmlform;
             $multiple = isset($args['multiple']) && $args['multiple'] == true ? 'multiple' : false;
             $atts = isset($args['required']) && $args['required'] == true ? 'required="required"' : '';
             $atts .= $multiple ? ' multiple' : '';
@@ -453,8 +442,7 @@ if (!class_exists('D1G1_Front_Form')) {
         }
 
         public function save_form()
-        { 
-            
+        {
             $inputs = filter_input_array(INPUT_POST);
             if (!isset($inputs['form_id_d1g1']) || $inputs['form_id_d1g1'] == '') {
                 return;
@@ -462,11 +450,9 @@ if (!class_exists('D1G1_Front_Form')) {
            // preprint($inputs);
             $formID = $inputs['form_id_d1g1'];
             $this->form_ID = $formID;
-            //die();
             if (isset($inputs['nonce_' . $formID]) && wp_verify_nonce($inputs['nonce_' . $formID], $formID)) {
                 //validace polí
-               
-             // die('test některých polí');
+                //die('test některých polí');
                 if (!$this->validate_fields($inputs, $formID)) {
                     $this->session->addSession($formID . '_save', 'fail');
                     wp_safe_redirect($inputs['_wp_http_referer']);
@@ -476,20 +462,19 @@ if (!class_exists('D1G1_Front_Form')) {
                 if ((isset($inputs['d1g1_meta']['name']) && $inputs['d1g1_meta']['name'] !== "") || (isset($inputs['d1g1_meta']['surname']) && $inputs['d1g1_meta']['surname'] !== "")) {
                     exit;
                 }
-                
+               
                 if (isset($this->fields) && isset($this->fields[0])) {
-                    //preprint($this->fields);
-                   //die(); 
+                   
+                    
                     // zde můžeme upravovat jak se má soubor zpracovávat
                     if (array_key_exists('save_option',$this->fields[0])){
-                        
+                      
                         do_action('d1g1_form_save_option_hook', $formID , $inputs , $this->fields );
-
-                        wp_safe_redirect($inputs['_wp_http_referer']);
-                        exit;
+               
+                       
                     //defaultní zpracování formuláře
                     }else {
-                       
+                         
                         $metas = $inputs;
                         $validation_data = $this->session->getSession( $this->form_ID.'_validation' );
                       
@@ -508,22 +493,23 @@ if (!class_exists('D1G1_Front_Form')) {
                                     }
                                 }
                         }
-                       
+                        
                         //vyhodit hodnoty, které se nemají uložit
                         if(isset($metas['_wp_http_referer'])) unset($metas['_wp_http_referer']);
                         if(isset($metas['form_id_d1g1'])) unset($metas['form_id_d1g1']);
                         if(isset($metas['submit'])) unset($metas['submit']);
                         if(isset($metas['nonce_' . $formID])) unset($metas['nonce_' . $formID]);
-                        
+                         
                         //zde budeme zpracovávat ukládání hodnot
                             if ($metas && !empty($metas)) {
-                                
+                               
                                 foreach ($metas as $meta_key => $meta_value) {
                                 
                                     if($meta_key)
                                         $this->save_data($meta_key, $meta_value);
                                     
                                 }
+                                
                                 // remove field validation data
                                 $this->session->removeSession($formID . '_validation');
                                 // add "all good and saved" notice
@@ -532,22 +518,21 @@ if (!class_exists('D1G1_Front_Form')) {
                                 wp_safe_redirect($newUrl);
                                 exit;
                                 } 
-                            }  
-                          
-                          
-                }  
-                 
+                    }  
+                    
+                }   
+                
                 $this->session->addSession($formID . '_save', 'fail');
                 wp_safe_redirect($inputs['_wp_http_referer']);
                 exit;
                 die('Nastala chyba');
             }
-        
         }
         public function save_data($key, $value) {
             $id = ($this->form_ID ? $this->form_ID : 'default');
             $pref = $this->prefix;
             $name = $pref. $id.'_'. $key;
+
             update_option($name, $value, false);
         }
         public function get_data($key,$form = '') {
@@ -643,12 +628,13 @@ if (!class_exists('D1G1_Front_Form')) {
                    $this->validation->d1g1_email_valid($value);
 
                 }
+               
                 //validate range unit
                 if ($type == 'range') {
-                  $this->validation->d1g1_range_valid($input,$name);
+                  $this->validation->d1g1_range_valid($inputs,$name);
                 
                 }
-
+            
                 $validated[$name] = [
                     'value' => $value,
                     'valid' => $valid,
@@ -673,7 +659,7 @@ if (!class_exists('D1G1_Front_Form')) {
         function save_cpt_meta(){
             global $post;
             if ($post && isset($post->post_type) && !empty($post->post_type)){
-                $builder = new \pluginbrandslug\framework\forms_builder\formsBuilderD1G1;
+                $builder = new formsBuilderD1G1;
                 $all_fields = $builder->get_fields_cpt_form($post->post_type);
                 if (!empty($all_fields)) {
                     foreach ($all_fields as $field) {
@@ -688,5 +674,5 @@ if (!class_exists('D1G1_Front_Form')) {
         }
     }
 
-    new \pluginbrandslug\framework\forms_core\D1G1_Front_Form;
+    new D1G1_Front_Form;
 }

@@ -5,6 +5,8 @@
  * @author digihood
  */ 
 namespace pluginbrandslug\admin\info_box\view;
+
+use pluginbrandslug\admin\info_box\call\getRestApiRequestD1G1;
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
@@ -41,7 +43,7 @@ if( ! class_exists( 'viewAdminBoxD1G1' ) )
 
 		private function display_box($type="plugins") { 
 			$lang = get_bloginfo('language');
-			$rApi = new \pluginbrandslug\admin\info_box\call\getRestApiRequestD1G1;
+			$rApi = new getRestApiRequestD1G1;
 			$data = $rApi->get_data($lang, $type);
             if($data) {
 				echo '<div class="card'.($type == 'plugins' ? ' info' : '').'">';
@@ -85,6 +87,6 @@ if( ! class_exists( 'viewAdminBoxD1G1' ) )
 }
 
 if( is_admin() )
-	new \pluginbrandslug\admin\info_box\view\viewAdminBoxD1G1;
+	new viewAdminBoxD1G1;
 
 

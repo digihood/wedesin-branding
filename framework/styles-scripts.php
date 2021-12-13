@@ -26,26 +26,16 @@ if ( !class_exists('ScriptsStylesD1G1') ) {
      */
     public function __construct()
     {
-      //scripty
-      add_action( 'wp_enqueue_scripts', [$this, 'add_scripts']);
+
   
       //scripty v administraci
       add_action( 'admin_enqueue_scripts', [$this, 'add_admin_scripts'] );
   
     }
   
-    /**
-     * empty function description
-     *
-     * @param none
-     * 
-     * @author digihood
-     * @return true/false
-     */ 
+
   
-    public function add_scripts( ) {
-  
-    }
+
   
     public function add_admin_scripts( ) {
   
@@ -59,8 +49,8 @@ if ( !class_exists('ScriptsStylesD1G1') ) {
       wp_enqueue_style( 'wp-color-picker' );
   
       //register javascript
-      $admin_script = filemtime(  D1G1_BRANDPATH . 'assets/scripts/d1g1-admin.js' );
-      wp_enqueue_script( 'star-comments', D1G1_BRANDURL . 'assets/scripts/d1g1-admin.js', array( 'jquery' ), $admin_script, true );
+      $admin_script = filemtime(  D1G1_BRANDPATH . 'assets/scripts/wds-admin.js' );
+      wp_enqueue_script( 'star-comments', D1G1_BRANDURL . 'assets/scripts/wds-admin.js', array( 'jquery' ), $admin_script, true );
       
       //WP media uploader
       wp_enqueue_media();

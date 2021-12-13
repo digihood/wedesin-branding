@@ -1,5 +1,10 @@
 <?php
 namespace pluginbrandslug\admin\submenu;
+
+use pluginbrandslug\framework\forms_builder\formsBuilderD1G1;
+use pluginbrandslug\framework\sessions\sessionClassD1G1;
+use pluginbrandslug\admin\info_box\view\viewAdminBoxD1G1;
+use pluginbrandslug\framework\feedback\d1g1_feedback;
 if (!defined('ABSPATH')) {
 
     exit;
@@ -24,7 +29,7 @@ if (!class_exists('submenuContentD1G1')) {
         function form_page_contents()
         {
 
-            $builder = new \pluginbrandslug\framework\forms_builder\formsBuilderD1G1();
+            $builder = new formsBuilderD1G1();
             //$builder = new formsBuilderD1G1_brand("test_form_mini");
 
             //$builder->display_form("test_form_mini");
@@ -47,14 +52,14 @@ if (!class_exists('submenuContentD1G1')) {
             
             //Získat aktivní tab z parametru $_GET 
             $default_tab = 'updates_list';
-            $builder = new \pluginbrandslug\framework\forms_builder\formsBuilderD1G1();
+            $builder = new formsBuilderD1G1();
             $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab; ?>
             <div class="wrap d1g1-admin">
 
                 <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
                 <?php 
-                $sessions = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
+                $sessions = new sessionClassD1G1;
 
                
 
@@ -92,8 +97,8 @@ if (!class_exists('submenuContentD1G1')) {
                             if (!empty($mailingForm)){
                                 ?>
                                 <a href="?page=<?= D1G1_BRANDING ?>&tab=emails" class="nav-tab <?php if ($tab === 'emails') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg"); ?>Nastavení e-mailu</a>
-                              <?php /*  <a href="?page=<?= D1G1_BRANDING ?>&tab=feedback" class="nav-tab <?php if ($tab === 'feedback') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/info-standard-line.svg"); ?>Zpetná vazba</a>
-*/ ?>
+                                <a href="?page=<?= D1G1_BRANDING ?>&tab=feedback" class="nav-tab <?php if ($tab === 'feedback') : ?>nav-tab-active<?php endif; ?>"><?php echo d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/info-standard-line.svg"); ?>Zpetná vazba</a>
+
                                 <?php 
                             } ?>
                         </nav>
@@ -130,8 +135,10 @@ if (!class_exists('submenuContentD1G1')) {
                                     $this->the_updates_list();
                                     break;
                                 case 'feedback':
-
-                                  //  $builder->display_form("feedback");
+                                
+                                    $session_box = new d1g1_feedback;
+                                    $session_box->d1g1_feedback_session();
+                                    $builder->display_form("feedback");
                                     break;
     
 
@@ -141,7 +148,7 @@ if (!class_exists('submenuContentD1G1')) {
                 <div class="column sidebar">
                     
                         <?php 
-                        $view = new \pluginbrandslug\admin\info_box\view\viewAdminBoxD1G1;
+                        $view = new viewAdminBoxD1G1;
                         $view->d1g1_dashboard_widget_display('pluginsnews');
                         $view->d1g1_dashboard_widget_display('plugins');
                         ?>
@@ -197,5 +204,5 @@ if (!class_exists('submenuContentD1G1')) {
     }
     
 
-    new \pluginbrandslug\admin\submenu\submenuContentD1G1;
+    new submenuContentD1G1;
 }

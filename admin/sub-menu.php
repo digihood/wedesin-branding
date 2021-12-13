@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 
 }
-
+use pluginbrandslug\admin\submenu\submenuContentD1G1;
 if( ! class_exists( 'subMenuD1G1' ) )
 
 {
@@ -38,7 +38,7 @@ if( ! class_exists( 'subMenuD1G1' ) )
             6) callback na přidání obsahu
             */
 
-            $subcontent = new \pluginbrandslug\admin\submenu\submenuContentD1G1;
+            $subcontent = new submenuContentD1G1;
 
             $submenus = [
                 [
@@ -68,7 +68,7 @@ if( ! class_exists( 'subMenuD1G1' ) )
 
     }
 
-	new \pluginbrandslug\admin\submenu\subMenuD1G1;
+	new subMenuD1G1;
 
 }
 

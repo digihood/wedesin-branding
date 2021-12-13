@@ -1,12 +1,11 @@
 <?php 
-namespace pluginbrandslug\framework\log_content;
+namespace pluginbrandslug\components\log_content;
 if ( ! defined( 'ABSPATH' ) ) {
 
   exit;
 
 }
 if (!class_exists('d1g1LogSettings')){
-
     class d1g1LogSettings{
         public $LogFile;
 
@@ -17,7 +16,7 @@ if (!class_exists('d1g1LogSettings')){
         
             add_action('d1g1_plugin_log_tab_content', [$this, 'add_tab'] );
             add_action('d1g1_plugin_log_header_content', [$this, 'add_header'] );
-          //  add_action( 'init',  [$this, 'test__log'] );
+            //add_action( 'init',  [$this, 'test__log'] );
 
         }
 
@@ -54,11 +53,10 @@ if (!class_exists('d1g1LogSettings')){
         public function add_header( ) { 
             $plugin_data = get_plugin_data( D1G1_BRANDPATH . 'setup.php' );
             $plugin_name = $plugin_data['Name'];
-
+            
             $default_tab = null;
             $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
             ?>
-            
             <a href="?page=d1g1-logs&tab=<?= D1G1_BRANDING ?>" class="nav-tab <?= ($tab=== D1G1_BRANDING ? 'nav-tab-active' : '')?>">
                 <?php echo $plugin_name; ?>
             </a>
@@ -76,7 +74,7 @@ if (!class_exists('d1g1LogSettings')){
             $tab = isset($_GET['tab']) ? $_GET['tab'] : '';
             $file = $this->LogFile;
             if ($tab) $file = $tab;
-            $this->the_log_excerpt_admin();
+            $this->the_log_excerpt_admin($file);
         }
 
         /**

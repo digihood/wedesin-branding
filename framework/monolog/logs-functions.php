@@ -4,7 +4,7 @@
  *
  *  $log = new \pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
  *  $array = ['data' => $arg,'data2' => $arg,'data3' => $arg,];
- *  $log->d1g1_add_log('branding','EMERGENCY','tab', $array);
+ *  $log->d1g1_add_log(get_class($this),'INFO','send_update_email', $array); 
  * 
  * @author Wedesin
  */ 
@@ -147,37 +147,51 @@ if( ! class_exists( 'd1g1_monolog' ) )
          * @author digihood
          * @return dir
          */ 
-       public function d1g1_get_log_file(){
+        public function d1g1_get_log_file(){
             $directory = $this->d1g1_get_log_folder();
-            $file = $directory .'/'. D1G1_BRANDING .'.json';
+            $file = $directory . '/' . D1G1_BRANDING . '.json';
             if(file_exists($file)){
-                $data = file_get_contents($directory .'/'. D1G1_BRANDING .'.json');
-                $datas = $this->json_split_objects($data);
-            
-                include_once( 'views/table-header.php' );
-                foreach($datas as $row){
-                    $someArray = json_decode( $row,true );
-                // preprint($someArray);
-                $showtime = $this->d1g1_setup_time($someArray['datetime']);
-                echo '<tr>';
-                echo '<td>'.$showtime.'</td>';
-                echo '<td>'.$someArray['channel'].'</td>';
-                echo '<td><b>'.$someArray['level_name'].'</b></td>';
-                echo '<td>'.$someArray['message'].'</td>';
-            
-                    foreach($someArray['context'] as $rows=>$context){
-                        
-                        echo ($context ? '<td>'.$rows.'   : <b>'.$context.'</b><br></td>' : '');
-                    
-                        //preprint($context);
-                        //preprint($rows);
-                    
+                $data = file_get_contents($file);
+                if($data){
+                    $datas = $this->json_split_objects($data);
+                    if(!$datas) return; 
+                    include_once( 'views/table-header.php' );
+                    foreach($datas as $row){
+                        if($row){
+                            $someArray = json_decode( $row,true );
+                            if (isset($someArray['datetime']['date']) && $someArray['datetime']['date']) {
+                                $showtime = $someArray['datetime']['date'] . '<br> zone_type:' . $someArray['datetime']['timezone_type'] . '<br> typezone:' . $someArray['datetime']['timezone'] ;
+                            }else {
+                                $showtime = $this->d1g1_setup_time($someArray['datetime']);
+                            }      
+                            echo '<tr>';
+                            echo '<td>'.$showtime.'</td>';
+                            echo '<td>'.$someArray['channel'].'</td>';
+                            echo '<td><b>'.$someArray['level_name'].'</b></td>';
+                            echo '<td>'.$someArray['message'].'</td>';
+                            if(isset($someArray['context']) && $someArray['context']){
+                           
+                              //  preprint($someArray['context']);
+                                foreach($someArray['context'] as $rows=>$context){
+                                    if (is_array($context)){
+                                        $contextinarray = implode(' || ',$context );
+                                    }
+                                    if(isset($contextinarray) && $contextinarray) {
+                                        echo ($contextinarray ? '<td>'.$rows.'   : <b>'.$contextinarray.'</b><br></td>' : '');
+                                    }else {
+                                        echo ($context ? '<td>'.$rows.'   : <b>'.$context.'</b><br></td>' : '');
+                                    }
+                               
+                                }
+                                
+                            }  
+                        }
                     }
-            
                 }
             }
             include_once( 'views/table-footer.php' );
         }
+
 
         /**
          * json_split_objects - Return an array of many JSON objects
@@ -245,5 +259,5 @@ if( ! class_exists( 'd1g1_monolog' ) )
 
 
     }
-     new \pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
+     
 }
