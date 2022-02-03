@@ -14,6 +14,7 @@ if( ! class_exists( 'mainMenuD1G1' ) )
 		public function __construct()
 		{
             add_action( 'admin_menu',  [$this, 'main_menu_callback'] );
+            
         }
 
         /**

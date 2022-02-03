@@ -1,13 +1,17 @@
 <?php 
 namespace pluginbrandslug\components\log_content;
+
+
 if ( ! defined( 'ABSPATH' ) ) {
 
   exit;
 
 }
+use pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
 if (!class_exists('d1g1LogSettings')){
     class d1g1LogSettings{
         public $LogFile;
+        private $log;
 
         //konstruktor
         public function __construct()
@@ -16,7 +20,8 @@ if (!class_exists('d1g1LogSettings')){
         
             add_action('d1g1_plugin_log_tab_content', [$this, 'add_tab'] );
             add_action('d1g1_plugin_log_header_content', [$this, 'add_header'] );
-            //add_action( 'init',  [$this, 'test__log'] );
+           // add_action( 'init',  [$this, 'del_error_count'] );
+            $this->log = new d1g1_monolog;
 
         }
 
@@ -92,6 +97,45 @@ if (!class_exists('d1g1LogSettings')){
                     include_once( D1G1_BRANDPATH. 'framework/monolog/views/view-log.php' );
                 }
         }
+        public function active_or_deactive_error_count($activate = ''){
+            $directory =  $this->log->d1g1_get_log_folder();
+            $file = $directory . '/' . D1G1_BRANDING . '.json';
+            $json = file_get_contents($file);
+            $jsonsplit = new d1g1_monolog;
+            $array = $jsonsplit->json_split_objects($json);
+            $arraycount = count($array);
+            for($i = 0; $i <= $arraycount; $i++){
+                $key = array_keys($array);
+                if(isset($key[$i]) && $key[$i]) {
+                    $jsondata = json_decode($array[$i]);
+                    foreach($jsondata as $key => $value) {
+                        if($key == 'level_name' && $value == 'ERROR'){
+                            if (!isset($count[$value])) $count[$value] = 0;
+                            $count[$value]++;
+                            $actual_errors = get_option('D1G1_all_error_counts');
+                            $error = ($actual_errors['error'] ? $actual_errors['error'] : '0');
+                            if($activate == 1){
+                                $new_errors = $error + $count['ERROR'];
+                                $info = 'activace';  
+                            }else{
+                                $new_errors = $error - $count['ERROR'];
+                                $info = 'deactivace';  
+                            }
+                            $plugin_data = [
+                                'error' => $new_errors,
+                            ];
+                            $new_array = array_replace($actual_errors,$plugin_data);  
+                          
+                        }
+                       
+                    }  
+                }
+            }
+            
+            $jsonsplit->d1g1_add_log(__METHOD__,'INFO',$info, $new_array);
+            update_option('D1G1_all_error_counts', $new_array);         
+        }
     }
+    new d1g1LogSettings;
+     
 }
-new d1g1LogSettings;

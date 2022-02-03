@@ -1,10 +1,12 @@
 <?php
 namespace pluginbrandslug;
+use pluginbrandslug\requirements\d1g1PluginRequirements;
+use pluginbrandslug\components\log_content\d1g1LogSettings;
 /**
 * Plugin Name: WeDesIn Branding
 * Description: WeDesIn branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
-* Version: 2.4.0
-* Framework version: 2.1
+* Version: 2.4.1
+* Framework version: 2.1.2
 * Author: WeDesIn
 * Author URI: https://www.wedesin.cz/
 * Requires at least: 3.0.
@@ -32,8 +34,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'TM_PLUGSEC', 'd1g1_plugins' );
 define( 'D1G1_BRANDPATH', plugin_dir_path( __FILE__ ) );
 define( 'D1G1_BRANDURL', plugin_dir_url( __FILE__ ) );
-define( 'D1G1_BRANDING', 'D1G1BRAND' );
-define( 'D1G1_LFILEDIR_BRAND','d1g1-wedesin-logs');
+define( 'D1G1_BRANDING', 'wedesin-branding' );
+define( 'D1G1_LFILEDIR_BRAND','d1g1-'.D1G1_BRANDING.'-logs');
 // Nastavení automatické kontroly auktualizací 
 // D1G1_GITHUBURL example : https://github.com/WeDesIn/wedesin-branding
 // D1G1_GITHUBREP example : wedesin-branding
@@ -45,7 +47,7 @@ define( 'D1G1_GITHUBREP_BRAND', 'wedesin-branding');
 ********************************/ 
 require( D1G1_BRANDPATH . 'framework/plugin-requirements.php');  
 
-class DemandingPlugin extends \pluginbrandslug\requirements\d1g1PluginRequirements {
+class DemandingPlugin extends d1g1PluginRequirements {
  
     const PLUGIN_NAME = "WeDesIn Branding";
  
@@ -86,3 +88,13 @@ if(D1G1_GITHUBURL_BRAND && D1G1_GITHUBREP_BRAND){
     //Optional: If you're using a private repository, specify the access token like this:
     $myUpdateChecker->setAuthentication('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');
 }
+
+register_activation_hook(__FILE__, function () {
+    $class = new d1g1LogSettings;
+    $class->active_or_deactive_error_count(1);
+ });
+
+ register_deactivation_hook(__FILE__, function () {
+    $class = new d1g1LogSettings;
+    $class->active_or_deactive_error_count(0);
+ });

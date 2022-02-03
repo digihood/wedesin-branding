@@ -26,7 +26,7 @@ if( ! class_exists( 'D1G1SendEmail' ) )
         private $settings;
         private $mailreply;
 
-        public function __construct($settings = [], $replymail ){
+        public function __construct($settings = [], $replymail){
           add_action( 'init', [$this,'email_test'] );
           add_filter( 'wp_mail', [$this, 'change_headers'] );  
           $this->settings_css($settings);

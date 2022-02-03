@@ -49,8 +49,8 @@ if ( !class_exists('ScriptsStylesD1G1') ) {
       wp_enqueue_style( 'wp-color-picker' );
   
       //register javascript
-      $admin_script = filemtime(  D1G1_BRANDPATH . 'assets/scripts/wds-admin.js' );
-      wp_enqueue_script( 'star-comments', D1G1_BRANDURL . 'assets/scripts/wds-admin.js', array( 'jquery' ), $admin_script, true );
+      $admin_script = filemtime(  D1G1_BRANDPATH . 'assets/scripts/d1g1-admin.js' );
+      wp_enqueue_script( 'star-comments', D1G1_BRANDURL . 'assets/scripts/d1g1-admin.js', array( 'jquery' ), $admin_script, true );
       
       //WP media uploader
       wp_enqueue_media();

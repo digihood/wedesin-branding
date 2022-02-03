@@ -7,15 +7,22 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 
 }
+use pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
+
+use pluginbrandslug\framework\sessions\sessionClassD1G1;
 use pluginbrandslug\framework\d1g1_plugins\d1g1plugins;
 if( ! class_exists( 'pluginsHomePageD1G1' ) )
 {
     class pluginsHomePageD1G1
 	{
+        private $session;
+        private $log;
 		//hook functions
 		public function __construct()
 		{
-    
+          
+            $this->session = new sessionClassD1G1;
+            $this->log = new d1g1_monolog;
         }
         /**
          * Plugins menu
@@ -90,6 +97,7 @@ if( ! class_exists( 'pluginsHomePageD1G1' ) )
         function compare_activated($a, $b){
           return strnatcmp($b['activated'], $a['activated']);
         }
+       
     
         /**
          * zobrazi pluginy v boxech 
@@ -100,6 +108,7 @@ if( ! class_exists( 'pluginsHomePageD1G1' ) )
          * @return echo
          */ 
         public function display_plugins_installed(){
+            
             $class = new d1g1plugins;
             $data = $class->d1g1_get_plugins();
             //preprint($data);
@@ -129,13 +138,14 @@ if( ! class_exists( 'pluginsHomePageD1G1' ) )
                 }  
                 
                 if(array_key_exists('plugin_name', $_POST)) {
-                    activate_plugin( ''.$_POST['plugin_name'].'/setup.php' );
-                    
+                    $result = activate_plugin( ''.$_POST['plugin_name'].'/setup.php', '/wp-admin/admin.php?page=d1g1-plugins' );
+                    $this->log->d1g1_add_log(__METHOD__,'INFO','plugin aktivovan:' . $_POST['plugin_name'] , $result);     
+                   
                 }
-
             }
         }
-
+   
+       
       
         /**
          * zobrazi relevantní pluginy v boxech 
@@ -154,7 +164,7 @@ if( ! class_exists( 'pluginsHomePageD1G1' ) )
             if ($data && isset($data)) {
                 
                 foreach($data as $value){
-                        
+                  
                     echo '<div class="plugin-card">';
                     if(isset($value['thumbnail']) && $value['thumbnail']){
                         echo '<img src="'.$value['thumbnail'].'"class="plugin-image" alt="' .__(''.$value['title'].'', D1G1_BRANDING).'" ">';

@@ -64,7 +64,7 @@ if( ! class_exists( 'd1g1_feedback' ) )
             $settingscss = [];
             $content = $this->feedback_content($inputs,$plugin);
             $footer = __('', D1G1_BRANDING);
-           
+            $log = new d1g1_monolog;
             if ($inputs['feedback_subject']) {
                 $subject = $inputs['feedback_subject'];
             }else{
@@ -82,18 +82,22 @@ if( ! class_exists( 'd1g1_feedback' ) )
            
            
             if ($inputs && $subject && $inputs['feedback_content']) {
-                $log = new d1g1_monolog;
-                $array = [
-                    'feedback pred odeslanim mailu  na '.$mail1 .' a ' . $mail2 .'',
-                ];
-                $log->d1g1_add_log('wedesin-branding','INFO','send_feedback_email if inputs' ,$array);
                 
+                $array = [
+                    /*'feedback pred odeslanim mailu  na '.$mail1 .' a ' . $mail2 .''*/
+                ];
+                $log->d1g1_add_log(__METHOD__,'INFO', $formID . 'success', $array); 
+               
                 $email->send_client_emails($mail1, $subject ,$text);
                 $email->send_client_emails($mail2, $subject ,$text);
-                $this->session->addSession($formID . '_save', 'success');
+                $this->session->addSession($formID . '_save', ' success');
                 
             } else {
-                
+                $array = [
+                    /*'feedback pred odeslanim mailu  na '.$mail1 .' a ' . $mail2 .''*/
+                ];
+                $log->d1g1_add_log(__METHOD__,'ERROR', $formID . ' fail', $array); 
+               
                 $this->session->addSession($formID . '_save', 'fail');
             }
           
@@ -141,5 +145,5 @@ if( ! class_exists( 'd1g1_feedback' ) )
 
     }
 
- new \pluginbrandslug\framework\feedback\d1g1_feedback;
+ new d1g1_feedback;
 }

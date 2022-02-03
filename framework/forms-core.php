@@ -7,6 +7,7 @@ use pluginbrandslug\framework\sessions\sessionClassD1G1;
 use pluginbrandslug\framework\form_validation\D1G1validform;
 use pluginbrandslug\framework\gethtmlform\d1g1GetHtmlform;
 use pluginbrandslug\framework\forms_builder\formsBuilderD1G1;
+use pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
 if (!class_exists('D1G1_Front_Form')) {
     class D1G1_Front_Form 
     {
@@ -16,6 +17,7 @@ if (!class_exists('D1G1_Front_Form')) {
         private $prefix;
         private $form_ID;
         private $validation;
+        private $log;
 
         public function __construct($field_list = [])
         {
@@ -28,6 +30,7 @@ if (!class_exists('D1G1_Front_Form')) {
 
             $this->session = new sessionClassD1G1;
             $this->validation = new D1G1validform;
+            $this->log = new d1g1_monolog;
             
         }
 
@@ -507,6 +510,7 @@ if (!class_exists('D1G1_Front_Form')) {
                                 
                                     if($meta_key)
                                         $this->save_data($meta_key, $meta_value);
+                                        
                                     
                                 }
                                 
@@ -514,6 +518,8 @@ if (!class_exists('D1G1_Front_Form')) {
                                 $this->session->removeSession($formID . '_validation');
                                 // add "all good and saved" notice
                                 $this->session->addSession($formID . '_save', 'success');
+                                $array = [$metas];
+                                $this->log->d1g1_add_log(__METHOD__,'INFO',$formID, $array);
                                 $newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);
                                 wp_safe_redirect($newUrl);
                                 exit;
@@ -532,7 +538,6 @@ if (!class_exists('D1G1_Front_Form')) {
             $id = ($this->form_ID ? $this->form_ID : 'default');
             $pref = $this->prefix;
             $name = $pref. $id.'_'. $key;
-
             update_option($name, $value, false);
         }
         public function get_data($key,$form = '') {
