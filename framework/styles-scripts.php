@@ -26,16 +26,26 @@ if ( !class_exists('ScriptsStylesD1G1') ) {
      */
     public function __construct()
     {
-
+      //scripty
+      add_action( 'wp_enqueue_scripts', [$this, 'add_scripts']);
   
       //scripty v administraci
       add_action( 'admin_enqueue_scripts', [$this, 'add_admin_scripts'] );
   
     }
   
-
+    /**
+     * empty function description
+     *
+     * @param none
+     * 
+     * @author digihood
+     * @return true/false
+     */ 
   
-
+    public function add_scripts( ) {
+  
+    }
   
     public function add_admin_scripts( ) {
   

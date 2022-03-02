@@ -390,5 +390,5 @@ if( ! class_exists( 'D1G1validform' ) )
 
 
     }
-     new D1G1validform;
+     new \pluginbrandslug\framework\form_validation\D1G1validform;
 }

@@ -10,8 +10,7 @@ namespace pluginbrandslug\components\formfunction;
  * 
  * @author Wedesin
  */ 
-use pluginbrandslug\framework\sessions\sessionClassD1G1;
-use pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
+
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
@@ -52,9 +51,10 @@ if( ! class_exists( 'D1G1FormFunction' ) )
                 
                 $this->fields = $fields;
                 if($this->fields[0]['save_option'] == 'send_mail'){
-                    
+                   // preprint($this->fields[0]['save_option']);
+                  
                  
-                    $this->session = new sessionClassD1G1;       
+                    $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;       
                    
                     $result = $this->send_update_email($inputs, $formID); 
                          
@@ -65,7 +65,18 @@ if( ! class_exists( 'D1G1FormFunction' ) )
                     exit();
                 }
 
-       
+                if(isset($this->fields[0]['save_option']) && $this->fields[0]['save_option'] == 'send_feedback'){
+                    $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
+                    $plugin = get_plugin_data(D1G1_BRANDPATH . '/setup.php');
+
+                    $result = $this->send_feedback_email($inputs, $formID,$plugin);              
+                    if ($result) {
+                        $this->session->addSession($formID . '_submit_res', 'true');                                                          
+                    } else {
+                        $this->session->addSession($formID . '_submit_res', 'false');
+                    }
+                    exit();
+                } 
                 
              }
 
@@ -96,20 +107,19 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             $subject = get_option('_d1g1_D1G1BRAND_brand_emails_settings_license_email_subject','');
             if (empty($subject)) $subject = __('Aktualizovali jsme váš web', D1G1_BRANDING);
            
-            $email = new \D1G1SendEmail($this->d1g1_settings_email(), '');
+            $email = new \pluginbrandslug\framework\emails\d1g1SendEmailBrand($this->d1g1_settings_email());
            
             //zde zprovoznit emaily
             $text = $email->email_content('Aktualizace webu', array($content),$footer );
           
             //uložení aktualizace
-            $this->session = new sessionClassD1G1;
+            $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
             $this->save_update_data($inputs);
             
             if ($this->save_update_data($inputs)) {
                 $email->send_client_emails($mail, $subject ,$text);
-                $log = new d1g1_monolog;
-                $log->d1g1_add_log(get_class($this),'INFO','send_update_email', $inputs); 
-
+                $log = new \pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
+                $log->d1g1_add_log('branding','INFO','tab', $inputs); 
                 $this->session->addSession($formID . '_save', 'success');
                 
                
@@ -203,5 +213,5 @@ if( ! class_exists( 'D1G1FormFunction' ) )
 
        
     }
-    new D1G1FormFunction;
+    new \pluginbrandslug\components\formfunction\D1G1FormFunction;
 }

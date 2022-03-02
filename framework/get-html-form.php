@@ -6,9 +6,6 @@ namespace pluginbrandslug\framework\gethtmlform;
  * 
  * @author Wedesin
  */ 
-use pluginbrandslug\framework\sessions\sessionClassD1G1;
-use pluginbrandslug\framework\forms_core\D1G1_Front_Form;
-use pluginbrandslug\framework\gethtmlform\d1g1GetHtmlform;
 
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
@@ -29,8 +26,8 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
             
             //set variable
             //$this->variable = '';
-            $this->session = new sessionClassD1G1;
-            $this->data = new D1G1_Front_Form;
+            $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
+            $this->data = new \pluginbrandslug\framework\forms_core\D1G1_Front_Form;
 
         }
         
@@ -45,7 +42,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
 
         public function getcaseform($type ,$name, $value, $args = [], $is_valid = true ,$form = ''){
             
-            $showme = new d1g1GetHtmlform;
+            $showme = new \pluginbrandslug\framework\gethtmlform\d1g1GetHtmlform;
             $multiple = isset($args['multiple']) && $args['multiple'] == true ? 'multiple' : false;
             $atts = isset($args['required']) && $args['required'] == true ? 'required="required"' : '';
             $atts .= $multiple ? ' multiple' : '';
@@ -73,11 +70,11 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
                 case 'number':
                 case 'password':
                 case 'text':
-                    $this->get_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text, $label );
+                    $this->get_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text , $label);
                     break;
                 case 'hidden': 
 
-                    $this->get_hidden_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text ,$label );
+                    $this->get_hidden_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text, $label );
             
                 break;
                 case 'select': 
@@ -86,25 +83,25 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
                 break;
                 case 'url': 
 
-                    $this->get_url_input($description, $is_valid, $floating_label_start, $value, $name, $placeholder, $atts, $class, $required , $floating_label_end, $help_text , $label);
+                    $this->get_url_input($description, $is_valid, $floating_label_start, $value, $name, $placeholder, $atts, $class, $required , $floating_label_end, $help_text);
 
 
                 break;
                 case 'image': 
                     
-                    $this->get_image_input($description, $is_valid, $floating_label_start, $value , $name , $placeholder , $atts, $class ,$label , $required, $help_text, $floating_label_end);
+                    $this->get_image_input($description, $is_valid, $floating_label_start, $value , $name , $placeholder , $atts, $class ,$label , $required, $help_text , $floating_label_end);
 
                 break;
                 case 'radio':
                 case 'radio_large': 
 
-                    $this->get_radio_large_input($args, $type, $description, $is_valid, $value, $name, $atts, $help_text, $class);
+                    $this->get_radio_large_input($args, $type, $description, $is_valid, $value, $name, $atts, $help_text);
 
                 break;
                 case 'checkbox':
                 case 'checkbox_large': 
 
-                    $this->get_checkbox_large_input($args, $type, $name, $label, $class,$required, $is_valid, $description, $help_text , $form ,$atts);
+                    $this->get_checkbox_large_input($args, $type, $name, $label, $class,$required, $is_valid, $description,  $help_text , $form ,$atts);
 
                 break;
                 case 'switch': 
@@ -175,7 +172,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          * @return echo
          */ 
 
-        private function get_hidden_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text , $label ) {
+        private function get_hidden_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text , $label  ) {
             $id_val = str_replace(']', '', str_replace('[', '', $name));
             if ($description) echo '<p>' . $description . '</p>';
             echo '<p>' . $floating_label_start;
@@ -205,7 +202,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          * @return true/false
          */ 
 
-        private function get_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text, $label  ) {
+        private function get_input($name, $description, $type, $is_valid, $floating_label_start, $value, $placeholder, $atts, $class, $required, $floating_label_end, $help_text , $label  ) {
             $id_val = str_replace(']', '', str_replace('[', '', $name));
 
                 if ($description) echo '<p>' . $description . '</p>';
@@ -311,7 +308,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          * @return 
          */ 
 
-        private function get_url_input($description, $is_valid, $floating_label_start, $value, $name, $placeholder, $atts, $class, $required , $floating_label_end, $help_text , $label){
+        private function get_url_input($description, $is_valid, $floating_label_start, $value, $name, $placeholder, $atts, $class, $required , $floating_label_end, $help_text){
             if ($description) echo '<p>' . $description . '</p>';
 
             if (!$is_valid) {
@@ -319,7 +316,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
             }
 
             echo '<div class="input-group">';
-            echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg") . '</span>';
+            echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDURL . "assets/icons/link-line.svg") . '</span>';
             echo  $floating_label_start;
 
             echo '<input type="url" value="' . $value . '" name="' . $name . '" placeholder="' . $placeholder . '" ' . $atts . ' class="' . $class . '" />';
@@ -351,7 +348,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          * @return echo 
          */ 
 
-        private function get_image_input($description, $is_valid, $floating_label_start, $value , $name , $placeholder , $atts, $class ,$label , $required, $help_text, $floating_label_end){
+        private function get_image_input($description, $is_valid, $floating_label_start, $value , $name , $placeholder , $atts, $class ,$label , $required, $help_text , $floating_label_end){
             //echo '<div id="media-uploader-' . $name . '" data-target="' . $name . '" data-limit="1" class="dropzone ' . $class . '"></div>';
             //echo '<input type="hidden" name="' . $name . '" value="' . $value . '" ' . $atts . ' />';
             //if (!empty($placeholder)) echo '<p>' . $placeholder . '</p>';
@@ -363,6 +360,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
             }
             
             echo '<div class="input-group">';
+           // echo get_plugin_directory_uri();
             echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg") . '</span>';
             echo  $floating_label_start;
 
@@ -403,7 +401,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          * @return true/false
          */ 
 
-        private function get_radio_large_input($args, $type, $description, $is_valid, $value, $name, $atts, $help_text, $class){
+        private function get_radio_large_input($args, $type, $description, $is_valid, $value, $name, $atts, $help_text){
             $options = isset($args['options']) ? $args['options'] : [];
 
             if ($type == 'radio_large') {
@@ -464,7 +462,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          * @return echo
          */ 
 
-        private function get_checkbox_large_input($args, $type, $name, $label, $class,$required, $is_valid, $description, $help_text ,$form, $atts){
+        private function get_checkbox_large_input($args, $type, $name, $label, $class,$required, $is_valid, $description,  $help_text ,$form , $atts = ''){
             $label = isset($args['label']) ? $args['label'] : false;
             //$checked = (!empty($value) ? 'checked' : "");
             if ($type == 'checkbox_large') {
@@ -521,7 +519,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          */ 
 
         private function get_switch_input($name, $label, $value , $atts, $required, $is_valid, $description, $help_text,$form){
-            $value = ($this->data->get_data($name,$form) == 1 ? 1 : 1);
+            $value = ($this->data->get_data($name,$form) == 1 ? 0 : 1);
             $checked = ($this->data->get_data($name,$form) == 1 ? 'checked' : "");
            
             if ($label)  {
@@ -609,7 +607,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
             $wrap_class = $show_attr == true ? $wrap_class . ' show-attr' : $wrap_class;
             // přidání validace a uložení změny jednotek
             $validation_data = $this->session->getSession( $this->form_ID.'_validation' );
-            $unit_value = isset($validation_data[$name.'_unit']['value']) ? $validation_data[$name.'_unit']['value'] : "";
+            $unit_value = ( $validation_data[$name.'_unit']['value'] ? $validation_data[$name.'_unit']['value'] : "");
             $unit_value = (empty($unit_value) && $this->data->get_data($name.'_unit') ? $this->data->get_data($name.'_unit') : $unit_value);
 
                 
@@ -657,14 +655,19 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
          */ 
 
         private function get_editor_input($name, $class, $description, $value, $help_text, $args){
-                    //$class = $name;
+                   // $class = $name;
+                    
                     $settings =   array(
                         'wpautop' => true, // use wpautop?
                         'media_buttons' => false, // show insert/upload button(s)
                         'textarea_name' => $name, // set the textarea name to something different, square brackets [] can be used here
                         'textarea_rows' => get_option('default_post_edit_rows', 10), // rows="..."
                         'tabindex' => '',
-                        'editor_css' => '', //  extra styles for both visual and HTML editors buttons,
+                        'editor_css' => '<style>.wp-core-ui .quicktags-toolbar input.button.button-small {
+                           
+                            width: 100px;
+                          
+                        }</style>', //  extra styles for both visual and HTML editors buttons,
                         'editor_class' => $class, // add extra class(es) to the editor textarea
                         'teeny' => false, // output the minimal editor config used in Press This
                         'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
@@ -721,7 +724,7 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
                     }
 
                     echo '<div class="input-group">';
-                    echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDPATH . $icon) . '</span>';
+                    echo '<span class="input-group-label">' . d1g1_get_svg(D1G1_BRANDURL . $icon) . '</span>';
                     echo $floating_label_start;
                     echo '<input type="' . $type . '" id="' . $name . '" name="' . $name . '" value="' . $value . '">';
                     if ($label)  echo '<label for="' . $name . '">' . $label . $required . '</label>';
@@ -785,8 +788,8 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
 
 
              echo '<div class="info-block' . $warning . '">';
-             
-             echo '<span class="icon">' . d1g1_get_svg(D1G1_BRANDPATH . $icon) . '</span>';
+
+             echo '<span class="icon">' . d1g1_get_svg(D1G1_BRANDURL . $icon) . '</span>';
 
              if ($headline) echo '<h3>' . $headline . '</h3>';
              if ($description) echo '<p>' . $description . '</p>';
@@ -852,5 +855,5 @@ if( ! class_exists( 'd1g1GetHtmlform' ) )
    
 
     }
-    new d1g1GetHtmlform;
+    new \pluginbrandslug\framework\gethtmlform\d1g1GetHtmlform;
 }

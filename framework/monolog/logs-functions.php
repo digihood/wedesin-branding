@@ -4,7 +4,7 @@
  *
  *  $log = new \pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
  *  $array = ['data' => $arg,'data2' => $arg,'data3' => $arg,];
- *   $log->d1g1_add_log(D1G1_BRANDING,'INFO',get_class($this), $array); 
+ *  $log->d1g1_add_log('branding','EMERGENCY','tab', $array);
  * 
  * @author Wedesin
  */ 
@@ -54,7 +54,6 @@ if( ! class_exists( 'd1g1_monolog' ) )
             //$handlerhtml->setFormatter($htmlformatter);             
             //Set the handler
             $logger->pushHandler($handlerjson);
-           
            // $logger->pushHandler($handlerhtml);
             return $logger;
         }
@@ -72,7 +71,6 @@ if( ! class_exists( 'd1g1_monolog' ) )
             $return = $upload_dir['basedir'] . '/'. D1G1_LFILEDIR_BRAND .'';
             return $return;
         }
-       
         
          /**
          * přidaní log zapisu 
@@ -102,13 +100,6 @@ if( ! class_exists( 'd1g1_monolog' ) )
                         $logger->INFO($mess); 
                     }
                 break;
-                case 'ERROR':
-                    if($mess && $array){
-                            $logger->ERROR($mess, $array);
-                        }elseif($mess  ){
-                            $logger->ERROR($mess); 
-                        }
-                    break;
                 case 'NOTICE':
                     if($mess && $array){
                         $logger->NOTICE($mess, $array);
@@ -156,77 +147,36 @@ if( ! class_exists( 'd1g1_monolog' ) )
          * @author digihood
          * @return dir
          */ 
-        public function d1g1_get_log_file(){
+       public function d1g1_get_log_file(){
             $directory = $this->d1g1_get_log_folder();
-            $file = $directory . '/' . D1G1_BRANDING . '.json';
+            $file = $directory .'/'. D1G1_BRANDING .'.json';
             if(file_exists($file)){
-                $data = file_get_contents($file);
-                if($data){
-                    $datas = $this->json_split_objects($data);
-                    $data_z_jsonu = array_reverse($datas);
-                    if(!$data_z_jsonu) return; 
-                    include_once( 'views/table-header.php' );
-                    add_thickbox();
-                    $count = 0;
-                    foreach($data_z_jsonu as $row){
-                        $count++;
-                        if($row){
-                            $someArray = json_decode( $row,true );
-                            if (isset($someArray['datetime']['date']) && $someArray['datetime']['date']) {
-                                $showtime = $someArray['datetime']['date'] . '<br> zone_type:' . $someArray['datetime']['timezone_type'] . '<br> typezone:' . $someArray['datetime']['timezone'] ;
-                            }else {
-                                $showtime = $this->d1g1_setup_time($someArray['datetime']);
-                            }
-                                $this->d1g1_popup_modal($someArray,$count);
-                                echo '<div class="divTableRow">';
-                                echo '<div class="divTableCell">'.$showtime.'</div>';
-                                echo '<div class="divTableCell">'.$someArray['channel'].'</div>';
-                                echo '<div class="divTableCell">'.$someArray['level_name'].'</div>';
-                                echo '<div class="divTableCell">'.$someArray['message'].'</div>';
-                                echo '<div class="divTableCell">';
-                                echo ($someArray['context'] ? '<a href="#TB_inline?&width=1000&height=600&inlineId=log-popup-'.$count.'" class="thickbox">Oteřit Data</a>' : '');
-                                echo '</div>';
-                                echo '</div>';
-                           
-                        }
+                $data = file_get_contents($directory .'/'. D1G1_BRANDING .'.json');
+                $datas = $this->json_split_objects($data);
+            
+                include_once( 'views/table-header.php' );
+                foreach($datas as $row){
+                    $someArray = json_decode( $row,true );
+                // preprint($someArray);
+                $showtime = $this->d1g1_setup_time($someArray['datetime']);
+                echo '<tr>';
+                echo '<td>'.$showtime.'</td>';
+                echo '<td>'.$someArray['channel'].'</td>';
+                echo '<td><b>'.$someArray['level_name'].'</b></td>';
+                echo '<td>'.$someArray['message'].'</td>';
+            
+                    foreach($someArray['context'] as $rows=>$context){
+                        
+                        echo ($context ? '<td>'.$rows.'   : <b>'.$context.'</b><br></td>' : '');
+                    
+                        //preprint($context);
+                        //preprint($rows);
+                    
                     }
+            
                 }
             }
             include_once( 'views/table-footer.php' );
-        }
-
-        public function d1g1_popup_modal($someArray,$i){
-            if(is_array($someArray)){
-                echo '<div id="log-popup-'.$i.'" style="display:none;">';
-                if(isset($someArray['context']) && $someArray['context']){
-                    echo '<table border="0">';
-                            echo '<tbody>';
-                    foreach($someArray['context'] as $rows=>$context){
-                        if (is_array($context)){
-                            $contextinarray = implode(' || ',$context ); 
-                            foreach($context as $key => $value){
-                            if(is_array($value)){
-                                $valueinarray = implode(' || ',$value );
-                                $data = $contextinarray  .=   '<br> <b>array<b> : ' .$key . ' - ' .$valueinarray;
-                            }      
-                        }
-                        echo '<tr>';
-                        echo '<td>'. $data .'</td>';
-                        echo '</tr>'; 
-                        }else{
-                            
-                        echo '<tr>';
-                        echo '<td><b>'.$rows.'</b></td>';
-                        echo '<td>'.$context.'</td>';
-                        echo '</tr>'; 
-                        }
-                    }
-                    
-                    echo '</tbody>';
-                    echo '</table>';
-                } 
-                echo '</div>';
-            }
         }
 
         /**
@@ -295,5 +245,5 @@ if( ! class_exists( 'd1g1_monolog' ) )
 
 
     }
-     
+     new \pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
 }

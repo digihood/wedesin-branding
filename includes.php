@@ -4,9 +4,7 @@ if(!class_exists('Monolog\Logger')){
 }
 //framework
 include_once( D1G1_BRANDPATH . 'framework/styles-scripts.php');  
-include_once( D1G1_BRANDPATH . 'framework/plugin-admin/main-menu.php');
-include_once( D1G1_BRANDPATH . 'framework/monolog/logs-functions.php');
-
+include_once( D1G1_BRANDPATH . 'framework/main-menu.php');  
 include_once( D1G1_BRANDPATH . 'framework/monolog/log-setup.php');  
 include_once( D1G1_BRANDPATH . 'framework/log-content.php');
 include_once( D1G1_BRANDPATH . 'framework/forms-builder.php'); 
@@ -18,12 +16,7 @@ include_once( D1G1_BRANDPATH . 'framework/forms-core.php');
 include_once( D1G1_BRANDPATH . 'framework/get-html-form.php');
 include_once( D1G1_BRANDPATH . 'framework/emails.php'); 
 include_once( D1G1_BRANDPATH . 'framework/plugin-update-checker/plugin-update-checker.php'); 
-include_once( D1G1_BRANDPATH . 'framework/plugin-admin/d1g1-plugins-api.php');
-include_once( D1G1_BRANDPATH . 'framework/plugin-admin/plugins-menu-page.php');
-include_once( D1G1_BRANDPATH . 'framework/feedback/d1g1-feedback.php');
-include_once( D1G1_BRANDPATH . 'framework/feedback/d1g1-field-fb.php');
-include_once( D1G1_BRANDPATH . 'framework/utm.php');
-include_once( D1G1_BRANDPATH . 'framework/monolog/overview-logs.php');
+include_once( D1G1_BRANDPATH . 'framework/monolog/logs-functions.php');
 
 //admin
 include_once( D1G1_BRANDPATH . 'admin/sub-menu.php');  

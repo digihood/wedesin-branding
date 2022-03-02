@@ -62,7 +62,9 @@ if ( !class_exists('CustomScriptsStylesD1G1') ) {
 		 * @author digihood
 		 * @return echo/false
 		 */ 
-		public function admin_bar_branding( ) { ?>
+		public function admin_bar_branding( ) { 
+            if(is_user_logged_in() == false) return;
+            ?>
 			<style>
 			#wpadminbar #wp-admin-bar-wp-logo>.ab-item .ab-icon:before {
 				content: ' ' !important;

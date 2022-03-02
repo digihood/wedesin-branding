@@ -10,7 +10,6 @@ if( ! class_exists( 'logSetupD1G1') )
 		{
           
             add_action( 'admin_menu',  [$this, 'admin_page_d1g1_log'],90);
-            add_action( 'admin_init', [$this,'save_errors_count']);
         }
 
 		/**
@@ -22,53 +21,16 @@ if( ! class_exists( 'logSetupD1G1') )
          * @return true/false
          */ 
         public function admin_page_d1g1_log() {
-            $notification_count = $this->show_bubbles();
-            $show = ($notification_count == 0 ? '' : '<span class="awaiting-mod">' . $notification_count . '</span>');
             add_submenu_page(
                 'd1g1-plugins',                              
                     __( 'WDS Log', TM_PLUGSEC ),                    
-                    __('WDS Log', TM_PLUGSEC) . $show ,               
+                    __('WDS Log', TM_PLUGSEC),               
                     'manage_options',                           
                     'd1g1-logs',                              
                     array( $this, 'my_admin_page_contents' ),
                   
             );
         }
-
-        public function show_bubbles(){
-            
-            $newbubles = 0;
-            $overview = new overview_logD1G1;
-            $countarray = $overview->count_all_logs_output();
-            $error_count_actual = $countarray['error'];
-            $actual_old_counts_log = get_option('D1G1_all_error_counts');
-            if(isset($actual_old_counts_log) && $actual_old_counts_log){
-                $error_counts_old = $actual_old_counts_log['error'];
-                if(isset($error_count_actual) && $error_count_actual && isset($error_counts_old) && $error_counts_old){
-                    if($error_count_actual > $error_counts_old ){
-                        $newbubles = abs($error_counts_old - $error_count_actual);
-                
-                    }
-                }
-             // preprint($actual_old_counts_log);
-                return $newbubles;
-            }
-           
-               
-            
-        }
-
-        public function save_errors_count(){
-            if(isset($_GET['LOGview']) && $_GET['LOGview'] == 1){
-                $overview = new overview_logD1G1;
-                $counts = $overview->count_all_logs_output();
-                update_option('D1G1_all_error_counts', $counts);
-                update_option('D1G1_error_counts', $overview->get_plugin_json());
-                wp_redirect(get_home_url() . '/wp-admin/admin.php?page=d1g1-logs');
-            }
-        }
-
-        
     
         /**
          * Zobrazení hlavní admin stránky v adminu wordpressu
@@ -99,15 +61,13 @@ if( ! class_exists( 'logSetupD1G1') )
                         <div class="wrap">
                             <div class="col-12">
                                 <div class="box-info">
-                                   
+                                    <div class="box-header">
+                                        <h3 class="box-title"><?php _e( 'Záznamy logu', 'plan' ); ?></h3>
+                                        
+                                    </div>
                                     <div class="box-body">
-                                      <?php
-                           echo '<div class="box-button"><a href="admin.php?page=d1g1-logs&LOGview=1" class="button button-primary">Videl jsem LOG</a></div>' ;
-                                    
-                           $test = new overview_logD1G1;
-                           $te = $test->overview_plugins_log();
-                                    
-                                      ?>
+                                        <?= __('V jednotlivých záložkách naleznete záznamy logů pro Vaše d1g1 pluginy. 
+                                        Máte-li problém a potřebujete poradit s chybou, zkopírujte tento log do excelu a ten nám zašlete. Nebo můžete poslat přímo soubor, který naleznete na Vašem ftp ve složce wp-content/uploads/d1g1-log/')?>
                                     </div>
                                 </div>                 
                             </div>
