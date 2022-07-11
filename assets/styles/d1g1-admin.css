@@ -1,9 +1,12 @@
 :root {
-  --primary: #a5c83c;
+  --primary: #77D77B;
   --primary20: rgba(165, 200, 60, 0.2);
-  --secondary: #77275b;
-  --dark: #333333;
-  --grey: #c3c2bf;
+  --secondary: #0C2134;
+  --dark: #0C2134;
+  --grey: #B6BCC2;
+  --white: #ffffff;
+  --watermelon: #FF817E;
+  --watermelon-dark: #dc6d6a;
 }
 
 /* main styles 
@@ -11,18 +14,19 @@
 body .d1g1-admin,
 body .d1g1-admin p,
 body .d1g1-notice {
-  font-family: "Lato", sans-serif;
+  font-family: "Comfortaa", sans-serif;
   font-size: 14px;
   color: var(--dark);
 }
 .d1g1-admin h1 {
+  font-family: "Comfortaa", sans-serif;
   margin-bottom: 10px;
 }
 
 .d1g1-admin h2,
 .d1g1-admin h3,
 .d1g1-notice h3 {
-  font-family: "Lato", sans-serif;
+  font-family: "Comfortaa", sans-serif;
   font-weight: 400;
   color: var(--dark);
 }
@@ -38,12 +42,12 @@ body .d1g1-notice {
 
 body .d1g1-admin a,
 body .d1g1-notice a {
-  color: var(--primary);
+  color: var(--watermelon);
   text-decoration: none;
 }
 body .d1g1-admin a:hover,
 body .d1g1-notice a:hover {
-  color: var(--secondary);
+  color: var(--watermelon-dark);
 }
 
 .d1g1-admin img {
@@ -132,8 +136,8 @@ body .d1g1-notice a:hover {
   box-shadow: 0px 0px 5px rgba(119, 39, 91, 0.5);
 }
 .d1g1-admin .nav-tab.nav-tab-active {
-  background-color: white;
-  border-bottom: 1px solid white;
+  background-color: #77D77B;
+  border-bottom: 1px solid #77D77B;
 }
 
 .d1g1-admin .content-box {
@@ -270,7 +274,7 @@ body .d1g1-notice a:hover {
   visibility: hidden;
   transform: translate(0, 0);
   font-size: 14px;
-  color: #999999;
+  color: var(--grey);
   z-index: 2;
 }
 
@@ -377,27 +381,43 @@ min-width: 60px;
   color: var(--dark) !important;
   font-size: 14px;
   line-height: 1;
-  background-color: var(--primary) !important;
-  border: 1px solid var(--primary) !important;
+  background-color: var(--watermelon) !important;
+  border: 1px solid var(--watermelon) !important;
   border-radius: 4px;
 }
 .d1g1-admin .button:hover,
 .d1g1-notice .button:hover {
-  filter: brightness(110%);
+  background-color: var(--watermelon-dark)!important;
+  border: 1px solid var(--watermelon-dark)!important;
+  color: #fff!important;
+}
+
+.d1g1-admin .button:hover svg *,
+.d1g1-notice .button:hover svg * {
+  fill: #fff;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.d1g1-admin .button svg *,
+.d1g1-notice .button svg * {
+  fill: var(--dark);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .d1g1-admin .button:focus,
 .d1g1-admin .button.white:focus,
 .d1g1-notice .button:focus,
 .d1g1-notice .button.white:focus {
-  border-color: var(--secondary) !important;
-  box-shadow: 0px 0px 5px rgba(119, 39, 91, 0.5);
+  border-color: var(--watermelon-dark) !important;
+  box-shadow: 0px 0px 5px var(--watermelon-dark);
 }
 
 .d1g1-admin .button.white,
 .d1g1-notice .button.white {
   background: white !important;
   border-color: white !important;
+  color: var(--dark);
 }
 
 .d1g1-admin .button svg {
@@ -467,7 +487,7 @@ min-width: 60px;
 }
 
 .d1g1-admin input:hover + .slider {
-  background-color: var(--primary20);
+  background-color: var(--secondary);
 }
 
 .d1g1-admin input:checked + .slider {
@@ -521,7 +541,7 @@ min-width: 60px;
 }
 
 .d1g1-admin .checkbox:hover input ~ .checkmark {
-  background-color: var(--primary20);
+  background-color: var(--primary);
 }
 
 .d1g1-admin .checkbox input:checked ~ .checkmark {
@@ -817,12 +837,13 @@ input[type="range"]::-ms-thumb {
 ========================================= */
 .d1g1-admin .card {
   background-color: white;
-  padding: 20px;
   border: none;
   border-radius: 4px;
+  padding: 0;
 }
 .d1g1-admin .card.info {
   background-color: var(--primary);
+  padding: 20px;
 }
 .d1g1-admin .card h3 {
   display: flex;
@@ -916,7 +937,7 @@ height: 500px;
 .d1g1-admin .info-block {
   background-color: var(--primary20);
   padding: 20px;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 .d1g1-admin .info-block a {

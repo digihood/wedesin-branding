@@ -1,11 +1,11 @@
 <?php
 namespace pluginbrandslug;
 /**
-* Plugin Name: WeDesIn Branding
-* Description: WeDesIn branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
-* Version: 2.3.4
-* Author: WeDesIn
-* Author URI: https://www.wedesin.cz/
+* Plugin Name: Digihood Branding
+* Description: Digihood branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
+* Version: 3.0.0
+* Author: Digihood
+* Author URI: https://www.Digihood.cz/
 * Requires at least: 3.0.
 * Tested up to: 5.8.
 * License: GPL2 or higher

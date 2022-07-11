@@ -54,7 +54,7 @@ if ( !class_exists('ScriptsStylesD1G1') ) {
       wp_enqueue_style( 'star-comments', D1G1_BRANDURL . 'assets/styles/d1g1-admin.css', array( ), $admin_style, 'all' );
     
       wp_enqueue_style( 'fonts-gstatic', 'https://fonts.gstatic.com' );
-      wp_enqueue_style( 'font-Lato', 'https://fonts.googleapis.com/css2?family=Lato:ital@0;1&display=swap' );
+      wp_enqueue_style( 'font-Comfortaa', 'https://fonts.googleapis.com/css2?family=Comfortaa&display=swap' );
   
       wp_enqueue_style( 'wp-color-picker' );
   

@@ -91,7 +91,7 @@ if ( !class_exists('CustomScriptsStylesD1G1') ) {
 		public function d1g1_login_stylesheet() { 
 
 			if ( is_eng_d1g1( ) ) {
-				$img_url =  D1G1_BRANDURL . '/assets/img/d1g1-logo-en.png';
+				$img_url =  D1G1_BRANDURL . '/assets/img/d1g1-logo-cz.png';
 			} else {
 				$img_url =  D1G1_BRANDURL . '/assets/img/d1g1-logo-cz.png';
 			}
@@ -102,19 +102,19 @@ if ( !class_exists('CustomScriptsStylesD1G1') ) {
 
                 body.login h1 a {
                 background: transparent url( <?php echo $img_url; ?>) no-repeat !important;
-                background-size: 100% 100% !important;
-                width: 300px !important;
+                background-size: contain!important;
+                width: 270px !important;
                 height: 80px !important;
                 }
 
                 body.wp-core-ui .button-primary {
-                    background:  #A5C83C;
-                    border-color: #A5C83C #8AB336 #8AB336;
-                    -webkit-box-shadow: 0 1px 0 #8AB336;
-                    box-shadow: 0 1px 0 #8AB336;
+                    background:  #FF817E;
+                    border-color: #FF817E #FF817E #FF817E;
+                    -webkit-box-shadow: 0 1px 0 #FF817E;
+                    box-shadow: 0 1px 0 #FF817E;
                     color: #fff;
                     text-decoration: none;
-                    text-shadow: 0 -1px 1px #8AB336, 1px 0 1px #8AB336, 0 1px 1px #8AB336, -1px 0 1px #8AB336;
+                    text-shadow: 0 -1px 1px #FF817E, 1px 0 1px #FF817E, 0 1px 1px #FF817E, -1px 0 1px #FF817E;
                     transition: 0.3 linear all;
                     -webkit-transition: 0.3 linear all;
                     -moz-transition: 0.3 linear all;
@@ -123,11 +123,27 @@ if ( !class_exists('CustomScriptsStylesD1G1') ) {
                 body.wp-core-ui .button-primary:active,
                 body.wp-core-ui .button-primary:focus,
                 body.wp-core-ui .button-primary:hover {
-                    background: #8AB336;
-                    border-color: #8AB336;
+                    background: #dc6d6a;
+                    border-color: #dc6d6a;
                     color: #fff;
-                    box-shadow: inset 0 2px 0 #8AB336;
+                    box-shadow: inset 0 2px 0 #dc6d6a;
                 }
+                #language-switcher .button,
+                #language-switcher-locales {
+                    color: #FF817E!important;
+                    border-color: #FF817E!important;
+                }
+                #language-switcher .button:hover,
+                #language-switcher .button:focus,
+                #language-switcher .button:target {
+                    color: #dc6d6a!important;
+                    border-color: #dc6d6a!important;
+                }
+
+                #language-switcher-locales:focus {
+                    box-shadow: 0 0 2px #FF817E !important;
+                }
+
 
                 input[type=text]:focus, 
                 input[type=search]:focus, 
@@ -146,57 +162,60 @@ if ( !class_exists('CustomScriptsStylesD1G1') ) {
                 input[type=month]:focus, 
                 input[type=number]:focus, 
                 select:focus, textarea:focus {
-                    border-color: #A5C83C !important;
-                    -webkit-box-shadow: 0 0 2px rgba(165,200,60,.8) !important;
-                    box-shadow: 0 0 2px rgba(165,200,60,.8) !important;
+                    border-color: #FF817E !important;
+                    -webkit-box-shadow: 0 0 2px #77D77B !important;
+                    box-shadow: 0 0 2px #77D77B !important;
                 }
 
                 body.login .message {
-                    border-left: 4px solid #8AB336;
+                    border-left: 4px solid #77D77B;
                 }
 
                 body input[type=checkbox]:checked:before {
                     content: "\f147";
                     margin: -3px 0 0 -4px;
-                    color: #A5C83C;
+                    color: #77D77B!important;
                 }
 
                 .login #backtoblog a:hover, 
                 .login #nav a:hover, 
                 .login h1 a:hover {
-                    color: #8AB336 !important;
+                    color: #dc6d6a !important;
                 }
 
+                .login form input[type=checkbox]:focus {
+                    box-shadow: 0 0 2px #FF817E !important;
+                }
                 a:focus {
-                    -webkit-box-shadow: 0 0 0 1px #8AB336, 0 0 2px 1px rgba(30,140,190,.8) !important;
-                    box-shadow: 0 0 0 1px #8AB336, 0 0 2px 1px rgba(30,140,190,.8) !important;
+                    -webkit-box-shadow: 0 0 0 1px #dc6d6a, 0 0 2px 1px rgba(30,140,190,.8) !important;
+                    box-shadow: 0 0 0 1px #dc6d6a, 0 0 2px 1px rgba(30,140,190,.8) !important;
 
                 }
 
                 body.wp-core-ui .button-secondary .dashicons-hidden:before,
                 body.wp-core-ui .button-secondary .dashicons-visibility:before {
-                    color: #A5C83C !important
+                    color: #FF817E !important
                 }
 
                 body.login .button.wp-hide-pw:focus {
-                    border-color: #8AB336;
-                    box-shadow: 0 0 0 1px #8AB336;
+                    border-color: #dc6d6a;
+                    box-shadow: 0 0 0 1px #dc6d6a;
                 }
 
                 body a,
                 body a:hover,
                 body a:focus {
-                    color: #A5C83C
+                    color: #77D77B;
                 }
 
                 body.wp-core-ui .admin-email__actions-primary .button.button-large:not(#correct-admin-email) {
-                    color: #8AB336;
-                    border-color: #8AB336;
+                    color: #dc6d6a;
+                    border-color: #dc6d6a;
                 }
 
                 .wp-core-ui input[type=checkbox]:checked:before {
                     margin: 7px 0 0 -4px;
-                    color: #8AB336;
+                    color: #dc6d6a;
                     content: '\2714';
                 }
 

@@ -47,7 +47,7 @@ if( ! class_exists( 'viewAdminBoxD1G1' ) )
 				echo '<div class="card'.($type == 'plugins' ? ' info' : '').'">';
 
 					if ($type == 'pluginsnews'){ 
-						echo 	'<h2 style="margin-top:0; line-height: 24px">' .__("Novinky na webu Wedesin", D1G1_BRANDING).'</h2>';
+						echo 	'<h2 style="margin-top:0; line-height: 24px">' .__("Novinky na webu Digihood", D1G1_BRANDING).'</h2>';
 					}
 					?>
 
