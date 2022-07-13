@@ -2,7 +2,7 @@
 
 
 
-WeDesIn admin CSS styling
+Digihood admin CSS styling
 
 
 
@@ -888,10 +888,14 @@ color: #dc6d6a;
 
 .wp-core-ui input[type=checkbox]:checked:before {
 
-    color: #FFF;
+    color: #FF817E;
 
 }
 
+div.tabs-panel-active:focus {
+    box-shadow: inset 0 0 0 1px #77D77B, inset 0 0 2px 1px #FF817E;
+    outline: 0 none;
+}
 
 
 .media-progress-bar div {
@@ -1695,7 +1699,7 @@ body input[type=checkbox]:checked:before {
     background-color: #77D77B !important;
 }
 
-/* WeDesIn custom styles
+/* Digihood custom styles
 ==========================================*/
 
 .wedclear {

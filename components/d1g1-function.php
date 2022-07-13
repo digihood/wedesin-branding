@@ -8,7 +8,7 @@ namespace pluginbrandslug\components\formfunction;
  * Popis třídy
  *
  * 
- * @author Wedesin
+ * @author Digihood
  */ 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -103,7 +103,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             }
             $colors = $this->d1g1_settings_email();
             $content = $this->update_email_content($inputs);
-            $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@wedesin.cz" style="color:'.$colors['Links_color'].';">jan@wedesin.cz</a>', D1G1_BRANDING);
+            $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@digihood.cz" style="color:'.$colors['Links_color'].';">jan@digihood.cz</a>', D1G1_BRANDING);
             $subject = get_option('_d1g1_D1G1BRAND_brand_emails_settings_license_email_subject','');
             if (empty($subject)) $subject = __('Aktualizovali jsme váš web', D1G1_BRANDING);
            

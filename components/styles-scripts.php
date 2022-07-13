@@ -68,7 +68,7 @@ if ( !class_exists('CustomScriptsStylesD1G1') ) {
 			<style>
 			#wpadminbar #wp-admin-bar-wp-logo>.ab-item .ab-icon:before {
 				content: ' ' !important;
-				background: url( <?php  echo D1G1_BRANDURL ?>assets/img/d1g1-logo-icon.png) no-repeat !important;
+				background: url( <?php  echo D1G1_BRANDURL ?>assets/img/digihood_icon-white.svg) no-repeat !important;
 				width: 22px !important;
 				height: 22px !important;
 				display: block;

@@ -6,7 +6,7 @@
  *  $array = ['data' => $arg,'data2' => $arg,'data3' => $arg,];
  *  $log->d1g1_add_log('branding','EMERGENCY','tab', $array);
  * 
- * @author Wedesin
+ * @author Digihood
  */ 
      
 namespace pluginbrandslug\framework\monolog\log_function;

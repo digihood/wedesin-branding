@@ -1347,7 +1347,7 @@ if (!class_exists('D1G1_Front_Form')) {
                 $mail = get_option( 'admin_email' );
             }
             $content = $this->update_email_content($inputs);
-            $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@wedesin.cz">jan@wedesin.cz</a>', D1G1_BRANDING);
+            $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@digihood.cz">jan@digihood.cz</a>', D1G1_BRANDING);
             $subject = get_option('_d1g1_D1G1BRAND_brand_emails_settings_license_email_subject','');
             if (empty($subject)) $subject = __('Aktualizovali jsme váš web', D1G1_BRANDING);
             $email = new \d1g1SendEmailBrand;

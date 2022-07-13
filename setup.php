@@ -36,8 +36,8 @@ define( 'D1G1_LFILEDIR_BRAND','d1g1-wedesin-logs');
 // Nastavení automatické kontroly auktualizací 
 // D1G1_GITHUBURL example : https://github.com/WeDesIn/wedesin-branding
 // D1G1_GITHUBREP example : wedesin-branding
-define( 'D1G1_GITHUBURL_BRAND', 'hhttps://github.com/WeDesIn/wedesin-branding');
-define( 'D1G1_GITHUBREP_BRAND', 'wedesin-branding');
+define( 'D1G1_GITHUBURL_BRAND', 'hhttps://github.com/WeDesIn/digihood-branding');
+define( 'D1G1_GITHUBREP_BRAND', 'digihood-branding');
 
 /*******************************
 /     Plugin requirements      *
@@ -46,7 +46,7 @@ require( D1G1_BRANDPATH . 'framework/plugin-requirements.php');
 
 class DemandingPlugin extends \pluginbrandslug\requirements\d1g1PluginRequirements {
  
-    const PLUGIN_NAME = "WeDesIn Branding";
+    const PLUGIN_NAME = "Digihood Branding";
  
     public function __construct() {
         $this->add_activation_hooks( __FILE__ );

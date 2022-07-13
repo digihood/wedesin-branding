@@ -4,7 +4,7 @@ namespace pluginbrandslug\framework\gethtmlform;
  * html content
  *
  * 
- * @author Wedesin
+ * @author Digihood
  */ 
 
 if ( ! defined( 'ABSPATH' ) ) {

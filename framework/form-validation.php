@@ -4,7 +4,7 @@ namespace pluginbrandslug\framework\form_validation;
  * validace formulařu
  *
  * 
- * @author Wedesin
+ * @author Digihood
  */ 
 
 if ( ! defined( 'ABSPATH' ) ) {

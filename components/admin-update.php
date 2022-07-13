@@ -46,9 +46,9 @@ if ( !class_exists('AdminUpdatesD1G1') ) {
         public function d1g1_remove_footer_admin () {
 
 			if ( is_eng_d1g1( ) ) {
-				echo '<p>Website by <a href="https://www.wedesin.cz/en/" target="_blank">WeDesIn</a>. If you have any questions, please send an email to <a href="mailto:info@wedesin.cz" target="_blank">info@wedesin.cz</a>.';
+				echo '<p>Website by <a href="https://www.digihood.cz/en/" target="_blank">Digihood</a>. If you have any questions, please send an email to <a href="mailto:hello@digihood.cz" target="_blank">info@digihood.cz</a>.';
 			} else {
-				echo '<p>Webové stránky vytvořil <a href="https://www.wedesin.cz/" target="_blank">WeDesIn</a>. Pokud máte jakékoliv otázky, napište na <a href="mailto:info@wedesin.cz" target="_blank">info@wedesin.cz</a>.';
+				echo '<p>Webové stránky vytvořil <a href="https://www.digihood.cz/" target="_blank">Digihood</a>. Pokud máte jakékoliv otázky, napište na <a href="mailto:hello@digihood.cz" target="_blank">info@digihood.cz</a>.';
 			}
 
 		} 
@@ -61,7 +61,7 @@ if ( !class_exists('AdminUpdatesD1G1') ) {
          * @return	string
          */
         public function d1g1_homepage_url() {
-			return 'https://www.wedesin.cz/';
+			return 'https://www.digihood.cz/';
 		}
     
     }
