@@ -3,7 +3,7 @@ namespace pluginbrandslug;
 /**
 * Plugin Name: Digihood Branding
 * Description: Digihood branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
-* Version: 3.0.0
+* Version: 3.0.1
 * Author: Digihood
 * Author URI: https://www.Digihood.cz/
 * Requires at least: 3.0.
@@ -36,8 +36,8 @@ define( 'D1G1_LFILEDIR_BRAND','d1g1-wedesin-logs');
 // Nastavení automatické kontroly auktualizací 
 // D1G1_GITHUBURL example : https://github.com/WeDesIn/wedesin-branding
 // D1G1_GITHUBREP example : wedesin-branding
-define( 'D1G1_GITHUBURL_BRAND', 'hhttps://github.com/WeDesIn/digihood-branding');
-define( 'D1G1_GITHUBREP_BRAND', 'digihood-branding');
+define( 'D1G1_GITHUBURL_BRAND', 'https://github.com/WeDesIn/wedesin-branding');
+define( 'D1G1_GITHUBREP_BRAND', 'wedesin-branding');
 
 /*******************************
 /     Plugin requirements      *
