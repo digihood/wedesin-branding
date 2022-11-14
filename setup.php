@@ -1,22 +1,48 @@
 <?php
 namespace pluginbrandslug;
-/**
-* Plugin Name: Digihood Branding
-* Description: Digihood branding plugin přináší novinky a nabídku našich služeb a mění vzhled WordPressu do našich barev.
-* Version: 3.0.1
+use pluginbrandslug\framework\pluginSystem\UpdatePlugin;
+
+use pluginbrandslug\framework\pluginSystem\d1g1PluginRequirements;
+use pluginbrandslug\framework\pluginAdmin\Menu\d1g1LogMenu;
+
+/*
+* Plugin Name: Wedesin Branding
+* Plugin URI: 
+* Description: 
 * Author: Digihood
-* Author URI: https://www.Digihood.cz/
+* Author URI: https://www.digihood.cz/
+* Version: 4.0.0
+* Version Framework: 3.0
 * Requires at least: 3.0.
-* Tested up to: 5.8.
+* Tested up to: 5.6
 * License: GPL2 or higher
 */
 
 /*
 
+1) přidt do pluginu emaily pluf email templatu
+2) přidat do pluginu log
+3) informační bloky vpravo
+3) do admin rootu přidat funkci na tvorbu formulářů
+4) do admini rootu přidat funkci na zpracování formulářů
+
 Při založení nového pluginu je vždy potřeba:
 1. Změnit všechny define názvy - TM_PLUGSEC musí zůstat
-2.Přejmenovat defaultní classy
-3. namespace
+2.Přejmenovat namespace - včetně framevork - save_form
+3.promazat form field
+3. 
+
+Co opravit templatě
+1) opravit vyskakovaci upozorneni session, nemizi 
+2) Přidat templatu emailů
+3) Kompletně zprovoznit gulpfile
+5) Nefungoval rovnou ukládání core metaboxů. 
+6) Přidat rovnou classu na tvorbu metaboxů a rovnou jí zprovoznit.
+7) Přidat do emailu rovnou funkci send_general_email s parametrem předmětu a obsahu
+8) V emailech vyřešit "replyto"
+9) Logo v emailu v záhlaví nějak hromadně opravit.
+10) Zbavit se staryho log systemu 
+
 */
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -27,29 +53,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 /           DEFINE             *
 ********************************/
 
+//tuto definici neměnit.
+
 //definice
-define( 'TM_PLUGSEC', 'd1g1_plugins' );
+define( 'TM_PLUGSEC', 'd1g1_plugins');
+define( 'TM_PLUGNAMEBRAND', 'Wedesin Branding');
 define( 'D1G1_BRANDPATH', plugin_dir_path( __FILE__ ) );
 define( 'D1G1_BRANDURL', plugin_dir_url( __FILE__ ) );
 define( 'D1G1_BRANDING', 'D1G1BRAND' );
-define( 'D1G1_LFILEDIR_BRAND','d1g1-wedesin-logs');
+define( 'D1G1_LFILEDIR_BRAND','d1g1-'. D1G1_BRANDING .'-logs');
 // Nastavení automatické kontroly auktualizací 
 // D1G1_GITHUBURL example : https://github.com/WeDesIn/wedesin-branding
 // D1G1_GITHUBREP example : wedesin-branding
-define( 'D1G1_GITHUBURL_BRAND', 'https://github.com/WeDesIn/wedesin-branding');
-define( 'D1G1_GITHUBREP_BRAND', 'wedesin-branding');
+define( 'D1G1_IS_LICENSING_BRAND', FALSE);
+define( 'D1G1_GITHUBURL_BRAND', 'https://github.com/WeDesIn/plugin-template');
+define( 'D1G1_GITHUBREP_BRAND', 'D1G1BRAND');
 
 /*******************************
 /     Plugin requirements      *
 ********************************/ 
-require( D1G1_BRANDPATH . 'framework/plugin-requirements.php');  
+require( D1G1_BRANDPATH . 'framework/pluginSystem/d1g1PluginRequirements.php');  
 
-class DemandingPlugin extends \pluginbrandslug\requirements\d1g1PluginRequirements {
+class DemandingPlugin extends d1g1PluginRequirements {
  
-    const PLUGIN_NAME = "Digihood Branding";
+    const PLUGIN_NAME = "Šablona pluginů";
  
     public function __construct() {
-        $this->add_activation_hooks( __FILE__ );
+        $this->add_activation_hooks( __FILE__ ); 
     }
  
     protected function check_plugin_requirements() {
@@ -65,23 +95,36 @@ class DemandingPlugin extends \pluginbrandslug\requirements\d1g1PluginRequiremen
 }
 $DemandingPlugin = new DemandingPlugin();
 
+
 /*******************************
-/       INCLUDE PART           *
+/       INCLUDE PARTS          *
 ********************************/
 
+$file   = basename( __FILE__ );
+$folder = basename( dirname( __FILE__ ) );
+$hook = "in_plugin_update_message-{$folder}/{$file}";
+add_action( $hook, function ( $plugin_data, $r )
+{
+    preprint($plugin_data);
+    preprint($r);
+    echo 'Hello World';
+}, 10, 2 ); // 10:priority, 2:arguments #
 
-include_once( D1G1_BRANDPATH . 'includes.php'); 
+
+include_once( D1G1_BRANDPATH . 'includes.php');
+
+$license = UpdatePlugin::Update_Plugin();
 
 
+register_activation_hook(__FILE__, function () {
+    
+    $class = new d1g1LogMenu;
+    $active = $class->active_or_deactive_error_count(1);
+ });
 
-if(D1G1_GITHUBURL_BRAND && D1G1_GITHUBREP_BRAND){
-    $myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
-        D1G1_GITHUBURL_BRAND,
-        __FILE__,
-        D1G1_GITHUBREP_BRAND
-    );
-    //Set the branch that contains the stable release.
-    $myUpdateChecker->setBranch('master');
-    //Optional: If you're using a private repository, specify the access token like this:
-    $myUpdateChecker->setAuthentication('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');
-}
+ register_deactivation_hook(__FILE__, function () {
+    
+    $class = new d1g1LogMenu;
+    $deactive = $class->active_or_deactive_error_count(0);
+   
+});

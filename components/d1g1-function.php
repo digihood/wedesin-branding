@@ -32,8 +32,8 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             
          //   add_action( 'd1g1_test', [$this,''] );
         
-         add_action( 'd1g1_form_save_option_hook', [$this,'d1g1_mail_send'],10,3);
-
+         add_action( 'd1g1_form_save_option_hook', [$this,'d1g1_form_save_option'],10,3);
+        
          
         }
 
@@ -47,36 +47,23 @@ if( ! class_exists( 'D1G1FormFunction' ) )
  
             // add_action('digi_test','d1g1_testfefe');
 
-            public function d1g1_mail_send( $formID , $inputs , $fields) {
-                
+            public function d1g1_form_save_option( $formID , $inputs , $fields) {
+               
                 $this->fields = $fields;
-                if($this->fields[0]['save_option'] == 'send_mail'){
-                   // preprint($this->fields[0]['save_option']);
-                  
-                 
-                    $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;       
-                   
-                    $result = $this->send_update_email($inputs, $formID); 
-                         
+                switch ($this->fields[0]['save_option']) {
+                    case 'send_mail':
+                        $this->session = new \pluginbrandslug\framework\d1g1Session;       
+                        $this->send_update_email($inputs, $formID); 
+                        break;
+                    case 'send_mail_anthor':
+                        $this->session = new \pluginbrandslug\framework\d1g1Session;       
+                        $result = $this->send_update_email($inputs, $formID,true); 
+                        break;
                     
-
-                    //$newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);  
-                   // wp_safe_redirect($inputs['_wp_http_referer']);
-                    exit();
+        
                 }
-
-                if(isset($this->fields[0]['save_option']) && $this->fields[0]['save_option'] == 'send_feedback'){
-                    $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
-                    $plugin = get_plugin_data(D1G1_BRANDPATH . '/setup.php');
-
-                    $result = $this->send_feedback_email($inputs, $formID,$plugin);              
-                    if ($result) {
-                        $this->session->addSession($formID . '_submit_res', 'true');                                                          
-                    } else {
-                        $this->session->addSession($formID . '_submit_res', 'false');
-                    }
-                    exit();
-                } 
+                
+                
                 
              }
 
@@ -96,35 +83,37 @@ if( ! class_exists( 'D1G1FormFunction' ) )
         }
          
 
-        function send_update_email($inputs, $formID){
+        function send_update_email($inputs, $formID,$other = false){
             $mail = get_option('_d1g1_D1G1BRAND_brand_emails_settings_send_to_email',false);
             if (empty($mail)) {
                 $mail = get_option( 'admin_email' );
             }
+          
             $colors = $this->d1g1_settings_email();
-            $content = $this->update_email_content($inputs);
+            $content = $this->update_email_content($inputs,$other);
             $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@digihood.cz" style="color:'.$colors['Links_color'].';">jan@digihood.cz</a>', D1G1_BRANDING);
             $subject = get_option('_d1g1_D1G1BRAND_brand_emails_settings_license_email_subject','');
             if (empty($subject)) $subject = __('Aktualizovali jsme váš web', D1G1_BRANDING);
            
-            $email = new \pluginbrandslug\framework\emails\d1g1SendEmailBrand($this->d1g1_settings_email());
+            $email = new \D1G1SendEmail($this->d1g1_settings_email(),$mail);
            
             //zde zprovoznit emaily
-            $text = $email->email_content('Aktualizace webu', array($content),$footer );
+            $text = $email->email_content((!$other ? 'Aktualizace webu' : ''), array($content),$footer );
           
             //uložení aktualizace
-            $this->session = new \pluginbrandslug\framework\sessions\sessionClassD1G1;
+            $this->session = new \pluginbrandslug\framework\d1g1Session;
             $this->save_update_data($inputs);
             
             if ($this->save_update_data($inputs)) {
                 $email->send_client_emails($mail, $subject ,$text);
-                $log = new \pluginbrandslug\framework\monolog\log_function\d1g1_monolog;
+                $log = new \pluginbrandslug\framework\monolog\d1g1MonologFunction;
                 $log->d1g1_add_log('branding','INFO','tab', $inputs); 
-                $this->session->addSession($formID . '_save', 'success');
+                $this->session->add_session($formID . '_save', 'success');
+                
                 
                
             } else {
-                $this->session->addSession($formID . '_save', 'fail');
+                $this->session->add_session($formID . '_save', 'fail');
             }
             
             wp_safe_redirect($inputs['_wp_http_referer']);
@@ -197,14 +186,18 @@ if( ! class_exists( 'D1G1FormFunction' ) )
 
         }
 
-        public function update_email_content($inputs) {
+        public function update_email_content($inputs,$other) {
          $colors = $this->d1g1_settings_email();
             $text = get_option('_d1g1_D1G1BRAND_brand_emails_settings_mail_text_license_d1g1',false);
             $content = __('Dobrý den', 'D1G1BRAND').',<br><br>';
-            $content .= __('právě jsme aktualizovali Váš web', 'D1G1BRAND').' <a href="'.get_home_url().'" style="color:'.$colors['Links_color'].';">'.$this->url_without_http().'</a>.<br><br>';
+            if(!$other){
+                $content .= __('právě jsme aktualizovali Váš web', 'D1G1BRAND').' <a href="'.get_home_url().'" style="color:'.$colors['Links_color'].';">'.$this->url_without_http().'</a>.<br><br>';
+            }
             if ($text) $content .= $text;
-            $content .= '<h3>'.__('Přehled aktualizací:', 'D1G1BRAND').'</h3>';
-            $content .= $this->update_list($inputs);
+            if(!$other){
+                $content .= '<h3>'.__('Přehled aktualizací:', 'D1G1BRAND').'</h3>';
+                $content .= $this->update_list($inputs);
+            }
             return $content;
 
         }
