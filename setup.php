@@ -66,9 +66,14 @@ define( 'D1G1_LFILEDIR_BRAND','d1g1-'. D1G1_BRANDING .'-logs');
 // D1G1_GITHUBURL example : https://github.com/WeDesIn/wedesin-branding
 // D1G1_GITHUBREP example : wedesin-branding
 define( 'D1G1_IS_LICENSING_BRAND', FALSE);
-define( 'D1G1_GITHUBURL_BRAND', 'https://github.com/WeDesIn/plugin-template');
-define( 'D1G1_GITHUBREP_BRAND', 'D1G1BRAND');
+define( 'D1G1_GITHUBURL_BRAND', 'https://github.com/WeDesIn/wedesin-branding');
+define( 'D1G1_GITHUBREP_BRAND', 'wedesin-branding');
 
+
+//dočastné definice
+if(!defined('GithubToken')){
+    define( 'GithubToken', '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');
+}
 /*******************************
 /     Plugin requirements      *
 ********************************/ 
@@ -105,9 +110,9 @@ $folder = basename( dirname( __FILE__ ) );
 $hook = "in_plugin_update_message-{$folder}/{$file}";
 add_action( $hook, function ( $plugin_data, $r )
 {
-    preprint($plugin_data);
-    preprint($r);
-    echo 'Hello World';
+    // preprint($plugin_data);
+    // preprint($r);
+  
 }, 10, 2 ); // 10:priority, 2:arguments #
 
 
