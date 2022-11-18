@@ -24,6 +24,9 @@ if( ! class_exists( 'd1g1Session' ) )
                 session_start();
             }
         }
+        public static function end_session(){
+            session_write_close();
+        }
         /**
          * Vytvoření session
          *

@@ -27,7 +27,7 @@ if( ! class_exists( 'd1g1FormsHandle' ) )
         }
         // akce spouštějící uložení formuláře
         public function save_form() {	
-            d1g1Session::start_session();
+            //d1g1Session::start_session();
 			$inputs = filter_input_array(INPUT_POST);
             if (isset($inputs['form_id_d1g1']) && !empty($inputs['form_id_d1g1']) && !empty($inputs['plugin_id_d1g1']) && $inputs['plugin_id_d1g1'] == D1G1_BRANDING ) {
 				return d1g1FormSave::save_form();
