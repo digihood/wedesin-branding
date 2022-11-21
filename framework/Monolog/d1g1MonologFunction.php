@@ -87,67 +87,70 @@ if( ! class_exists( 'd1g1MonologFunction' ) )
          */ 
 
         public function d1g1_add_log($channel,$level,$mess = '', $array = []){
-            $logger = $this->d1g1_log_louder($channel);
-       
-            switch($level){
-                case 'DEBUG':
-                    if($mess && $array){
-                        $logger->DEBUG($mess, $array);
-                    }elseif($mess  ){
-                        $logger->DEBUG($mess); 
-                    }
-                break;
-                case 'INFO':
-                if($mess && $array){
-                        $logger->INFO($mess, $array);
-                    }elseif($mess  ){
-                        $logger->INFO($mess); 
-                    }
-                break;
-                case 'ERROR':
-                    if($mess && $array){
-                            $logger->ERROR($mess, $array);
+            if(version_compare(PHP_VERSION, '7.4', '>=')){
+                $logger = $this->d1g1_log_louder($channel);
+                switch($level){
+                    case 'DEBUG':
+                        if($mess && $array){
+                            $logger->DEBUG($mess, $array);
                         }elseif($mess  ){
-                            $logger->ERROR($mess); 
+                            $logger->DEBUG($mess); 
                         }
                     break;
-                case 'NOTICE':
+                    case 'INFO':
                     if($mess && $array){
-                        $logger->NOTICE($mess, $array);
-                    }elseif($mess  ){
-                        $logger->NOTICE($mess); 
-                    }
-                break;
-                case 'WARNING':
-                    if($mess && $array){
-                        $logger->WARNING($mess, $array);
-                    }elseif($mess  ){
-                        $logger->WARNING($mess); 
-                    }
-                break;
-                case 'CRITICAL':
-                    if($mess && $array){
-                        $logger->CRITICAL($mess, $array);
-                    }elseif($mess  ){
-                        $logger->CRITICAL($mess); 
-                    }
-                break;
-                case 'ALERT':
-                    if($mess && $array){
-                        $logger->ALERT($mess, $array);
-                    }elseif($mess  ){
-                        $logger->ALERT($mess); 
-                    }
-                break;
-                case 'EMERGENCY':
-                    if($mess && $array){
-                        $logger->EMERGENCY($mess, $array);
-                    }elseif($mess){
-                        $logger->EMERGENCY($mess); 
-                    }
-                 
-                break;
+                            $logger->INFO($mess, $array);
+                        }elseif($mess  ){
+                            $logger->INFO($mess); 
+                        }
+                    break;
+                    case 'ERROR':
+                        if($mess && $array){
+                                $logger->ERROR($mess, $array);
+                            }elseif($mess  ){
+                                $logger->ERROR($mess); 
+                            }
+                        break;
+                    case 'NOTICE':
+                        if($mess && $array){
+                            $logger->NOTICE($mess, $array);
+                        }elseif($mess  ){
+                            $logger->NOTICE($mess); 
+                        }
+                    break;
+                    case 'WARNING':
+                        if($mess && $array){
+                            $logger->WARNING($mess, $array);
+                        }elseif($mess  ){
+                            $logger->WARNING($mess); 
+                        }
+                    break;
+                    case 'CRITICAL':
+                        if($mess && $array){
+                            $logger->CRITICAL($mess, $array);
+                        }elseif($mess  ){
+                            $logger->CRITICAL($mess); 
+                        }
+                    break;
+                    case 'ALERT':
+                        if($mess && $array){
+                            $logger->ALERT($mess, $array);
+                        }elseif($mess  ){
+                            $logger->ALERT($mess); 
+                        }
+                    break;
+                    case 'EMERGENCY':
+                        if($mess && $array){
+                            $logger->EMERGENCY($mess, $array);
+                        }elseif($mess){
+                            $logger->EMERGENCY($mess); 
+                        }
+                    
+                    break;
 
+                }
+            }else{
+                return false;
             }
 
        }

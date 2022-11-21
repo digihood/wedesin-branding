@@ -30,7 +30,7 @@ if( ! class_exists( 'digiLogSetup') )
                     __('WDS Log', TM_PLUGSEC) . $show ,               
                     'manage_options',                           
                     'd1g1-logs',                              
-                    array( $this, 'my_admin_page_contents' ),
+                    array( $this, 'my_admin_page_contents' )
                   
             );
         }

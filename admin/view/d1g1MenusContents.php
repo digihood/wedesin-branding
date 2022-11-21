@@ -82,8 +82,9 @@ if (!class_exists('d1g1MenusContents')) {
                         if (isset($record['user']) && $record['update']) {
                             $user = get_userdata($record['user']);
                           //  $zone = new \DateTimeZone('UTC +2');
+                           
                             echo '<tr style="border-top: 1px solid black">';
-                            echo '<td>'.wp_date('d. m. Y H:i', $date) .'</td>';
+                            echo '<td>'.digi_date('d. m. Y H:i', $date) .'</td>';
                             echo '<td>'.$user->user_login. '('.$user->ID.')</td>';
                             echo '<td>'.$record['update'].'</td>';
                             echo '</tr>';

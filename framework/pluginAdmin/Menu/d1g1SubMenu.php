@@ -61,7 +61,7 @@ if( ! class_exists( 'd1g1SubMenu' ) )
                         $submenu[2],
                         $submenu[3],
                         $submenu[4],
-                        $submenu[5],
+                        $submenu[5]
                     );
                 }
             }             

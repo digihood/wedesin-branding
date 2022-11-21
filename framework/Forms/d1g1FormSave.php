@@ -43,7 +43,7 @@ if( ! class_exists( 'd1g1FormSave' ) )
             if (!isset($inputs['form_id_d1g1']) || $inputs['form_id_d1g1'] == '') {
                 return;
             }
-            d1g1Session::start_session();
+         //   d1g1Session::start_session();
             self::set_prefix_and_form_id($inputs['form_id_d1g1']);
             $fields = d1g1FormsBuilderFields::get_fields_form(self::$form_id);
             if (isset($inputs['nonce_' . self::$form_id]) && wp_verify_nonce($inputs['nonce_' . self::$form_id], self::$form_id)) {

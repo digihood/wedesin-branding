@@ -11,7 +11,7 @@ use pluginbrandslug\framework\pluginAdmin\Menu\d1g1LogMenu;
 * Description: 
 * Author: Digihood
 * Author URI: https://www.digihood.cz/
-* Version: 4.0.0
+* Version: 3.1.0
 * Version Framework: 3.0
 * Requires at least: 3.0.
 * Tested up to: 5.6
@@ -92,8 +92,8 @@ class DemandingPlugin extends d1g1PluginRequirements {
         $failed = array();
         if ( $wp_version < 4.0 )
             $failed[] = 'WordPress version must be at least 4.0! ';
-        if ( version_compare( PHP_VERSION, '7.0.0', '<' ) )
-            $failed[] = 'PHP version must be at least 7.0.0! ';
+        if ( version_compare( PHP_VERSION, '5.6.0', '<' ) )
+            $failed[] = 'PHP version must be at least 5.6.0! ';
         return $failed;
     }
  

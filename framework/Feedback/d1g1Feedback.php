@@ -30,7 +30,7 @@ if( ! class_exists( 'd1g1Feedback' ) ){
 		{
             $this->fields = $field_list;
             if(isset($_GET['tab']) && $_GET['tab'] == 'feedback'){
-                add_action( 'd1g1_submit_button_form', [$this,'button_feedback'], 10, 1 );
+                add_action( 'd1g1_submit_button_form-'.D1G1_BRANDING, [$this,'button_feedback'], 10, 1 );
             }
             add_action( 'd1g1_form_save_option_hook', [$this,'feedback_send'],10 , 3);
 
@@ -74,7 +74,7 @@ if( ! class_exists( 'd1g1Feedback' ) ){
                 $subject = __('Feedback na plugin  ' . $plugin['Name'] . '', D1G1_BRANDING);
             }
             
-            d1g1Session::start_session();
+          //  d1g1Session::start_session();
             $email = new \D1G1SendEmail($settingscss,$replymail);
             //zde zprovoznit emaily
             

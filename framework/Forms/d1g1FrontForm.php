@@ -68,8 +68,8 @@ if (!class_exists('d1g1FrontForm')) {
                                 <input type="hidden" value="<?=self::$form_id?>" name="form_id_d1g1" />
                                 <input type="hidden" value="<?= D1G1_BRANDING?>" name="plugin_id_d1g1" />                                                             
                                 <?php self::get_form_fields(); 
-                                    do_action( 'd1g1_submit_button_form', self::$form_id );
-                                    has_action( 'd1g1_submit_button_form') ? '' : submit_button();
+                                    do_action( 'd1g1_submit_button_form-'.D1G1_BRANDING, self::$form_id );
+                                    has_action( 'd1g1_submit_button_form-'.D1G1_BRANDING) ? '' : submit_button();
                                  ?>
                             </form>
                         </div>

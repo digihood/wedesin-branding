@@ -105,7 +105,7 @@ if( ! class_exists( 'd1g1ThisPluginField' ) )
 					]
 				];
 			} else if ($formID == 'update_report') {
-				add_action('d1g1_submit_button_form',function () { echo submit_button('Odeslat hlášení');} );
+				add_action('d1g1_submit_button_form-'.D1G1_BRANDING,function () { echo submit_button('Odeslat hlášení');} );
 				$plugins = [];
 				$plugins_list = get_plugins();
 				foreach ($plugins_list as $plugin => $value) {
@@ -162,7 +162,7 @@ if( ! class_exists( 'd1g1ThisPluginField' ) )
 					];
 
 			}elseif($formID == 'send_digi_mail'){
-				add_action('d1g1_submit_button_form',function () { echo submit_button('Odeslat email');} );
+				add_action('d1g1_submit_button_form-'.D1G1_BRANDING,function () { echo submit_button('Odeslat email');} );
 				$fields=[
 					
 					[

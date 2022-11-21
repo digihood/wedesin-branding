@@ -98,4 +98,14 @@ if(!function_exists('is_licensing')){
     }
 }
 
+if(!function_exists('digi_date')){
+    function digi_date($format,$date){
+        if(function_exists('wp_date')){
+            return wp_date($format,$date);
+        }elseif(version_compare(PHP_VERSION, '7.0', '<=')){
+            return date($format,$date);
+        }
+    }
+}
+
 
