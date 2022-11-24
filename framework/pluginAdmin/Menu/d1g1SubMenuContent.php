@@ -18,6 +18,7 @@ if (!class_exists('d1d1SubMenuContent')) {
         //hook functions
         public function __construct()
         {
+        
         }
         /**
          * Zobrazení ukázkového formuláře
@@ -29,7 +30,7 @@ if (!class_exists('d1d1SubMenuContent')) {
          */
         function my_admin_page_contents()
         {   
-            //d1g1Session::start_session();
+              
             //Získat aktivní tab z parametru $_GET 
             $default_tab = null;
             $builder = new d1g1FormsBuilderFields();
@@ -94,6 +95,7 @@ if (!class_exists('d1d1SubMenuContent')) {
                 </div>
             </div>
 <?php
+d1g1Session::end_session();
         }
 
   

@@ -20,16 +20,20 @@ if( ! class_exists( 'd1g1FormsHandle' ) )
 
 
         function __construct() {
-
-            add_action( 'admin_init', [$this, 'save_form'] );
+   
+                add_action( 'admin_init', [$this, 'save_form'] );
             add_action('save_post', [$this, 'save_cpt_meta']);
+            if ((isset($inputs['form_id_d1g1']) && !empty($inputs['form_id_d1g1']) && !empty($inputs['plugin_id_d1g1']) && $inputs['plugin_id_d1g1'] == D1G1_BRANDING ) || isset($_GET['page']) && $_GET['page'] == D1G1_BRANDING)
+            d1g1Session::start_session();
 
         }
         // akce spouštějící uložení formuláře
         public function save_form() {	
-            //d1g1Session::start_session();
+
 			$inputs = filter_input_array(INPUT_POST);
             if (isset($inputs['form_id_d1g1']) && !empty($inputs['form_id_d1g1']) && !empty($inputs['plugin_id_d1g1']) && $inputs['plugin_id_d1g1'] == D1G1_BRANDING ) {
+               
+               
 				return d1g1FormSave::save_form();
             }
 		}

@@ -23,10 +23,15 @@ if( ! class_exists( 'd1g1FormSave' ) )
         private static $form_id = '';
         private static $prefix_form = '';
 
+        function __construct(){
+           
+        }
+        
         // nastaví prefix pro ukládání dat do options
         private static function set_prefix_and_form_id($form_id) {
             self::$prefix_form = '_d1g1_'.D1G1_BRANDING.'_';
             self::$form_id = $form_id;
+           
         }
 
         /**
@@ -50,6 +55,7 @@ if( ! class_exists( 'd1g1FormSave' ) )
                 //validace polí
                 if (!d1g1FormsValidationForm::validate_fields($inputs,self::$form_id)) {
                     d1g1Session::add_session(self::$form_id . '_save', 'fail');
+                  
                     wp_safe_redirect($inputs['_wp_http_referer']);
                     exit;
                 }
@@ -104,6 +110,7 @@ if( ! class_exists( 'd1g1FormSave' ) )
                                 d1g1Session::add_session(self::$form_id . '_save', 'success');
                                 (new d1g1MonologFunction)->d1g1_add_log(__METHOD__,'INFO',self::$form_id,[$metas]);
                                 $newUrl = add_query_arg(['submit' => 1], $inputs['_wp_http_referer']);
+                              
                                
                                 wp_safe_redirect($newUrl);
                                 exit;
@@ -113,6 +120,7 @@ if( ! class_exists( 'd1g1FormSave' ) )
                 }   
                 
                 d1g1Session::add_session(self::$form_id . '_save', 'fail');
+              
                 wp_safe_redirect($inputs['_wp_http_referer']);
                 exit;
             }

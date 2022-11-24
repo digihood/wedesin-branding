@@ -58,6 +58,7 @@ if( ! class_exists( 'd1g1Feedback' ) ){
                     
                         d1g1Session::add_session($formID . '_submit_res', 'false');
                     }
+                    d1g1Session::end_session();
                     exit();
                 }
             }
@@ -74,7 +75,7 @@ if( ! class_exists( 'd1g1Feedback' ) ){
                 $subject = __('Feedback na plugin  ' . $plugin['Name'] . '', D1G1_BRANDING);
             }
             
-          //  d1g1Session::start_session();
+            d1g1Session::start_session();
             $email = new \D1G1SendEmail($settingscss,$replymail);
             //zde zprovoznit emaily
             
@@ -100,7 +101,7 @@ if( ! class_exists( 'd1g1Feedback' ) ){
                
                 d1g1Session::add_session($formID . '_save', 'fail');
             }
-          
+            d1g1Session::end_session();
             
             wp_safe_redirect($inputs['_wp_http_referer']);
             exit;

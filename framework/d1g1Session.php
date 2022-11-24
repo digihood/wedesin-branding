@@ -17,13 +17,16 @@ if( ! class_exists( 'd1g1Session' ) )
 	{
 		public function __construct()
 		{
-            add_action( 'plugins_loaded', [$this,'start_session'] );
+
+           
+            
         }
         
         public static function start_session(){
-            if(!session_id()){ 
-                session_start();
+            if(!session_id() ){ 
+                session_start( );
             }
+           
         }
         public static function end_session(){
             session_write_close();
