@@ -17,8 +17,6 @@ if( ! class_exists( 'd1g1Session' ) )
 	{
 		public function __construct()
 		{
-
-           
             
         }
         
@@ -198,5 +196,4 @@ if( ! class_exists( 'd1g1Session' ) )
         }
             
     }
-    new d1g1Session;
  }

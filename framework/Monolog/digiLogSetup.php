@@ -26,8 +26,8 @@ if( ! class_exists( 'digiLogSetup') )
             $show = ($notification_count == 0 ? '' : '<span class="awaiting-mod">' . $notification_count . '</span>');
             add_submenu_page(
                 'd1g1-plugins',                              
-                    __( 'WDS Log', TM_PLUGSEC ),                    
-                    __('WDS Log', TM_PLUGSEC) . $show ,               
+                    __( 'digi Log', TM_PLUGSEC ),                    
+                    __('digi Log', TM_PLUGSEC) . $show ,               
                     'manage_options',                           
                     'd1g1-logs',                              
                     array( $this, 'my_admin_page_contents' )

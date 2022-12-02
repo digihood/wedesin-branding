@@ -6,9 +6,9 @@ use pluginbrandslug\framework\pluginSystem\d1g1PluginRequirements;
 use pluginbrandslug\framework\pluginAdmin\Menu\d1g1LogMenu;
 
 /*
-* Plugin Name: Wedesin Branding
+* Plugin Name: digihood Branding
 * Plugin URI: 
-* Description: 
+* Description: Nová verze wedesin branding pluginu. Po změně brandingu přichází i změna názvů pluginů. Nově již naše pluginy najdete pro názvem digihood. Děkujeme, že děláte weby s námi.
 * Author: Digihood
 * Author URI: https://www.digihood.cz/
 * Version: 3.1.0
@@ -57,7 +57,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 //definice
 define( 'TM_PLUGSEC', 'd1g1_plugins');
-define( 'TM_PLUGNAMEBRAND', 'Wedesin Branding');
+define( 'TM_PLUGNAMEBRAND', 'Digihood Branding');
 define( 'D1G1_BRANDPATH', plugin_dir_path( __FILE__ ) );
 define( 'D1G1_BRANDURL', plugin_dir_url( __FILE__ ) );
 define( 'D1G1_BRANDING', 'D1G1BRAND' );
