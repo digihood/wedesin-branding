@@ -43,6 +43,9 @@ Co opravit templatě
 9) Logo v emailu v záhlaví nějak hromadně opravit.
 10) Zbavit se staryho log systemu 
 
+//změna stylů na WP_die pro pepu
+ve složce framework soubor includes stačí odkomentovat include souboru digi-wp-die.php a v momente co nekde použiješ funkci wp_die(); tak se použije html template z souboru framework/wp-die.php
+Toto bych pak pozdeji hodil i do šablony se stejným nazvem classy bez namespace.  at to máme jak v pluginu tak i v šabloně. 
 */
 if ( ! defined( 'ABSPATH' ) ) {
     exit;

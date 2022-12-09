@@ -107,5 +107,11 @@ if(!function_exists('digi_date')){
         }
     }
 }
-
+// add_action('init', 'wp_maintenance_mode');
+// function wp_maintenance_mode() {
+//     if (!current_user_can('edit_themes') || !is_user_logged_in()) {
+//         wp_die();
+//     }
+// }
+  
 
