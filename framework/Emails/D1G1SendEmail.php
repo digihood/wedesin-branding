@@ -94,7 +94,7 @@ if( ! class_exists( 'D1G1SendEmail' ) )
           $body="",
           $footer=""
           ){
-            $img_default = D1G1_BRANDURL . 'assets/img/d1g1-logo-cz.png';
+            $img_default = D1G1_BRANDURL . 'assets/img/d1g1-logo-dark-blue.png';
             $img = (d1g1_get_option('emails_settings','header_logo') ? d1g1_get_option('emails_settings','header_logo') : $img_default);
 
             $return ='<!DOCTYPE html>
