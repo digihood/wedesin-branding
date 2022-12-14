@@ -13,4 +13,3 @@ include_once(__DIR__.'/Emails/includes.php'); // emaily z BE pluginu
 include_once(__DIR__.'/Feedback/includes.php'); // odesílání feedbacku
 include_once(__DIR__.'/Forms/includes.php'); // BE formuláře
 include_once(__DIR__.'/pluginSystem/includes.php'); // lincence a aktualizace
-//include_once(__DIR__.'/digi-wp-die.php'); // lincence a aktualizace

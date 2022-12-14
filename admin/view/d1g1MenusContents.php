@@ -39,6 +39,7 @@ if (!class_exists('d1g1MenusContents')) {
             echo '<a href="?page='.D1G1_BRANDING.'&tab=update_report" class="nav-tab '.($tab === 'update_report' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg").'Odeslání reportu</a>';
             echo '<a href="?page='.D1G1_BRANDING.'&tab=send_digi_mail" class="nav-tab '.($tab === 'send_digi_mail' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg").'Odeslaní emailu</a>';
             echo '<a href="?page='.D1G1_BRANDING.'&tab=emails" class="nav-tab '.($tab === 'emails' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg").'Emaily</a>';
+            echo '<a href="?page='.D1G1_BRANDING.'&tab=tools" class="nav-tab '.($tab === 'tools' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg").'tools</a>';
 
         }
         /**
@@ -57,6 +58,7 @@ if (!class_exists('d1g1MenusContents')) {
             $contents['emails'] = 'brand_emails_settings';
             $contents['send_digi_mail'] = 'send_digi_mail';
             $contents['update_report'] = 'update_report';
+            $contents['tools'] = 'plugins_tools';
             return $contents;
 
         }

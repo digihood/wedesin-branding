@@ -194,6 +194,44 @@ if( ! class_exists( 'd1g1ThisPluginField' ) )
                         ],
 					]
 					];
+			}elseif($formID == 'plugins_tools'){
+				$fields=[
+					
+					[
+						'headline' => 'Režím udržby',
+						[
+							'type' => 'switch',
+							'name' => 'digi_maintenance_mode',
+							'label' => 'Zapnout udržbu',
+							'saveAs' => 'meta',
+						],
+						[
+                            'type' => 'text',
+                            'name' => 'digi_maintenance_mode_title',
+                            'saveAs' => 'meta',
+                            'label' => 'Title',
+                            'help_text' => '',
+							'required' => false,
+                        ],
+						[
+                            'type' => 'text',
+                            'name' => 'digi_maintenance_mode_text',
+                            'saveAs' => 'meta',
+                            'label' => 'Defautní zprava stránky',
+                            'help_text' => '',
+							'required' => false,
+                        ],
+						[
+                            'type' => 'time',
+                            'name' => 'digi_maintenance_mode_time',
+                            'saveAs' => 'meta',
+                            'label' => 'udržba do ',
+                            'help_text' => '',
+							'required' => false,
+                        ],
+						
+					]
+				];
 			}
 			return $fields;
         

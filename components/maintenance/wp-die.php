@@ -20,7 +20,7 @@ endif;
 			wp_robots_no_robots( array( 'noindex' ) );
 		}
 		?>
-		<title>Keyboard Action Error</title>
+		<title><?php echo $title ?></title>
 		<style type="text/css">
 			@import url(https://fonts.googleapis.com/css?family=Arvo);
 
@@ -177,7 +177,7 @@ endif;
 
 		<div class="container">
 
-			<h1>Oops!</h1>
+			<h1><?php echo $title; ?></h1>
 
 			<div class="warning">
 				<h2><?php echo $message; ?></h2>
