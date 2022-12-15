@@ -70,7 +70,7 @@ if( ! class_exists( 'D1G1SendEmail' ) )
         function change_headers($args) {
           
           if(isset($this->mailreply) &&  $this->mailreply) {
-            $mailheader = 'Reply-To: ' . $this->mailreply;
+            $mailheader = 'Reply-To: ' . $this->mailreply.'\r\n';
           }else{
             $mailheader = "Reply-To: jan@digihood.cz\r\n";
             
