@@ -30,6 +30,7 @@ if( ! class_exists( 'D1G1SendEmail' ) )
           add_action( 'init', [$this,'email_test'] );
           add_filter( 'wp_mail', [$this, 'change_headers'] );  
           $this->settings_css($settings);
+         
           $this->mailreply = $replymail;
         }
         public function settings_css($settings = []) {
@@ -70,7 +71,8 @@ if( ! class_exists( 'D1G1SendEmail' ) )
         function change_headers($args) {
           
           if(isset($this->mailreply) &&  $this->mailreply) {
-            $mailheader = 'Reply-To: ' . $this->mailreply.'\r\n';
+            $mailheader = "Reply-To: " . $this->mailreply."\r\n";
+          
           }else{
             $mailheader = "Reply-To: jan@digihood.cz\r\n";
             
@@ -317,7 +319,7 @@ if( ! class_exists( 'D1G1SendEmail' ) )
         public function send_client_emails( $mail, $subject, $message ){ 
 
           $headers = array( 'Content-Type: text/html; charset=UTF-8 ');
-
+          
           if ( $mail && $subject && $message ) {
             wp_mail(  $mail, $subject, $message, $headers );
             return true;

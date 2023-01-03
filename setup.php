@@ -136,3 +136,13 @@ register_activation_hook(__FILE__, function () {
     $deactive = $class->active_or_deactive_error_count(0);
    
 });
+function mailtrap($phpmailer) {
+    $phpmailer->isSMTP();
+    $phpmailer->Host = 'smtp.mailtrap.io';
+    $phpmailer->SMTPAuth = true;
+    $phpmailer->Port = 2525;
+    $phpmailer->Username = 'c1f0e41e659c86';
+    $phpmailer->Password = 'fe88ac7fdda9ee';
+  }
+  
+  add_action('phpmailer_init', 'mailtrap');

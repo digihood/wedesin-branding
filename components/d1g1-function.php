@@ -85,6 +85,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
 
         function send_update_email($inputs, $formID,$other = false){
             $mail = get_option('_d1g1_D1G1BRAND_brand_emails_settings_send_to_email',false);
+           
             if (empty($mail)) {
                 $mail = get_option( 'admin_email' );
             }
