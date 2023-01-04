@@ -27,6 +27,7 @@ if( ! class_exists( 'D1G1SendEmail' ) )
         private $mailreply;
 
         public function __construct($settings = [], $replymail){
+        
           add_action( 'init', [$this,'email_test'] );
           add_filter( 'wp_mail', [$this, 'change_headers'] );  
           $this->settings_css($settings);
@@ -96,9 +97,10 @@ if( ! class_exists( 'D1G1SendEmail' ) )
           $body="",
           $footer=""
           ){
+          
             $img_default = D1G1_BRANDURL . 'assets/img/d1g1-logo-dark-blue.png';
             $img = (d1g1_get_option('emails_settings','header_logo') ? d1g1_get_option('emails_settings','header_logo') : $img_default);
-
+         
             $return ='<!DOCTYPE html>
                 <html lang="cs">
                 <head>
@@ -142,11 +144,12 @@ if( ! class_exists( 'D1G1SendEmail' ) )
                                             if (!empty($title) ) {
                                               $return .= '<tr><td align="left" style="font-size: 40px; line-height: 48px; font-family: Georgia, Arial, sans-serif; color: '.$this->fontColorText.'; padding:20px 5%" class="padding-copy">' .$title. '</td></tr>';
                                             }
-
+                                           
                                           if ( $body ) { 
-                                            foreach ($body as $paragraph) {
 
-                                              $return .= '<tr><td align="left" style="'.$this->default_font_style().' padding: 0 5% 20px 5%;" class="padding-copy">' .$paragraph. '</td></tr>';
+                                            foreach ($body as $paragraph) {
+                                             
+                                              $return .= '<tr><td align="left" style="'.$this->default_font_style().' padding: 0 5% 20px 5%;" class="padding-copy">' .nl2br( $paragraph ). '</td></tr>';
 
                                             }
                                           }
@@ -167,8 +170,7 @@ if( ! class_exists( 'D1G1SendEmail' ) )
                 </body>
                 </html>';
 
-                // echo $return;
-                // die();
+   
 
                 return $return;
 
@@ -319,8 +321,9 @@ if( ! class_exists( 'D1G1SendEmail' ) )
         public function send_client_emails( $mail, $subject, $message ){ 
 
           $headers = array( 'Content-Type: text/html; charset=UTF-8 ');
-          
+       
           if ( $mail && $subject && $message ) {
+          
             wp_mail(  $mail, $subject, $message, $headers );
             return true;
           }  

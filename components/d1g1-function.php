@@ -100,13 +100,14 @@ if( ! class_exists( 'D1G1FormFunction' ) )
            
             //zde zprovoznit emaily
             $text = $email->email_content((!$other ? 'Aktualizace webu' : ''), array($content),$footer );
-          
+           
             //uložení aktualizace
             $this->session = new \pluginbrandslug\framework\d1g1Session;
             $this->save_update_data($inputs);
             
             if ($this->save_update_data($inputs)) {
                 $email->send_client_emails($mail, $subject ,$text);
+               
                 $log = new \pluginbrandslug\framework\monolog\d1g1MonologFunction;
                 $log->d1g1_add_log('branding','INFO','tab', $inputs); 
                 $this->session->add_session($formID . '_save', 'success');
@@ -190,6 +191,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
         public function update_email_content($inputs,$other) {
          $colors = $this->d1g1_settings_email();
             $text = get_option('_d1g1_D1G1BRAND_brand_emails_settings_mail_text_license_d1g1',false);
+           
             $content = __('Dobrý den', 'D1G1BRAND').',<br><br>';
             if(!$other){
                 $content .= __('právě jsme aktualizovali Váš web', 'D1G1BRAND').' <a href="'.get_home_url().'" style="color:'.$colors['Links_color'].';">'.$this->url_without_http().'</a>.<br><br>';

@@ -45,6 +45,7 @@ if( ! class_exists( 'd1g1FormSave' ) )
         public static function save_form()
         {
             $inputs = filter_input_array(INPUT_POST);
+          
             if (!isset($inputs['form_id_d1g1']) || $inputs['form_id_d1g1'] == '') {
                 return;
             }
@@ -98,6 +99,7 @@ if( ! class_exists( 'd1g1FormSave' ) )
                         if(isset($metas['nonce_' . self::$form_id])) unset($metas['nonce_' . self::$form_id]);
                         //zde budeme zpracovávat ukládání hodnot
                             if ($metas && !empty($metas)) {
+                               
                                 foreach ($metas as $meta_key => $meta_value) {
                                 
                                     if($meta_key) self::save_data($meta_key, $meta_value);
