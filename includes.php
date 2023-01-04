@@ -1,8 +1,7 @@
 <?php
- if(!class_exists("\Composer\Autoload\ClassLoader"))
- {
-    include_once( D1G1_BRANDPATH . 'vendor/autoload.php');
- }
+
+include_once( D1G1_BRANDPATH . 'vendor/autoload.php');
+ 
 
 //framework
 include_once( D1G1_BRANDPATH . 'framework/includes.php');  
