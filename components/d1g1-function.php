@@ -96,10 +96,10 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             $subject = get_option('_d1g1_D1G1BRAND_brand_emails_settings_license_email_subject','');
             if (empty($subject)) $subject = __('Aktualizovali jsme váš web', D1G1_BRANDING);
            
-            $email = new \D1G1SendEmail($this->d1g1_settings_email(),$mail);
+            $email = new \D1G1SendEmailNew($this->d1g1_settings_email(),$mail);
            
             //zde zprovoznit emaily
-            $text = $email->email_content((!$other ? 'Aktualizace webu' : ''), array($content),$footer );
+            $text = $email->email_content('', array($content),$footer );
            
             //uložení aktualizace
             $this->session = new \pluginbrandslug\framework\d1g1Session;

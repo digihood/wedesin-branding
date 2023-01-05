@@ -76,7 +76,7 @@ if( ! class_exists( 'd1g1Feedback' ) ){
             }
             
             d1g1Session::start_session();
-            $email = new \D1G1SendEmail($settingscss,$replymail);
+            $email = new \D1G1SendEmailNew($settingscss,$replymail);
             //zde zprovoznit emaily
             
             $text = $email->email_content('Feedback', array($content),$footer );
