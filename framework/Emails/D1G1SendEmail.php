@@ -9,11 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-if( ! class_exists( 'D1G1SendEmail' ) )
+if( ! class_exists( 'D1G1SendEmailNew' ) )
 
 {
 
-    class D1G1SendEmail
+    class D1G1SendEmailNew
     { 
         private $background;
         private $fontColorText;
@@ -93,7 +93,7 @@ if( ! class_exists( 'D1G1SendEmail' ) )
         ==============================================================*/
 
         public function email_content(
-          $title, 
+          $title="", 
           $body="",
           $footer=""
           ){

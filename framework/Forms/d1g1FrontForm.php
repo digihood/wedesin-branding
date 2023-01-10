@@ -125,10 +125,19 @@ if (!class_exists('d1g1FrontForm')) {
             if (isset($validation_data['allvalid']) && !$validation_data['allvalid']) {
                 
                 d1g1GetHtmlForm::d1g1_notice_form('error');
+                d1g1Session::remove_session(self::$form_id.'_save');
                
             } else if ( $save_progress == 'success') {
               
                 d1g1GetHtmlForm::d1g1_notice_form('success');
+                d1g1Session::remove_session(self::$form_id.'_save');
+            } else if ( $save_progress == 'send_email') {
+              
+                d1g1GetHtmlForm::d1g1_notice_form('send_email');
+                d1g1Session::remove_session(self::$form_id.'_save');
+            } else if ( $save_progress == 'fail') {
+              
+                d1g1GetHtmlForm::d1g1_notice_form('fail');
                 d1g1Session::remove_session(self::$form_id.'_save');
             }
            

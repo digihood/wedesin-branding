@@ -844,6 +844,20 @@ if( ! class_exists( 'd1g1GetHtmlForm' ) )
                <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?=''. __('Skrýt toto upozornění.', TM_PLUGSEC). ''?></span></button>
                </div>
            <?php
+            }elseif ($notice == 'send_email'){
+                ?>
+                <div class="notice notice-success d1g1-notice is-dismissible">
+               <?= '<p>'. __('Email s reportem byl odeslán.', TM_PLUGSEC) . '</p>' ?>
+               <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?=''. __('Skrýt toto upozornění.', TM_PLUGSEC). ''?></span></button>
+               </div>
+           <?php
+           }elseif ($notice == 'fail'){
+            ?>
+                <div class="notice notice-error d1g1-notice is-dismissible">
+                <?= '<p>'. __('Email s reportem se nepodařilo odeslat.', TM_PLUGSEC) . '</p>' ?>
+                <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?=''. __('Skrýt toto upozornění.', TM_PLUGSEC). ''?></span></button>
+                </div>
+            <?php
             }
          
         }

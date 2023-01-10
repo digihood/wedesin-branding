@@ -76,7 +76,7 @@ if( ! class_exists( 'd1g1Feedback' ) ){
             }
             
             d1g1Session::start_session();
-            $email = new \D1G1SendEmail($settingscss,$replymail);
+            $email = new \D1G1SendEmailNew($settingscss,$replymail);
             //zde zprovoznit emaily
             
             $text = $email->email_content('Feedback', array($content),$footer );
@@ -110,20 +110,20 @@ if( ! class_exists( 'd1g1Feedback' ) ){
         public function feedback_content($inputs,$plugin) {
             
             $content = __('Feedback z webu <a href="'.get_home_url().'">'.get_home_url().'</a> na plugin <b>'. $plugin['Name'] . '</b>'  , D1G1_BRANDING).'<br><br>';
-            $content .= __('Od uživatele : '. $inputs['username'], 'D1G1BRAND').'<br><br>';
-            $content .= __('Uživatelský email  : '. $inputs['usermail'], 'D1G1BRAND').'<br><br>';
+            $content .= __('Od uživatele: '. $inputs['username'], 'D1G1BRAND').'<br><br>';
+            $content .= __('Uživatelský email: '. $inputs['usermail'], 'D1G1BRAND').'<br><br>';
             if($inputs['userphone']){
-                $content .= __('Telefon uživatele : '. $inputs['userphone'], 'D1G1BRAND').'<br><br>';
+                $content .= __('Telefon uživatele: '. $inputs['userphone'], 'D1G1BRAND').'<br><br>';
             }
-            $content .= __('Uživatel se registroval :'. $inputs['dateregister'], 'D1G1BRAND').'<br><br>';
-            $content .= __('Role uživatele  : '. $inputs['userroles'], 'D1G1BRAND').'<br><br>';
-            $content .= __('Plugin : '. $plugin['Name'], 'D1G1BRAND').'<br><br>';
-            $content .= __('Plugin Version  : '. $plugin['Version'], 'D1G1BRAND').'<br><br>';
+            $content .= __('Uživatel se registroval: '. $inputs['dateregister'], 'D1G1BRAND').'<br><br>';
+            $content .= __('Role uživatele: '. $inputs['userroles'], 'D1G1BRAND').'<br><br>';
+            $content .= __('Plugin: '. $plugin['Name'], 'D1G1BRAND').'<br><br>';
+            $content .= __('Plugin Version: '. $plugin['Version'], 'D1G1BRAND').'<br><br>';
             if(isset($inputs['licence']) && $inputs['licence']){
-                $content .= __('Plugin Licence  : '. $inputs['licence'], 'D1G1BRAND').'<br><br>';
+                $content .= __('Plugin Licence: '. $inputs['licence'], 'D1G1BRAND').'<br><br>';
             }
            
-            $content .= '<h3>'.__('feedback : ', 'D1G1BRAND').'</h3>';
+            $content .= '<h3>'.__('feedback: ', 'D1G1BRAND').'</h3>';
             $content .= $inputs['feedback_content'];
             return $content;
 
