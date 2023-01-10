@@ -107,24 +107,24 @@ if(!function_exists('digi_date')){
         }
     }
 }
-
-add_action('init', 'wp_maintenance_mode');
-function wp_maintenance_mode() {
-   
-    if (d1g1_get_option('plugins_tools','digi_maintenance_mode') && !current_user_can('edit_themes') && !is_user_logged_in()) {
-        if(d1g1_get_option('plugins_tools','digi_maintenance_mode_time') !== null){
-       
-            if( strtotime(d1g1_get_option('plugins_tools','digi_maintenance_mode_time')) > strtotime(date('H:i'))){
-           
-                wp_die((d1g1_get_option('plugins_tools','digi_maintenance_mode_text') ? d1g1_get_option('plugins_tools','digi_maintenance_mode_text') : ''),(d1g1_get_option('plugins_tools','digi_maintenance_mode_title') ? d1g1_get_option('plugins_tools','digi_maintenance_mode_title') : ''));
-            }
-        }else{
-           
-                wp_die((d1g1_get_option('plugins_tools','digi_maintenance_mode_text') ? d1g1_get_option('plugins_tools','digi_maintenance_mode_text') : ''),(d1g1_get_option('plugins_tools','digi_maintenance_mode_title') ? d1g1_get_option('plugins_tools','digi_maintenance_mode_title') : ''));
-        }
+if(function_exists('wp_maintenance_mode')){
+    add_action('init', 'wp_maintenance_mode');
+    function wp_maintenance_mode() {
+    
+        if (d1g1_get_option('plugins_tools','digi_maintenance_mode') && !current_user_can('edit_themes') && !is_user_logged_in()) {
+            if(d1g1_get_option('plugins_tools','digi_maintenance_mode_time') !== null){
         
-      
+                if( strtotime(d1g1_get_option('plugins_tools','digi_maintenance_mode_time')) > strtotime(date('H:i'))){
+            
+                    wp_die((d1g1_get_option('plugins_tools','digi_maintenance_mode_text') ? d1g1_get_option('plugins_tools','digi_maintenance_mode_text') : ''),(d1g1_get_option('plugins_tools','digi_maintenance_mode_title') ? d1g1_get_option('plugins_tools','digi_maintenance_mode_title') : ''));
+                }
+            }else{
+            
+                    wp_die((d1g1_get_option('plugins_tools','digi_maintenance_mode_text') ? d1g1_get_option('plugins_tools','digi_maintenance_mode_text') : ''),(d1g1_get_option('plugins_tools','digi_maintenance_mode_title') ? d1g1_get_option('plugins_tools','digi_maintenance_mode_title') : ''));
+            }
+            
+        
+        }
     }
-}
   
-
+}
