@@ -11,7 +11,7 @@ use pluginbrandslug\framework\pluginAdmin\Menu\d1g1LogMenu;
 * Description: Nová verze wedesin branding pluginu. Po změně brandingu přichází i změna názvů pluginů. Nově již naše pluginy najdete pro názvem digihood. Děkujeme, že děláte weby s námi.
 * Author: Digihood
 * Author URI: https://www.digihood.cz/
-* Version: 3.1.0
+* Version: 3.1.1
 * Version Framework: 3.0
 * Requires at least: 3.0.
 * Tested up to: 5.6
@@ -69,7 +69,7 @@ define( 'D1G1_LFILEDIR_BRAND','d1g1-'. D1G1_BRANDING .'-logs');
 // D1G1_GITHUBURL example : https://github.com/WeDesIn/wedesin-branding
 // D1G1_GITHUBREP example : wedesin-branding
 define( 'D1G1_IS_LICENSING_BRAND', FALSE);
-define( 'D1G1_GITHUBURL_BRAND', 'https://github.com/WeDesIn/wedesin-branding');
+define( 'D1G1_GITHUBURL_BRAND', 'https://github.com/digihood/wedesin-branding');
 define( 'D1G1_GITHUBREP_BRAND', 'wedesin-branding');
 
 
