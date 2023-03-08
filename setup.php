@@ -87,18 +87,3 @@ $DemandingPlugin = new DemandingPlugin();
 include_once( D1G1_BRANDPATH . 'includes.php');
 
 $license = UpdatePlugin::Update_Plugin();
-
-
-register_activation_hook(__FILE__, function () {
-    
-    $class = new d1g1LogMenu;
-    $active = $class->active_or_deactive_error_count(1);
- });
-
- register_deactivation_hook(__FILE__, function () {
-    
-    $class = new d1g1LogMenu;
-    $deactive = $class->active_or_deactive_error_count(0);
-   
-});
-
