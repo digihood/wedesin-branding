@@ -81,7 +81,9 @@ if(!defined('GithubToken')){
 /     Plugin requirements      *
 ********************************/ 
 require( D1G1_BRANDPATH . 'framework/pluginSystem/d1g1PluginRequirements.php');  
-
+if( class_exists( 'd1g1PluginRequirements','wfwfw', false )){
+    return;
+}
 class DemandingPlugin extends d1g1PluginRequirements {
  
     const PLUGIN_NAME = "Šablona pluginů";
@@ -108,16 +110,6 @@ $DemandingPlugin = new DemandingPlugin();
 /       INCLUDE PARTS          *
 ********************************/
 
-$file   = basename( __FILE__ );
-$folder = basename( dirname( __FILE__ ) );
-$hook = "in_plugin_update_message-{$folder}/{$file}";
-add_action( $hook, function ( $plugin_data, $r )
-{
-    // preprint($plugin_data);
-    // preprint($r);
-  
-}, 10, 2 ); // 10:priority, 2:arguments #
-
 
 include_once( D1G1_BRANDPATH . 'includes.php');
 
@@ -136,3 +128,4 @@ register_activation_hook(__FILE__, function () {
     $deactive = $class->active_or_deactive_error_count(0);
    
 });
+
