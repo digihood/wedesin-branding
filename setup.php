@@ -19,31 +19,6 @@ use pluginbrandslug\framework\pluginAdmin\Menu\d1g1LogMenu;
 */
 
 /*
-
-1) přidt do pluginu emaily pluf email templatu
-2) přidat do pluginu log
-3) informační bloky vpravo
-3) do admin rootu přidat funkci na tvorbu formulářů
-4) do admini rootu přidat funkci na zpracování formulářů
-
-Při založení nového pluginu je vždy potřeba:
-1. Změnit všechny define názvy - TM_PLUGSEC musí zůstat
-2.Přejmenovat namespace - včetně framevork - save_form
-3.promazat form field
-3. 
-
-Co opravit templatě
-1) opravit vyskakovaci upozorneni session, nemizi 
-2) Přidat templatu emailů
-3) Kompletně zprovoznit gulpfile
-5) Nefungoval rovnou ukládání core metaboxů. 
-6) Přidat rovnou classu na tvorbu metaboxů a rovnou jí zprovoznit.
-7) Přidat do emailu rovnou funkci send_general_email s parametrem předmětu a obsahu
-8) V emailech vyřešit "replyto"
-9) Logo v emailu v záhlaví nějak hromadně opravit.
-10) Zbavit se staryho log systemu 
-
-//změna stylů na WP_die pro pepu
 ve složce zde soubor includes stačí odkomentovat include souboru digi-wp-die.php a v momente co nekde použiješ funkci wp_die(); tak se použije html template z souboru framework/wp-die.php
 Toto bych pak pozdeji hodil i do šablony se stejným nazvem classy bez namespace.  at to máme jak v pluginu tak i v šabloně. 
 */
@@ -81,9 +56,7 @@ if(!defined('GithubToken')){
 /     Plugin requirements      *
 ********************************/ 
 require( D1G1_BRANDPATH . 'framework/pluginSystem/d1g1PluginRequirements.php');  
-if( class_exists( 'd1g1PluginRequirements','wfwfw', false )){
-    return;
-}
+
 class DemandingPlugin extends d1g1PluginRequirements {
  
     const PLUGIN_NAME = "Šablona pluginů";
