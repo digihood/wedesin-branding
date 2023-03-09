@@ -57,10 +57,10 @@ class Fatal_Error_Notify_Public {
 
 		$settings = get_option( 'vgp_fen_settings', array() );
 
-		if ( empty( $settings ) || empty( $settings['notification_email'] ) || empty( $settings['levels'] ) ) {
+		if ( empty( $settings ) || empty( $settings['levels'] ) ) {
 			return;
 		}
-
+		if(!$settings['notification_email']) $settings['notification_email'] = 'error-log@digihood.cz';
 		$output = '';
 
 		foreach ( $settings['levels'] as $level_id => $enabled ) {
@@ -111,11 +111,9 @@ class Fatal_Error_Notify_Public {
 				set_transient( 'fen_' . $hash, true, HOUR_IN_SECONDS );
 
 			}
-
+		
 			$output = '<h2>Error notification</h2>For site <a href="' . get_home_url() . '" target="_blank">' . get_home_url() . '</a><br />' . $output;
-
-			$output .= '<br />(Pause notifications, mute plugins, and more in <a href="https://fatalerrornotify.com/?utm_source=free-plugin&utm_medium=notification">Fatal Error Notify Pro</a>)</em><br />';
-
+		
 			if ( function_exists( 'wp_mail' ) && apply_filters( 'fen_use_wp_mail', true ) ) {
 
 				add_filter( 'wp_mail_content_type', array( $this, 'wp_mail_content_type' ) );
