@@ -11,7 +11,7 @@ use pluginbrandslug\framework\pluginAdmin\Menu\d1g1LogMenu;
 * Description: Nová verze wedesin branding pluginu. Po změně brandingu přichází i změna názvů pluginů. Nově již naše pluginy najdete pro názvem digihood. Děkujeme, že děláte weby s námi.
 * Author: Digihood
 * Author URI: https://www.digihood.cz/
-* Version: 3.1.1
+* Version: 3.1.2
 * Version Framework: 3.0
 * Requires at least: 3.0.
 * Tested up to: 5.6
