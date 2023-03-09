@@ -52,10 +52,8 @@ if (!class_exists('d1d1SubMenuContent')) {
                             <?php 
                             $contents = [];
                             $contents = apply_filters( 'd1g1_navigation_content-'.D1G1_BRANDING, $contents );
-                           
-                            
                             foreach($contents as $tab_name => $content){
-                              
+                          
                                 if(is_array($content)){
                                     if(isset($content[0]) && $content[0] && isset($content[1]) && $content[1]){
                                         if(class_exists($content[0]) && method_exists($content[0],$content[1])){

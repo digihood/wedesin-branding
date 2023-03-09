@@ -40,6 +40,7 @@ if (!class_exists('d1g1MenusContents')) {
             //echo '<a href="?page='.D1G1_BRANDING.'&tab=send_digi_mail" class="nav-tab '.($tab === 'send_digi_mail' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg").'Odeslaní emailu</a>';
             echo '<a href="?page='.D1G1_BRANDING.'&tab=emails" class="nav-tab '.($tab === 'emails' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg").'Emaily</a>';
             //echo '<a href="?page='.D1G1_BRANDING.'&tab=tools" class="nav-tab '.($tab === 'tools' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg").'tools</a>';
+            echo '<a href="?page='.D1G1_BRANDING.'&tab=EmailerrorNotify" class="nav-tab '.($tab === 'EmailerrorNotify' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_BRANDPATH . "assets/icons/link-line.svg").'Notifikace Chyb</a>';
 
         }
         /**
@@ -59,6 +60,7 @@ if (!class_exists('d1g1MenusContents')) {
             $contents['send_digi_mail'] = 'send_digi_mail';
             $contents['update_report'] = 'update_report';
             $contents['tools'] = 'plugins_tools';
+            $contents['EmailerrorNotify'] = [\Fatal_Error_Notify_Admin::class,'settings_page'];
             return $contents;
 
         }

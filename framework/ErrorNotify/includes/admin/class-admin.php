@@ -2,68 +2,7 @@
 
 class Fatal_Error_Notify_Admin {
 
-	/**
-	 * Get things started
-	 *
-	 * @since 1.0
-	 * @return void
-	 */
-
-	public function __construct() {
-
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'wp_ajax_test_error', array( $this, 'test_error' ) );
-	}
-
-	/**
-	 * Register admin settings menu
-	 *
-	 * @since 1.0
-	 * @return void
-	 */
-
-	public function admin_menu() {
-
-		$id = add_options_page(
-			'Fatal Error Notification Settings',
-			'Digi Error Notifikace',
-			'manage_options',
-			'fatal-error-notify',
-			array( $this, 'settings_page' )
-		);
-
-		add_action( 'load-' . $id, array( $this, 'enqueue_scripts' ) );
-
-	}
-
-	/**
-	 * Register CSS files
-	 *
-	 * @since 1.0
-	 * @return void
-	 */
-
-	public function enqueue_scripts() {
-
-		remove_all_actions( 'admin_notices' ); // don't need to see these on our page.
-
-		wp_enqueue_style( 'fatal-error-notify', FATAL_ERROR_NOTIFY_DIR_URL . 'framework/ErrorNotify/assets/admin.css', array(), FATAL_ERROR_NOTIFY_VERSION );
-		wp_enqueue_script( 'test_error', FATAL_ERROR_NOTIFY_DIR_URL . 'framework/ErrorNotify/assets/admin.js', array( 'jquery' ), FATAL_ERROR_NOTIFY_VERSION );
-
-	}
-
-	/**
-	 * Creates test error button
-	 *
-	 * @access public
-	 * @return void
-	 */
-
-	public function test_error() {
-
-		function_that_does_not_exist();
-
-	}
+	
 
 	/**
 	 * Renders Settings page
@@ -72,8 +11,10 @@ class Fatal_Error_Notify_Admin {
 	 * @return mixed
 	 */
 
-	public function settings_page() {
-
+	public static function settings_page() {
+		$tab = (isset($_GET['tab']) &&  $_GET['tab'] ? $_GET['tab'] : null);
+	
+		if($tab !== 'EmailerrorNotify')return;
 		// Save settings
 		if ( isset( $_POST['fen_settings_nonce'] ) && wp_verify_nonce( $_POST['fen_settings_nonce'], 'fen_settings' ) ) {
 			update_option( 'vgp_fen_settings', map_deep( wp_unslash( $_POST['fen_settings'] ), 'sanitize_text_field' ) );
@@ -106,7 +47,7 @@ class Fatal_Error_Notify_Admin {
 
 
 			<h2><?= __('Digi Error Notifikace nastavení', D1G1_BRANDING)?></h2>
-
+		
 			<form id="fen-settings" action="" method="post">
 				<?php wp_nonce_field( 'fen_settings', 'fen_settings_nonce' ); ?>
 				<input type="hidden" name="action" value="update">
@@ -115,8 +56,10 @@ class Fatal_Error_Notify_Admin {
 					<tr valign="top">
 						<th scope="row"><?= __('Notifikační email',D1G1_BRANDING );?></th>
 						<td valign="top">
-							<input class="regular-text" type="email" name="fen_settings[notification_email]" value="<?php echo esc_attr( $settings['notification_email'] ); ?>" />
-							<p class="description"><?= __('Na tuto adresu budou zasílána nakonfigurovaná oznámení o chybách.',D1G1_BRANDING );?></p>
+							<div class="form-item">
+								<input class="regular-text" type="email" name="fen_settings[notification_email]" value="<?php echo esc_attr( $settings['notification_email'] ); ?>" />
+								<p class="description"><?= __('Na tuto adresu budou zasílána nakonfigurovaná oznámení o chybách.',D1G1_BRANDING );?></p>
+							</div>
 						</td>
 					</tr>
 					<tr valign="top">
@@ -132,12 +75,13 @@ class Fatal_Error_Notify_Admin {
 									if ( empty( $settings['levels'][ $level_id ] ) ) {
 										$settings['levels'][ $level_id ] = false;}
 										?>
+									
 
-									<label for="level_<?php echo $level_string; ?>">
-										<input type="checkbox" name="fen_settings[levels][<?php echo $level_id; ?>]" id="level_<?php echo $level_string; ?>" value="1" <?php checked( $settings['levels'][ $level_id ] ); ?> />
-										<?php echo esc_html( $level_string ); ?>
-									</label>
-
+										<label for="level_<?php echo $level_string; ?>" class="checkbox">
+											<input type="checkbox" name="fen_settings[levels][<?php echo $level_id; ?>]" id="level_<?php echo $level_string; ?>" value="1" <?php checked( $settings['levels'][ $level_id ] ); ?> />
+											<span class="checkmark"></span><?php echo esc_html( $level_string ); ?>
+										</label>
+									
 									
 
 									<br />
@@ -150,7 +94,7 @@ class Fatal_Error_Notify_Admin {
 				</table>
 
 				<p class="submit">
-					<input name="Submit" type="submit" class="button-primary" value="Uložit"/>
+					<input name="Submit" type="submit" class="button button-primary" value="Uložit"/>
 				</p>
 
 			</form>
@@ -163,4 +107,4 @@ class Fatal_Error_Notify_Admin {
 
 }
 
-new Fatal_Error_Notify_Admin();
+
