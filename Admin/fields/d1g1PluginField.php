@@ -126,6 +126,7 @@ if( ! class_exists( 'd1g1PluginField' ) )
 					'headline' => 'Aktualizace',
 					'description' => '',
 					'enctype' => '',
+					'action' => 'send_mail',
 					'sections' => [
 						'section1' => [
 							'headline' => 'Jádro WP',
