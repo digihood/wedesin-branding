@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Author: Digihood    
  * Author URI: digihood.cz   
  */
-define( 'D1G1_BRANDING', 'digihoodbranding' );
+define( 'D1G1_BRANDING', 'digibrand' );
 define( 'D1G1_PLUGSLUG_'.D1G1_BRANDING, 'd1g1_plugins');
 define( 'D1G1_PLUGNAME_'.D1G1_BRANDING, 'Digihood Branding');
 define( 'D1G1_PATHS_'.D1G1_BRANDING, plugin_dir_path( __FILE__ ) );
