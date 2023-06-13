@@ -30,10 +30,8 @@ if (!class_exists('d1g1MenusContents')) {
          */
         public static function add_navigations($tab) {
             echo '<a href="?page='.D1G1_BRANDING.'" class="nav-tab '.($tab === null ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_digibrand . "icons/home-line.svg").' Default Tab</a>';
-            echo '<a href="?page='.D1G1_BRANDING.'&tab=email" class="nav-tab '.($tab === 'email' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_digibrand . "icons/link-line.svg").'Emaily</a>';
-            echo '<a href="?page='.D1G1_BRANDING.'&tab=test" class="nav-tab '.($tab === 'test' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_digibrand . "icons/link-line.svg").'test</a>';
-            echo '<a href="?page='.D1G1_BRANDING.'&tab=test_rep" class="nav-tab '.($tab === 'test_rep' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_digibrand . "icons/link-line.svg").'Repeater</a>';
-       
+            echo '<a href="?page='.D1G1_BRANDING.'&tab=emails" class="nav-tab '.($tab === 'emails' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_digibrand . "icons/link-line.svg").'Emaily</a>';
+            echo '<a href="?page='.D1G1_BRANDING.'&tab=update_report" class="nav-tab '.($tab === 'update_report' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_digibrand . "icons/link-line.svg").'Odeslání reportu</a>';
         }
         /**
          * zobrazní navigačním panelum obsah 
@@ -48,10 +46,9 @@ if (!class_exists('d1g1MenusContents')) {
             /*if(d1g1license::validate_lisense_key()){
                 $contents['tools'] = 'test_form_mini_for_test';
             }*/
-            $contents['email'] = 'emails_settings';
-            $contents['test'] = 'test';
-            $contents['test_rep'] = 'test_rep';
-           
+
+            $contents['emails'] = 'brand_emails_settings';
+            $contents['update_report'] = 'update_report';
             return $contents;
 
         }
