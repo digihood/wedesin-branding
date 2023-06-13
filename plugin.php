@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 /*
- * Plugin Name: pluginTemplate
+ * Plugin Name: Digihood Branding
  * Plugin URI: 		  
  * Description: desciption
  * Version:           
