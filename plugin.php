@@ -1,22 +1,22 @@
 <?php
-namespace pluginone;
+namespace digibrand;
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 /*
  * Plugin Name: Digihood Branding
- * Plugin URI: 		  
+ * Plugin URI: digihood.cz   
  * Description: desciption
- * Version:           
- * Author:            
- * Author URI:        
+ * Version: 4.0.0          
+ * Author: Digihood    
+ * Author URI: digihood.cz   
  */
-define( 'D1G1_PLUGINIDONE', 'pluginone' );
-define( 'D1G1_PLUGSLUG_'.D1G1_PLUGINIDONE, 'd1g1_plugins');
-define( 'D1G1_PLUGNAME_'.D1G1_PLUGINIDONE, 'Plugin ONE');
-define( 'D1G1_PATHS_'.D1G1_PLUGINIDONE, plugin_dir_path( __FILE__ ) );
-define( 'D1G1_PATHTOFWASSET_'.D1G1_PLUGINIDONE, plugin_dir_path( __FILE__ ).'plugin-framework/FrameworkAssets/' );
-define( 'D1G1_URL_'.D1G1_PLUGINIDONE, plugin_dir_url( __FILE__ ) );
+define( 'D1G1_BRANDING', 'digihoodbranding' );
+define( 'D1G1_PLUGSLUG_'.D1G1_BRANDING, 'd1g1_plugins');
+define( 'D1G1_PLUGNAME_'.D1G1_BRANDING, 'Digihood Branding');
+define( 'D1G1_PATHS_'.D1G1_BRANDING, plugin_dir_path( __FILE__ ) );
+define( 'D1G1_PATHTOFWASSET_'.D1G1_BRANDING, plugin_dir_path( __FILE__ ).'plugin-framework/FrameworkAssets/' );
+define( 'D1G1_URL_'.D1G1_BRANDING, plugin_dir_url( __FILE__ ) );
 
 require __DIR__.'/plugin-framework/kint.phar';
 

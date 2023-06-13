@@ -1,5 +1,5 @@
 <?php 
-namespace pluginone\admin\fields;
+namespace digibrand\admin\fields;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;

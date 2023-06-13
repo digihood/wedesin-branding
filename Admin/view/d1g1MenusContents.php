@@ -1,6 +1,6 @@
 <?php
 
-namespace pluginone\admin\view;
+namespace digibrand\admin\view;
 
 if (!defined('ABSPATH')) {
 
@@ -17,8 +17,8 @@ if (!class_exists('d1g1MenusContents')) {
 
 
         function __construct() {
-            add_action( 'd1g1_navigations-'.D1G1_PLUGINIDONE, [$this,'add_navigations']);
-            add_filter( 'd1g1_navigation_content-'.D1G1_PLUGINIDONE, [$this,'add_navigation_contents'] );
+            add_action( 'd1g1_navigations-'.D1G1_BRANDING, [$this,'add_navigations']);
+            add_filter( 'd1g1_navigation_content-'.D1G1_BRANDING, [$this,'add_navigation_contents'] );
 
         }
         /**
@@ -29,10 +29,10 @@ if (!class_exists('d1g1MenusContents')) {
          * @author Digihood
          */
         public static function add_navigations($tab) {
-            echo '<a href="?page='.D1G1_PLUGINIDONE.'" class="nav-tab '.($tab === null ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_pluginone . "icons/home-line.svg").' Default Tab</a>';
-            echo '<a href="?page='.D1G1_PLUGINIDONE.'&tab=email" class="nav-tab '.($tab === 'email' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_pluginone . "icons/link-line.svg").'Emaily</a>';
-            echo '<a href="?page='.D1G1_PLUGINIDONE.'&tab=test" class="nav-tab '.($tab === 'test' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_pluginone . "icons/link-line.svg").'test</a>';
-            echo '<a href="?page='.D1G1_PLUGINIDONE.'&tab=test_rep" class="nav-tab '.($tab === 'test_rep' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_pluginone . "icons/link-line.svg").'Repeater</a>';
+            echo '<a href="?page='.D1G1_BRANDING.'" class="nav-tab '.($tab === null ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_digibrand . "icons/home-line.svg").' Default Tab</a>';
+            echo '<a href="?page='.D1G1_BRANDING.'&tab=email" class="nav-tab '.($tab === 'email' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_digibrand . "icons/link-line.svg").'Emaily</a>';
+            echo '<a href="?page='.D1G1_BRANDING.'&tab=test" class="nav-tab '.($tab === 'test' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_digibrand . "icons/link-line.svg").'test</a>';
+            echo '<a href="?page='.D1G1_BRANDING.'&tab=test_rep" class="nav-tab '.($tab === 'test_rep' ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_digibrand . "icons/link-line.svg").'Repeater</a>';
        
         }
         /**
