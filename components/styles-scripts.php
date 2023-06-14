@@ -52,7 +52,7 @@ if ( !class_exists('CustomScriptsStylesD1G1') ) {
     
             //Register style
             $admin_style = filemtime(  Globals::$FWDIGI_PATHSLUG . 'assets/styles/d1g1hood-admin.css' );
-            wp_enqueue_style( 'd1g1-admin', Globals::$FWDIGI_PATHSLUG . 'assets/styles/d1g1hood-admin.css', array( ), $admin_style, 'all' );
+            wp_enqueue_style( 'd1g1-admin', Globals::$FWDIGI_URL . 'assets/styles/d1g1hood-admin.css', array( ), $admin_style, 'all' );
                         
         }
 

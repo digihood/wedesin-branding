@@ -42,7 +42,7 @@ if (!class_exists('d1g1MenusContents')) {
          * @return array
          */
         public static function add_navigation_contents($contents){
-            $contents['default'] = 'test_repeater';
+            $contents['default'] = [__CLASS__,'the_updates_list'];
             /*if(d1g1license::validate_lisense_key()){
                 $contents['tools'] = 'test_form_mini_for_test';
             }*/
@@ -52,6 +52,52 @@ if (!class_exists('d1g1MenusContents')) {
             return $contents;
 
         }
+        /**
+         * Zobrazuje tabulku dostupných aktualizací s příslušnými daty a autory.
+         * 
+         * 
+         * 
+         */
+
+        public static function the_updates_list() {
+            $updates_list = get_option('_d1g1_list', []);
+            $tab = (isset($_GET['tab']) &&  $_GET['tab'] ? $_GET['tab'] : null);
+            if($tab !== null)return;
+            ?>
+            <h2>Seznam dostupných zapsaných aktualizací</h2>
+            <table width=100%>
+                <thead style="font-weight:700">
+                    <tr>
+                        <td>Datum</td>
+                        <td>Autor</td>
+                        <td>Seznam aktualizací</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $rev_updates_list = array_reverse($updates_list, true);
+                    foreach ($rev_updates_list as $date => $record) {
+                        if (isset($record['user']) && $record['update']) {
+                            $user = get_userdata($record['user']);
+                          //  $zone = new \DateTimeZone('UTC +2');
+                           
+                            echo '<tr style="border-top: 1px solid black">';
+                            echo '<td>'.digi_date('d. m. Y H:i', $date) .'</td>';
+                            echo '<td>'.$user->user_login. '('.$user->ID.')</td>';
+                            echo '<td>'.$record['update'].'</td>';
+                            echo '</tr>';
+                            
+                        }
+
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <?php
+            
+           // preprint($updates_list);
+        }
+
 
     }
     new d1g1MenusContents;
