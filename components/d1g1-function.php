@@ -25,6 +25,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
 	{
        private $fields;
        private $session;
+       private $type_notices;
       
 		public function __construct($field_list = [])
 		{
@@ -53,7 +54,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
                 switch ($rules->get_action()) {
                     case 'send_mail':
                         $this->session = new d1g1Session;       
-               
+                      
                         $this->send_update_email($rules->values, $rules->form_id); 
                         break;
                     case 'send_mail_anthor':
@@ -90,7 +91,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             if (empty($mail)) {
                 $mail = get_option( 'admin_email' );
             }
-          
+            global $global;
             $colors = $this->d1g1_settings_email();
             $content = $this->update_email_content($inputs,$other);
             $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@digihood.cz" style="color:'.$colors['Links_color'].';">jan@digihood.cz</a>', D1G1_BRANDING);
@@ -104,31 +105,37 @@ if( ! class_exists( 'D1G1FormFunction' ) )
            
             //uložení aktualizace
             $this->session = new d1g1Session;
+           
             
             if ($this->save_update_data($inputs)) {
-                $email->send_client_emails($mail, $subject ,$text);
-               
-
-                $this->session->add_session($formID . '_save', 'send_email');
+               $t =  $email->send_client_emails($mail, $subject ,$text);
+         
+               $this->type_notices = 'success';
+               add_action('admin_notices', [$this, 'send_mail_notices']);
                 
                 
                
             } else {
-                $this->session->add_session($formID . '_save', 'fail');
+                $this->type_notices = 'error';
+                add_action('admin_notices', [$this, 'send_mail_notices']);
+               
             }
+          
             
-            wp_safe_redirect($inputs['_wp_http_referer']);
-            exit;
+           
         }
 
         public function save_update_data($inputs){
             $update_list = get_option('_d1g1_list', []);
+            
             $new = $this->update_list($inputs);
+          
             if($new) {
                 $update_list[strtotime('now')] = array(
                     'user'=> get_current_user_id(),
                     'update'=> $new
                 );
+               
                 update_option('_d1g1_list',$update_list);
                 return true;
             } else{
@@ -142,23 +149,23 @@ if( ! class_exists( 'D1G1FormFunction' ) )
         public function update_list($inputs) {
             global $wp_version;
             $content = '';
-            if(isset($inputs['up_wp']) && !empty($inputs['up_wp'])) {
+            if(isset($inputs['update_report_up_wp']) && !empty($inputs['update_report_up_wp'])) {
                 if ($wp_version){
                     $content .= __('Wordpress aktualizován na verzi', 'D1G1BRAND').' '. $wp_version.'<br>';
                 }else {
                     $content .= __('Wordpress aktualizován na nejnovější verzi', 'D1G1BRAND').'<br>';
                 } 
             }
-            if(isset($inputs['up_theme']) && !empty($inputs['up_theme'])) {
+            if(isset($inputs['update_report_up_theme']) && !empty($inputs['update_report_up_theme'])) {
                 $content .= __('Šablona byla aktualizován na nejnovější verzi', 'D1G1BRAND').'<br>';
             }
-            if(isset($inputs['up_settings']) && !empty($inputs['up_settings'])) {
+            if(isset($inputs['update_report_up_settings']) && !empty($inputs['update_report_up_settings'])) {
                 $content .= __('Na webu jsme aktualizovali nastavení webu (zabezpečení, zálohy, php, nastavení eshopu)', 'D1G1BRAND').'<br>';
             }
-            if(isset($inputs['up_plugins']) && !empty($inputs['up_plugins'])) {
+            if(isset($inputs['update_report_up_plugins']) && !empty($inputs['update_report_up_plugins'])) {
                 $content .= '<p><b>'. __('Aktualizované pluginy', 'D1G1BRAND').':</b></p>';
                 $plugins_list = get_plugins();
-                foreach ($inputs['up_plugins'] as $key => $value) {
+                foreach ($inputs['update_report_up_plugins'] as $key => $value) {
                     if(array_key_exists($value, $plugins_list )){
                         if (isset($plugins_list[$value])){
                             $name = (isset($plugins_list[$value]['Name'])? $plugins_list[$value]['Name'] : '');
@@ -170,10 +177,11 @@ if( ! class_exists( 'D1G1FormFunction' ) )
                     }
                 }
             }
-            if(isset($inputs['up_content']) && !empty($inputs['up_content'])) {
+            if(isset($inputs['update_report_up_content']) && !empty($inputs['update_report_up_content'])) {
                 $content .= '<p><b>'.__('Poznámka k aktualizaci', 'D1G1BRAND').'</b></p>';
                 $content .= '<div>'.$inputs['up_content'].'</div>';
             }
+      
             return $content;
 
         }
@@ -207,7 +215,25 @@ if( ! class_exists( 'D1G1FormFunction' ) )
 
         }
       
-      
+        function send_mail_notices($type_notices){
+            ?>
+                <div class="notice notice-<?= $this->type_notices; ?> d1g1-notice is-dismissible">
+                    <?php 
+                        switch ($this->type_notices) {
+                            case 'error':
+                                echo '<p>'. __('Hlášení neodesláno', 'digi-framework'). '</p>';
+                                break;
+                            
+                            case 'success':
+                                echo '<p>'. __('Hlášení odesláno', 'digi-framework'). '</p>';
+                                break;
+                        }
+                    ?>
+                    
+                    <button type="button" class="notice-dismiss"><span class="screen-reader-text">Skrýt toto upozornění.</span></button>
+                </div>
+            <?php
+        }
 
        
     }
