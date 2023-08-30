@@ -22,12 +22,17 @@ if( ! class_exists( 'd1g1PluginField' ) )
 							'headline' => 'Nastavení vzhledu emailu',
 							'fields' => [  
 									[
+										'type' => 'box',
+										'name' => 'footer',
+									],
+									[
 										'type' => 'color',
 										'name' => 'footer_bg_color',
 										'label' => 'Barva pozadí zápatí',
 										'help_text' => 'Vyberte si barvu, kterou bude mít zápatí emailů',
 										'value' => '#0a0a0a', // rgba(30,30,30,0.64)
 										'saveAs' => 'options',
+										
 										'options' => [
 											'width' => 'full',
 										],
