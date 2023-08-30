@@ -54,7 +54,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
                 switch ($rules->get_action()) {
                     case 'send_mail':
                         $this->session = new d1g1Session;       
-                      
+                       
                         $this->send_update_email($rules->values, $rules->form_id); 
                         break;
                     case 'send_mail_anthor':
@@ -72,13 +72,13 @@ if( ! class_exists( 'D1G1FormFunction' ) )
           
         function d1g1_settings_email($settings = []){
             $settings = [
-                'footer_bg_color'        => get_option(Globals::$FWDIGI_PLUGINID.'_section1_0_brand_emails_settings_footer_bg_color',false),
-                'footer_color'           => get_option(Globals::$FWDIGI_PLUGINID.'_section1_1_brand_emails_settings_footer_color', false),
-                'header_logo'            => get_option(Globals::$FWDIGI_PLUGINID.'_section1_3_brand_emails_settings_header_logo', false),
-                'reply_to_email'         => get_option(Globals::$FWDIGI_PLUGINID.'_section1_4_brand_emails_settings_reply_to_email', false),
-                'license_email_subject'  => get_option(Globals::$FWDIGI_PLUGINID.'_section2_1_brand_emails_settings_license_email_subject', false),
-                'send_to_email'          => get_option(Globals::$FWDIGI_PLUGINID.'_section2_2_brand_emails_settings_send_to_email', false),
-                'Links_color'            => get_option(Globals::$FWDIGI_PLUGINID.'_section2_0_brand_emails_settings_Links_color', false)   
+                'footer_bg_color'        => Globals::d1g1_get_option('brandEmailsSettings','footer_bg_color'),
+                'footer_color'           => Globals::d1g1_get_option('brandEmailsSettings','footer_color'), 
+                'header_logo'            => Globals::d1g1_get_option('brandEmailsSettings','header_logo'), 
+                'reply_to_email'         => Globals::d1g1_get_option('brandEmailsSettings','reply_to_email'), 
+                'license_email_subject'  => Globals::d1g1_get_option('brandEmailsSettings','license_email_subject'), 
+                'send_to_email'          => Globals::d1g1_get_option('brandEmailsSettings','send_to_email'), 
+                'Links_color'            => Globals::d1g1_get_option('brandEmailsSettings','Links_color'),
             ];
             return $settings;
 
@@ -86,8 +86,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
          
 
         function send_update_email($inputs, $formID,$other = false){
-            $mail = get_option(Globals::$FWDIGI_PLUGINID.'_section2_1_brand_emails_settings_license_email_subject', false);
-           
+            $mail = Globals::d1g1_get_option('brandEmailsSettings', 'send_to_email' );           
             if (empty($mail)) {
                 $mail = get_option( 'admin_email' );
             }
@@ -95,7 +94,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             $colors = $this->d1g1_settings_email();
             $content = $this->update_email_content($inputs,$other);
             $footer = __('Děkujeme, že využíváte naše služby. V případě problémů s aktualizací se na nás neprodleně obraťte na emailu <a href="mailto:jan@digihood.cz" style="color:'.$colors['Links_color'].';">jan@digihood.cz</a>', D1G1_BRANDING);
-            $subject = get_option('_d1g1_D1G1BRAND_brand_emails_settings_license_email_subject','');
+            $subject = Globals::d1g1_get_option('brandEmailsSettings','license_email_subject');
             if (empty($subject)) $subject = __('Aktualizovali jsme váš web', D1G1_BRANDING);
            
             $email = new \D1G1SendEmailNew($this->d1g1_settings_email(),$mail);
@@ -105,8 +104,8 @@ if( ! class_exists( 'D1G1FormFunction' ) )
            
             //uložení aktualizace
             $this->session = new d1g1Session;
-           
-            
+          
+        
             if ($this->save_update_data($inputs)) {
                $t =  $email->send_client_emails($mail, $subject ,$text);
          
@@ -129,7 +128,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             $update_list = get_option('_d1g1_list', []);
             
             $new = $this->update_list($inputs);
-          
+            
             if($new) {
                 $update_list[strtotime('now')] = array(
                     'user'=> get_current_user_id(),
@@ -149,27 +148,31 @@ if( ! class_exists( 'D1G1FormFunction' ) )
         public function update_list($inputs) {
             global $wp_version;
             $content = '';
-            if(isset($inputs['update_report_up_wp']) && !empty($inputs['update_report_up_wp'])) {
+            if(isset($inputs['updateReport_up_wp']) && !empty($inputs['updateReport_up_wp'])) {
                 if ($wp_version){
                     $content .= __('Wordpress aktualizován na verzi', 'D1G1BRAND').' '. $wp_version.'<br>';
                 }else {
                     $content .= __('Wordpress aktualizován na nejnovější verzi', 'D1G1BRAND').'<br>';
                 } 
             }
-            if(isset($inputs['update_report_up_theme']) && !empty($inputs['update_report_up_theme'])) {
+            if(isset($inputs['updateReport_up_theme']) && !empty($inputs['updateReport_up_theme'])) {
                 $content .= __('Šablona byla aktualizován na nejnovější verzi', 'D1G1BRAND').'<br>';
             }
-            if(isset($inputs['update_report_up_settings']) && !empty($inputs['update_report_up_settings'])) {
+            if(isset($inputs['updateReport_up_settings']) && !empty($inputs['updateReport_up_settings'])) {
                 $content .= __('Na webu jsme aktualizovali nastavení webu (zabezpečení, zálohy, php, nastavení eshopu)', 'D1G1BRAND').'<br>';
             }
-            if(isset($inputs['update_report_up_plugins']) && !empty($inputs['update_report_up_plugins'])) {
+            if(isset($inputs['updateReport_up_plugins']) && !empty($inputs['updateReport_up_plugins'])) {
                 $content .= '<p><b>'. __('Aktualizované pluginy', 'D1G1BRAND').':</b></p>';
                 $plugins_list = get_plugins();
-                foreach ($inputs['update_report_up_plugins'] as $key => $value) {
-                    if(array_key_exists($value, $plugins_list )){
-                        if (isset($plugins_list[$value])){
-                            $name = (isset($plugins_list[$value]['Name'])? $plugins_list[$value]['Name'] : '');
-                            $version = (isset($plugins_list[$value]['Version'])? $plugins_list[$value]['Version'] : '');
+                foreach ($inputs['updateReport_up_plugins'] as $key => $value) {
+             
+                    if( $value && array_key_exists($key, $plugins_list )){
+                       
+                        if (isset($plugins_list[$key])){
+                          
+                            $name = (isset($plugins_list[$key]['Name'])? $plugins_list[$key]['Name'] : '');
+                            $version = (isset($plugins_list[$key]['Version'])? $plugins_list[$key]['Version'] : '');
+                     
                             if ($name && $version) {
                                 $content .= $name . ' '. __('Aktualizováno na verzi', 'D1G1BRAND'). ' '. $version. '<br>';
                             }
@@ -177,11 +180,11 @@ if( ! class_exists( 'D1G1FormFunction' ) )
                     }
                 }
             }
-            if(isset($inputs['update_report_up_content']) && !empty($inputs['update_report_up_content'])) {
+            if(isset($inputs['updateReport_up_content']) && !empty($inputs['updateReport_up_content'])) {
                 $content .= '<p><b>'.__('Poznámka k aktualizaci', 'D1G1BRAND').'</b></p>';
-                $content .= '<div>'.$inputs['up_content'].'</div>';
+                $content .= '<div>'.$inputs['updateReport_up_content'].'</div>';
             }
-      
+     
             return $content;
 
         }
@@ -197,7 +200,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
 
         public function update_email_content($inputs,$other) {
          $colors = $this->d1g1_settings_email();
-            $text = get_option('_d1g1_D1G1BRAND_brand_emails_settings_mail_text_license_d1g1',false);
+            $text = Globals::d1g1_get_option('brandEmailsSettings','mail_text_license_d1g1');
             
             $content = "";
             if ($text) {

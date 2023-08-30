@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /*
  * Plugin Name: Digihood Branding
  * Plugin URI: digihood.cz   
- * Description: desciption
+ * Description: Nová verze Digihood branding pluginu 4.0, Děkujeme, že děláte weby s námi.
  * Version: 4.0.0          
  * Author: Digihood    
  * Author URI: digihood.cz   

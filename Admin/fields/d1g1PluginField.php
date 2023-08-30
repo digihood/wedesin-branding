@@ -12,7 +12,7 @@ if( ! class_exists( 'd1g1PluginField' ) )
         public static function get_fields_form($formID){
 			
             $fields= [];
-			if($formID == 'brand_emails_settings'){
+			if($formID == 'brandEmailsSettings'){
 				$fields = [
 					'headline' => 'Nastavení emailů',
 					'description' => 'Pro správné používání emailů je potřeba přizpůsobit jejich vzhled a nastavení.',
@@ -24,6 +24,8 @@ if( ! class_exists( 'd1g1PluginField' ) )
 									[
 										'type' => 'box',
 										'name' => 'footer',
+										'label' => '',
+										'saveAs' => 'options',
 									],
 									[
 										'type' => 'color',
@@ -117,7 +119,7 @@ if( ! class_exists( 'd1g1PluginField' ) )
 						]
 					];
 			
-			}elseif($formID == 'update_report'){
+			}elseif($formID == 'updateReport'){
 				
 				add_filter('d1g1_button_form-'.Globals::$FWDIGI_PLUGINID.'_'.$formID,function ($text) { $text = 'Odeslat hlášení'; return $text;} );
 				$plugins = [];
@@ -126,6 +128,7 @@ if( ! class_exists( 'd1g1PluginField' ) )
 					if ($plugin && isset($value['Name']))
 						$plugins[$plugin] = $value['Name'];
 				}
+
 				
 				$fields = [
 					'headline' => 'Aktualizace',
@@ -160,7 +163,6 @@ if( ! class_exists( 'd1g1PluginField' ) )
 						'section2' => [
 							'headline' => 'Pluginy',
 							'description' => 'Jaké pluginy byly aktualizovány',
-
 							'fields' => [
 								[
 									'type' => 'checkbox',
@@ -175,6 +177,7 @@ if( ! class_exists( 'd1g1PluginField' ) )
 							],
 							'section3' => [
 								'headline' => 'Připojit ke zprávě poznámku',
+								'description' => '',
 								'fields' => [
 									[
 										'type' => 'editor',
@@ -196,7 +199,7 @@ if( ! class_exists( 'd1g1PluginField' ) )
             $fields= [];
             if ($post_type == 'feedback') {
                 $fields=[
-                   
+
                 ];
             }
             return $fields;

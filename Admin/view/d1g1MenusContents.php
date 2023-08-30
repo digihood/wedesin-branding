@@ -47,8 +47,8 @@ if (!class_exists('d1g1MenusContents')) {
                 $contents['tools'] = 'test_form_mini_for_test';
             }*/
 
-            $contents['emails'] = 'brand_emails_settings';
-            $contents['update_report'] = 'update_report';
+            $contents['emails'] = 'brandEmailsSettings';
+            $contents['update_report'] = 'updateReport';
             return $contents;
 
         }
@@ -62,7 +62,8 @@ if (!class_exists('d1g1MenusContents')) {
         public static function the_updates_list() {
             $updates_list = get_option('_d1g1_list', []);
             $tab = (isset($_GET['tab']) &&  $_GET['tab'] ? $_GET['tab'] : null);
-            if($tab !== null)return;
+         
+            if($tab !== null  ) return;
             ?>
             <h2>Seznam dostupných zapsaných aktualizací</h2>
             <table width=100%>
