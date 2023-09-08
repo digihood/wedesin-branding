@@ -1,5 +1,6 @@
 <?php 
 namespace digibrand\admin\fields;
+use digibrand\framework\Functions\feedback\d1g1Feedback;
 use digibrand\framework\Globals;
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -191,6 +192,9 @@ if( ! class_exists( 'd1g1PluginField' ) )
 							]
 					]
 				];
+			}else if($formID == 'feedback'){
+				$field = d1g1Feedback::field_feedback();
+                $fields = $field;
 			}
 			return $fields;
         

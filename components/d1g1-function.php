@@ -97,7 +97,7 @@ if( ! class_exists( 'D1G1FormFunction' ) )
             $subject = Globals::d1g1_get_option('brandEmailsSettings','license_email_subject');
             if (empty($subject)) $subject = __('Aktualizovali jsme váš web', D1G1_BRANDING);
            
-            $email = new \D1G1SendEmailNew($this->d1g1_settings_email(),$mail);
+            $email = new \D1G1SendEmailNew($mail,$this->d1g1_settings_email());
            
             //zde zprovoznit emaily
             $text = $email->email_content('', array($content),$footer );
