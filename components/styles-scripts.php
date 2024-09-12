@@ -7,6 +7,8 @@
  * @author digihood
  */ 
 
+ use digibrand\framework\Globals;
+
 if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
@@ -49,8 +51,8 @@ if ( !class_exists('CustomScriptsStylesD1G1') ) {
         public function add_admin_scripts( ) {
     
             //Register style
-            $admin_style = filemtime(  D1G1_BRANDPATH . 'assets/styles/d1g1hood-admin.css' );
-            wp_enqueue_style( 'd1g1-admin', D1G1_BRANDURL . 'assets/styles/d1g1hood-admin.css', array( ), $admin_style, 'all' );
+            $admin_style = filemtime(  Globals::$FWDIGI_PATHSLUG . 'assets/styles/d1g1hood-admin.css' );
+            wp_enqueue_style( 'd1g1-admin', Globals::$FWDIGI_URL . 'assets/styles/d1g1hood-admin.css', array( ), $admin_style, 'all' );
                         
         }
 
@@ -68,7 +70,7 @@ if ( !class_exists('CustomScriptsStylesD1G1') ) {
 			<style>
 			#wpadminbar #wp-admin-bar-wp-logo>.ab-item .ab-icon:before {
 				content: ' ' !important;
-				background: url( <?php  echo D1G1_BRANDURL ?>assets/img/digihood_icon-white.svg) no-repeat !important;
+				background: url( <?php  echo Globals::$FWDIGI_URL ?>assets/img/digihood_icon-white.svg) no-repeat !important;
 				width: 22px !important;
 				height: 22px !important;
 				display: block;
@@ -89,11 +91,11 @@ if ( !class_exists('CustomScriptsStylesD1G1') ) {
 
         //add login stylesheet
 		public function d1g1_login_stylesheet() { 
-
+          
 			if ( is_eng_d1g1( ) ) {
-				$img_url =  D1G1_BRANDURL . '/assets/img/d1g1-logo-cz.png';
+				$img_url =  Globals::$FWDIGI_URL . '/assets/img/d1g1-logo-cz.png';
 			} else {
-				$img_url =  D1G1_BRANDURL . '/assets/img/d1g1-logo-cz.png';
+				$img_url =  Globals::$FWDIGI_URL . '/assets/img/d1g1-logo-cz.png';
 			}
 
 			?>
