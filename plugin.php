@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /*
  * Plugin Name: Digihood Branding
  * Plugin URI: digihood.cz   
- * Description: Nová verze Digihood branding pluginu 4.0, Děkujeme, že děláte weby s námi.
+ * Description: Nová verze Digihood branding pluginu 4.1.0, Děkujeme, že děláte weby s námi.
  * Version: 4.1.0          
  * Author: Digihood    
  * Author URI: digihood.cz   
@@ -24,6 +24,6 @@ if( ! defined('D1G1_SITE_BOX_LANG_SHOW')){
 }
 
 
-require __DIR__.'/plugin-framework/kint.phar';
+// require __DIR__.'/plugin-framework/kint.phar';
 
 include_once __DIR__ . '/includes.php';
