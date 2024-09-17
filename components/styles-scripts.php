@@ -70,7 +70,7 @@ if ( !class_exists('CustomScriptsStylesD1G1') ) {
 			<style>
 			#wpadminbar #wp-admin-bar-wp-logo>.ab-item .ab-icon:before {
 				content: ' ' !important;
-				background: url( <?php  echo Globals::$FWDIGI_URL ?>assets/img/digihood_icon-white.svg) no-repeat !important;
+				background: url( <?php  echo Globals::$FWDIGI_URL ?>assets/icons/digihood_icon-white.svg) no-repeat !important;
 				width: 22px !important;
 				height: 22px !important;
 				display: block;

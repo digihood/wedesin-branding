@@ -8,7 +8,7 @@ use digibrand\framework\d1g1Session;
  * Popis třídy
  *
  * 
- * @author Digihood
+ * @author digihood
  */ 
 
 if ( ! defined( 'ABSPATH' ) ) {

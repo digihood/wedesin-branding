@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
  * d1g1MenusContents
  *  obsah navigace a jednotlivých tabů
  * 
- * @author Digihood
+ * @author digihood
  */
 if (!class_exists('d1g1MenusContents')) {
     class d1g1MenusContents {
@@ -26,7 +26,7 @@ if (!class_exists('d1g1MenusContents')) {
          * 
          * @param $ŧab = get jmeno tabu
          * 
-         * @author Digihood
+         * @author digihood
          */
         public static function add_navigations($tab) {
             echo '<a href="?page='.D1G1_BRANDING.'" class="nav-tab '.($tab === null ? 'nav-tab-active' : '' ).'">'. d1g1_get_svg(D1G1_PATHTOFWASSET_digibrand . "icons/home-line.svg").' Default Tab</a>';
@@ -38,7 +38,7 @@ if (!class_exists('d1g1MenusContents')) {
          * 
          * @param $contents = array [jmeno tabu => jmeno fieldu]
          * 
-         * @author Digihood
+         * @author digihood
          * @return array
          */
         public static function add_navigation_contents($contents){

@@ -46,9 +46,9 @@ if ( !class_exists('AdminUpdatesD1G1') ) {
         public function d1g1_remove_footer_admin () {
 
 			if ( is_eng_d1g1( ) ) {
-				echo '<p>Website by <a href="https://www.digihood.cz/en/" target="_blank">Digihood</a>. If you have any questions, please send an email to <a href="mailto:hello@digihood.cz" target="_blank">info@digihood.cz</a>.';
+				echo '<p>Website by <a href="https://www.digihood.cz/en/" target="_blank">digihood</a>. If you have any questions, please send an email to <a href="mailto:hello@digihood.cz" target="_blank">info@digihood.cz</a>.';
 			} else {
-				echo '<p>Webové stránky vytvořil <a href="https://www.digihood.cz/" target="_blank">Digihood</a>. Pokud máte jakékoliv otázky, napište na <a href="mailto:hello@digihood.cz" target="_blank">info@digihood.cz</a>.';
+				echo '<p>Webové stránky vytvořil <a href="https://www.digihood.cz/" target="_blank">digihood</a>. Pokud máte jakékoliv otázky, napište na <a href="mailto:hello@digihood.cz" target="_blank">info@digihood.cz</a>.';
 			}
 
 		} 
