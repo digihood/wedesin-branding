@@ -24,6 +24,7 @@ if( ! defined('D1G1_SITE_BOX_LANG_SHOW')){
 }
 
 
+
 // require __DIR__.'/plugin-framework/kint.phar';
 
 include_once __DIR__ . '/includes.php';
