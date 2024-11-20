@@ -42,8 +42,8 @@ if( ! class_exists( 'd1g1MainMenu' ) )
         public function main_menu_callback() {
             if (!isset( $GLOBALS['admin_page_hooks']['d1g1-plugins']) || empty( $GLOBALS['admin_page_hooks']['d1g1-plugins'] ) ) {
                 add_menu_page(
-                    __( 'Digi Plugins', globals::$FWDIGI_PLUGINID ),
-                    __( 'Digi Plugins', globals::$FWDIGI_PLUGINID ),
+                    __( 'Digi digibrands', globals::$FWDIGI_PLUGINID ),
+                    __( 'Digi digibrands', globals::$FWDIGI_PLUGINID ),
                     'manage_options',
                     'd1g1-plugins',
                     array( $this, 'my_admin_page_contents' ),

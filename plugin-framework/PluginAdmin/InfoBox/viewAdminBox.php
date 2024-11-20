@@ -24,7 +24,7 @@ if( ! class_exists( 'viewAdminBox' ) )
 
 		public function __construct()
 		{
-			
+			add_action( 'wp_dashboard_setup', [$this, 'register_dashboard_widget'] );
 		}
 		/**
 		 *  zobrazeni boxu
@@ -34,7 +34,28 @@ if( ! class_exists( 'viewAdminBox' ) )
 		 * @author digihood
 		 * @return string
 		 */
-	
+		
+
+		        /**
+         * Registrace widgetu na dashboard
+         */
+        public function register_dashboard_widget() {
+            wp_add_dashboard_widget(
+                'digihood_dashboard_widget', // ID widgetu
+                __('Digihood Dashboard Box', 'textdomain'), // Název
+                [$this, 'render_dashboard_widget'] // Callback pro obsah widgetu
+            );
+        }
+
+		
+		
+		/**
+         * Zobrazení obsahu widgetu
+         */
+        public function render_dashboard_widget() {
+            $this->display_box('pluginsnews'); // Typ může být přizpůsoben
+        }
+		
         public function d1g1_dashboard_widget_display($type){
 			$this->display_box($type);
 		}
@@ -42,7 +63,6 @@ if( ! class_exists( 'viewAdminBox' ) )
 		 *  box nastenka 
 		 *
 		 * @param type (default: plugins)
-		 * 
 		 * @author digihood
 		 * @return string
 		 */
