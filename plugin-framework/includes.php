@@ -12,3 +12,4 @@ include_once __DIR__ . '/PluginAdmin/Includes.php';
 include_once __DIR__ . '/Emails/includes.php';
 include_once __DIR__ . '/Forms/Includes.php';
 include_once __DIR__ . '/Functions/includes.php';
+include_once(__DIR__.'/pluginSystem/includes.php'); // lincence a aktualiz
