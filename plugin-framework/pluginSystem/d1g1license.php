@@ -30,14 +30,13 @@ if( ! class_exists( 'd1g1license' ) )
                 add_action('admin_init', [$this,'get_plugin_info']);
                 add_action( 'admin_enqueue_scripts', [$this, 'scripts'] );
             }
-       
-         
+
 
 		}
 
         public function scripts(){
                //register javascript
-              
+
         $admin_script = filemtime(  D1G1_BRANDPATH . 'assets/scripts/wds-update.js' );
         wp_enqueue_script( 'plugin-update-'.D1G1_BRANDING, D1G1_BRANDURL . 'assets/scripts/wds-update.js', array( 'jquery' ), $admin_script, true );
       

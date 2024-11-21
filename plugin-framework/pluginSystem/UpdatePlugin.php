@@ -46,7 +46,7 @@ if( ! class_exists( 'UpdatePlugin' ) )
                     
                     $myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
                         D1G1_GITHUBURL_BRAND,
-                        Globals::$FWDIGI_PATHSLUG.'/setup.php',
+                        Globals::$FWDIGI_PATHSLUG.'/plugin.php',
                         D1G1_GITHUBREP_BRAND
                     );
                     $myUpdateChecker->setBranch('master');
@@ -60,7 +60,7 @@ if( ! class_exists( 'UpdatePlugin' ) )
         }
       
         static function stop_plugin_updates( $value ) {
-            unset( $value->response[D1G1_BRANDING.'/setup.php']->package );
+            unset( $value->response[D1G1_BRANDING.'/plugin.php']->package );
             return $value;
         }
         
