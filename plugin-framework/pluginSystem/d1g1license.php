@@ -147,5 +147,5 @@ if( ! class_exists( 'd1g1license' ) )
 
         
     }
-    new d1g1license;
+   // new d1g1license;
 }
