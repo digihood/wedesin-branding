@@ -7,7 +7,7 @@
  */
 namespace digibrand\framework\Forms\Validation;
 
-use digibrand\admin\fields\d1g1digibrandField;
+use digibrand\admin\fields\d1g1PluginField;
 use digibrand\framework\globals;
 use digibrand\framework\Forms\formObject;
 class SetValidationRules
@@ -79,7 +79,7 @@ class SetValidationRules
      */
     public function get_section_field($field_name)
     {
-        $form = d1g1digibrandField::get_fields_form($this->form_id);
+        $form = d1g1PluginField::get_fields_form($this->form_id);
         $form_2 = new formObject($this->form_id, $this->cpt);
         $form_2 = $form_2->get_fields();
         if($form_2){
