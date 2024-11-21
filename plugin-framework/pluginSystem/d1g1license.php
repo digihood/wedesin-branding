@@ -1,7 +1,7 @@
 <?php
-namespace pluginbrandslug\framework\pluginSystem;
-use pluginbrandslug\framework\PluginAdmin\d1g1PluginsAPI;
-use pluginbrandslug\framework\d1g1Session;
+namespace digibrand\framework\pluginSystem;
+use digibrand\framework\PluginAdmin\d1g1PluginsAPI;
+use digibrand\framework\d1g1Session;
 
 
 if ( ! defined( 'ABSPATH' ) ) {

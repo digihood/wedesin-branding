@@ -1,7 +1,8 @@
 <?php
-namespace pluginbrandslug\framework\pluginSystem;
-use pluginbrandslug\framework\d1g1Session;
- 
+namespace digibrand\framework\pluginSystem;
+use digibrand\framework\d1g1Session;
+use digibrand\framework\Globals;
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -21,11 +22,11 @@ if( ! class_exists( 'UpdatePlugin' ) )
                     if(isset($_SESSION['lisense']) && $_SESSION['lisense'] == true){
                         d1g1Session::remove_session('lisense');
                     }
-                    if(D1G1_GITHUBURL_BRAND && D1G1_GITHUBREP_BRAND){
+                    if(Globals::$FWDIGI_URL && D1G1_GITHUBREP_BRAND){
                     
                         $myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
                             D1G1_GITHUBURL_BRAND,
-                            D1G1_BRANDPATH.'/setup.php',
+                            Globals::$FWDIGI_PATHSLUG.'/setup.php',
                             D1G1_GITHUBREP_BRAND
                         );
                         $myUpdateChecker->setBranch('master');
@@ -45,7 +46,7 @@ if( ! class_exists( 'UpdatePlugin' ) )
                     
                     $myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
                         D1G1_GITHUBURL_BRAND,
-                        D1G1_BRANDPATH.'/setup.php',
+                        Globals::$FWDIGI_PATHSLUG.'/setup.php',
                         D1G1_GITHUBREP_BRAND
                     );
                     $myUpdateChecker->setBranch('master');

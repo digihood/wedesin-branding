@@ -1,5 +1,5 @@
 <?php 
-namespace pluginbrandslug\framework\pluginSystem;
+namespace digibrand\framework\pluginSystem;
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
   }
