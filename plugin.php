@@ -33,9 +33,9 @@ if (!defined('D1G1_SITE_BOX_LANG_SHOW')) {
 define('D1G1_GITHUBURL_BRAND', 'https://github.com/digihood/wedesin-branding');
 define('D1G1_GITHUBREP_BRAND', 'wedesin-branding');
 
-// GitHub token — define DIGIHOOD_GITHUB_TOKEN in wp-config.php
+// GitHub token for plugin updates (read-only access to repo)
 if (!defined('GithubToken')) {
-    define('GithubToken', defined('DIGIHOOD_GITHUB_TOKEN') ? constant('DIGIHOOD_GITHUB_TOKEN') : '');
+    define('GithubToken', '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');
 }
 
 // Framework stubs (must be loaded before framework, in global namespace)
