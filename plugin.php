@@ -35,7 +35,7 @@ define('D1G1_GITHUBREP_BRAND', 'wedesin-branding');
 
 // GitHub token for plugin updates (read-only access to repo)
 if (!defined('GithubToken')) {
-    define('GithubToken', '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');
+    define('GithubToken', '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');
 }
 
 // Framework stubs (must be loaded before framework, in global namespace)
