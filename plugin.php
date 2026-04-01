@@ -1,61 +1,74 @@
 <?php
-namespace digibrand;
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
 /*
- * Plugin Name: digihood Branding
- * Plugin URI: digihood.cz   
- * Description: Nová verze digihood branding pluginu 4.1.0, Děkujeme, že děláte weby s námi.
- * Version: 4.1.0          
- * Author: digihood    
- * Author URI: digihood.cz   
+ * Plugin Name: digihood branding
+ * Plugin URI: https://digihood.cz
+ * Description: Branding, automatické sledování aktualizací a reportování klientům.
+ * Version: 5.0.0
+ * Requires at least: 6.0
+ * Requires PHP: 8.0
+ * Author: digihood
+ * Author URI: https://digihood.cz
+ * License: GPL2
  */
 
-// Global PFW constants
-define( 'D1G1_BRANDING', 'digibrand' );
-define( 'D1G1_PLUGSLUG_'.D1G1_BRANDING, 'd1g1_plugins');
-define( 'D1G1_PLUGNAME_'.D1G1_BRANDING, 'digihood Branding');
-define( 'D1G1_PATHS_'.D1G1_BRANDING, plugin_dir_path( __FILE__ ) );
-define( 'D1G1_PATHTOFWASSET_'.D1G1_BRANDING, plugin_dir_path( __FILE__ ).'plugin-framework/FrameworkAssets/' );
-define( 'D1G1_URL_'.D1G1_BRANDING, plugin_dir_url( __FILE__ ) );
-if( ! defined('D1G1_SITE_BOX_LANG_SHOW')){
-    define('D1G1_SITE_BOX_LANG_SHOW', ['cs','sk-SK']);
-}
-define( 'D1G1_GITHUBURL_BRAND', 'https://github.com/digihood/wedesin-branding');
-define( 'D1G1_GITHUBREP_BRAND', 'wedesin-branding');
+namespace digibrand;
 
-
-//dočastné definice
-if(!defined('GithubToken')){
-    define( 'GithubToken', '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');
+if (!defined('ABSPATH')) {
+    exit;
 }
 
-// require __DIR__.'/plugin-framework/kint.phar';
+// Framework constants (required by plugin-framework)
+define('D1G1_BRANDING', 'digibrand');
+define('D1G1_SITEMAP', D1G1_BRANDING); // Required by plugin-framework Globals
+define('D1G1_PLUGSLUG_' . D1G1_BRANDING, 'd1g1_plugins');
+define('D1G1_PLUGNAME_' . D1G1_BRANDING, 'digihood branding');
+define('D1G1_PATHS_' . D1G1_BRANDING, plugin_dir_path(__FILE__));
+define('D1G1_PATHTOFWASSET_' . D1G1_BRANDING, plugin_dir_path(__FILE__) . 'plugin-framework/FrameworkAssets/');
+define('D1G1_URL_' . D1G1_BRANDING, plugin_dir_url(__FILE__));
 
-include_once __DIR__ . '/includes.php';
-include_once(__DIR__ . '/plugin-framework/pluginSystem/d1g1PluginRequirements.php');  
-class DemandingPlugin extends \digibrand\framework\pluginSystem\d1g1PluginRequirements {
- 
-    const PLUGIN_NAME = "digihood Branding";
- 
-    public function __construct() {
-        $this->add_activation_hooks( __FILE__ ); 
+if (!defined('D1G1_SITE_BOX_LANG_SHOW')) {
+    define('D1G1_SITE_BOX_LANG_SHOW', ['cs', 'sk-SK']);
+}
+
+define('D1G1_GITHUBURL_BRAND', 'https://github.com/digihood/wedesin-branding');
+define('D1G1_GITHUBREP_BRAND', 'wedesin-branding');
+
+// GitHub token — define DIGIHOOD_GITHUB_TOKEN in wp-config.php
+if (!defined('GithubToken')) {
+    define('GithubToken', defined('DIGIHOOD_GITHUB_TOKEN') ? constant('DIGIHOOD_GITHUB_TOKEN') : '');
+}
+
+// Framework stubs (must be loaded before framework, in global namespace)
+include_once __DIR__ . '/src/framework-stubs.php';
+
+// Plugin-framework includes (globals.php + pluginSystem loaded via framework's own includes.php)
+include_once __DIR__ . '/plugin-framework/includes.php';
+
+// PSR-4 style autoloader for src/ directory
+spl_autoload_register(function (string $class): void {
+    $prefix = 'Digihood\\Branding\\';
+    $baseDir = __DIR__ . '/src/';
+
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        return;
     }
- 
-    protected function check_plugin_requirements() {
-        global $wp_version;
-        $failed = array();
-        if ( $wp_version < 4.0 )
-            $failed[] = 'WordPress version must be at least 4.0! ';
-        if ( version_compare( PHP_VERSION, '5.6.0', '<' ) )
-            $failed[] = 'PHP version must be at least 5.6.0! ';
-        return $failed;
+
+    $relativeClass = substr($class, $len);
+    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+
+    if (file_exists($file)) {
+        require $file;
     }
- 
-}
-$DemandingPlugin = new DemandingPlugin();
+});
 
+// Add type="module" to gradient scripts (ESM imports)
+add_filter('script_loader_tag', function (string $tag, string $handle): string {
+    if (in_array($handle, ['digihood-login-gradient', 'digihood-admin-gradient'], true)) {
+        $tag = str_replace(' src=', ' type="module" src=', $tag);
+    }
+    return $tag;
+}, 10, 2);
 
-
-$license = \digibrand\framework\pluginSystem\UpdatePlugin::Update_Plugin();
+// Boot the plugin
+\Digihood\Branding\Plugin::getInstance();
