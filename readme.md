@@ -4,7 +4,7 @@ Donate link: https://digihood.cz/
 Tags: v3.1.3
 Requires at least: 4.0
 Tested up to: 6.6.2
-Stable tag: 5.1.1
+Stable tag: 5.1.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,10 @@ Here is a short description of the plugin.  This should be no more than 150 char
 
 == Description ==
 Branding plugin pro klienty WeDesIn a dogihood.
+**verze 5.1.2** Oprava fatální chyby na PHP 8.x
+- Ošetření prázdné (null/false) hodnoty u filtrů admin_footer_text a get_user_option_admin_color
+- Odstranění TypeError při prázdném textu patičky administrace
+
 **verze 5.1.1** Drobné interní úpravy a údržba
 
 **verze 5.1.0** Redesign pozadí a sjednocení admin barev

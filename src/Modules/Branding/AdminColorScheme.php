@@ -27,7 +27,7 @@ class AdminColorScheme
         );
     }
 
-    public function forceDefaultScheme(string $color): string
+    public function forceDefaultScheme(mixed $color): string
     {
         // Enforce the digihood brand scheme across the whole admin for every
         // user, regardless of any personal color-scheme choice. Intercepts the

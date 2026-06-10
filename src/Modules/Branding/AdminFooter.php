@@ -11,7 +11,7 @@ class AdminFooter
         add_filter('admin_footer_text', [$this, 'footerText'], 9999);
     }
 
-    public function footerText(string $text): string
+    public function footerText(mixed $text): string
     {
         if (self::isCzech()) {
             return '<span id="footer-thankyou">Spravováno s &hearts; agenturou <a href="https://digihood.cz" target="_blank" rel="noopener">digihood</a>.</span>';
