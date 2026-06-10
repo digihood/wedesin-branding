@@ -9,7 +9,7 @@ class RecordingMode
     private const OPTION_ACTIVE = 'digihood_recording_active';
     private const OPTION_STARTED = 'digihood_recording_started_at';
     private const OPTION_USER = 'digihood_recording_user_id';
-    private const ALLOWED_DOMAIN = '@digihood.cz';
+    private const ALLOWED_DOMAINS = ['@digihood.cz', '@wedesin.cz'];
 
     public function __construct()
     {
@@ -39,7 +39,13 @@ class RecordingMode
         if (!$user->exists()) {
             return false;
         }
-        return str_ends_with(strtolower($user->user_email), self::ALLOWED_DOMAIN);
+        $email = strtolower($user->user_email);
+        foreach (self::ALLOWED_DOMAINS as $domain) {
+            if (str_ends_with($email, $domain)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static function start(): void

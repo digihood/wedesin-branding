@@ -147,7 +147,8 @@ class AdminPage
 
         // Digihood user check
         $user = wp_get_current_user();
-        $isDigihood = str_ends_with($user->user_email, '@digihood.cz');
+        $email = strtolower($user->user_email);
+        $isDigihood = str_ends_with($email, '@digihood.cz') || str_ends_with($email, '@wedesin.cz');
 
         // Non-digihood users default to history tab
         if (!$isDigihood && $currentTab === 'reporting') {
