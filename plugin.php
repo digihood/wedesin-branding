@@ -3,7 +3,7 @@
  * Plugin Name: digihood branding
  * Plugin URI: https://digihood.cz
  * Description: Branding, automatické sledování aktualizací a reportování klientům.
- * Version: 5.1.2
+ * Version: 5.1.3
  * Requires at least: 6.0
  * Requires PHP: 8.0
  * Author: digihood
@@ -42,7 +42,22 @@ if (!defined('GithubToken')) {
 include_once __DIR__ . '/src/framework-stubs.php';
 
 // Plugin-framework includes (globals.php + pluginSystem loaded via framework's own includes.php)
-include_once __DIR__ . '/plugin-framework/includes.php';
+$d1g1FrameworkIncludes = __DIR__ . '/plugin-framework/includes.php';
+if (is_readable($d1g1FrameworkIncludes)) {
+    include_once $d1g1FrameworkIncludes;
+}
+
+// Fail safely if the framework is missing/incomplete (e.g. submodule deployed
+// without files) instead of white-screening on the missing parent class in
+// src/Plugin.php. Show a clear admin notice and stop loading the plugin.
+if (!class_exists('sitemap\\framework\\pluginSystem\\d1g1PluginRequirements')) {
+    add_action('admin_notices', static function (): void {
+        echo '<div class="notice notice-error"><p><strong>digihood branding:</strong> '
+            . 'chybí soubory složky <code>plugin-framework</code>. Nahrajte plugin znovu '
+            . 'z oficiálního balíčku <code>wedesin-branding.zip</code>, který framework obsahuje.</p></div>';
+    });
+    return;
+}
 
 // PSR-4 style autoloader for src/ directory
 spl_autoload_register(function (string $class): void {
@@ -62,12 +77,15 @@ spl_autoload_register(function (string $class): void {
     }
 });
 
-// Add type="module" to gradient scripts (ESM imports)
-add_filter('script_loader_tag', function (string $tag, string $handle): string {
-    if (in_array($handle, ['digihood-login-gradient', 'digihood-admin-gradient'], true)) {
-        $tag = str_replace(' src=', ' type="module" src=', $tag);
+// Force-enable automatic background updates for this plugin, so client sites
+// pull future releases on their own (via the PUC update checker + WP cron)
+// without manual intervention.
+$d1g1PluginFile = plugin_basename(__FILE__);
+add_filter('auto_update_plugin', static function ($update, $item) use ($d1g1PluginFile) {
+    if (isset($item->plugin) && $item->plugin === $d1g1PluginFile) {
+        return true;
     }
-    return $tag;
+    return $update;
 }, 10, 2);
 
 // Boot the plugin

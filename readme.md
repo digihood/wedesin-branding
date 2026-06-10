@@ -4,7 +4,7 @@ Donate link: https://digihood.cz/
 Tags: v3.1.3
 Requires at least: 4.0
 Tested up to: 6.6.2
-Stable tag: 5.1.2
+Stable tag: 5.1.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,11 @@ Here is a short description of the plugin.  This should be no more than 150 char
 
 == Description ==
 Branding plugin pro klienty WeDesIn a dogihood.
+**verze 5.1.3** Odolnost při chybějícím frameworku + auto-aktualizace
+- Plugin se při chybějících souborech složky plugin-framework (např. nasazení bez submodulu) elegantně zastaví a zobrazí adminovi hlášku místo fatální chyby (white-screen)
+- Vynucené automatické aktualizace pluginu — klientské weby si budoucí verze stáhnou samy (PUC + WP cron) bez ručního zásahu
+- Odstraněn mrtvý kód (filtr type="module" pro již smazané gradient skripty)
+
 **verze 5.1.2** Opravy fatální chyby na PHP 8.x a ukládání nastavení
 - Ošetření prázdné (null/false) hodnoty u filtrů admin_footer_text a get_user_option_admin_color
 - Odstranění TypeError při prázdném textu patičky administrace
