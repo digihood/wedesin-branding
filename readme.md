@@ -13,9 +13,10 @@ Here is a short description of the plugin.  This should be no more than 150 char
 
 == Description ==
 Branding plugin pro klienty WeDesIn a dogihood.
-**verze 5.1.2** Oprava fatální chyby na PHP 8.x
+**verze 5.1.2** Opravy fatální chyby na PHP 8.x a ukládání nastavení
 - Ošetření prázdné (null/false) hodnoty u filtrů admin_footer_text a get_user_option_admin_color
 - Odstranění TypeError při prázdném textu patičky administrace
+- Ukládání e-mailové konfigurace funguje i bez JS (fallback přes admin-post.php) — odstraněn prázdný admin.php a únik e-mailu do URL při selhání JS
 
 **verze 5.1.1** Drobné interní úpravy a údržba
 

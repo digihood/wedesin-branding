@@ -212,9 +212,16 @@ $baseUrl = admin_url('admin.php?page=digihood-reporter');
         <!-- TAB: Settings -->
         <?php if ($currentTab === 'settings'): ?>
         <div class="dh-tab-panel is-active">
+            <?php if (!empty($_GET['dh_saved'])): ?>
+                <div class="dh-notice" style="margin-bottom:20px;">
+                    <p style="margin:0;"><?php echo $isCzech ? 'Nastavení uloženo.' : 'Settings saved.'; ?></p>
+                </div>
+            <?php endif; ?>
             <div class="dh-glass">
                 <h3><span class="dashicons dashicons-admin-generic"></span> <?php echo $isCzech ? 'E-mailová konfigurace' : 'Email configuration'; ?></h3>
-                <form id="dh-settings-form">
+                <form id="dh-settings-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+                    <?php wp_nonce_field('digihood_save_settings'); ?>
+                    <input type="hidden" name="action" value="digihood_save_settings">
                     <div class="dh-field">
                         <label for="dh-reply-to">Reply-to email:</label>
                         <input type="email" id="dh-reply-to" name="reply_to_email" class="dh-input" value="<?php echo esc_attr($settings['reply_to_email']); ?>" placeholder="hello@digihood.cz">

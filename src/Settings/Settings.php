@@ -16,6 +16,7 @@ class Settings
     public function __construct()
     {
         add_action('wp_ajax_digihood_save_settings', [$this, 'handleAjaxSave']);
+        add_action('admin_post_digihood_save_settings', [$this, 'handlePostSave']);
     }
 
     public static function get(): array
@@ -64,5 +65,30 @@ class Settings
         ]);
 
         wp_send_json_success('Nastavení uloženo.');
+    }
+
+    /**
+     * Non-AJAX fallback (admin-post.php) so saving works even when JS does not
+     * run. Saves, then redirects back to the settings tab — prevents the native
+     * GET submit that dropped the page context and showed a blank page.
+     */
+    public function handlePostSave(): void
+    {
+        check_admin_referer('digihood_save_settings');
+
+        if (!current_user_can('manage_options')) {
+            wp_die(esc_html__('Nedostatečná oprávnění.', 'digihood-branding'));
+        }
+
+        self::save([
+            'reply_to_email' => sanitize_email($_POST['reply_to_email'] ?? ''),
+            'mail_to_email' => sanitize_email($_POST['mail_to_email'] ?? ''),
+        ]);
+
+        wp_safe_redirect(add_query_arg(
+            ['page' => 'digihood-reporter', 'tab' => 'settings', 'dh_saved' => '1'],
+            admin_url('admin.php')
+        ));
+        exit;
     }
 }
