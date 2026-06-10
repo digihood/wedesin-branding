@@ -38,14 +38,6 @@ class PluginsPage
             [],
             filemtime($basePath . 'assets/css/admin-pages.css')
         );
-
-        wp_enqueue_script(
-            'digihood-admin-gradient',
-            $baseUrl . 'assets/js/admin-gradient.js',
-            [],
-            filemtime($basePath . 'assets/js/admin-gradient.js'),
-            true
-        );
     }
 
     public static function render(): void

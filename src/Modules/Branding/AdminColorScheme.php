@@ -29,11 +29,9 @@ class AdminColorScheme
 
     public function forceDefaultScheme(string $color): string
     {
-        // Only override if user hasn't explicitly chosen something else
-        // On first load or for new users, default to digihood
-        if ($color === 'fresh' || $color === '') {
-            return 'digihood';
-        }
-        return $color;
+        // Enforce the digihood brand scheme across the whole admin for every
+        // user, regardless of any personal color-scheme choice. Intercepts the
+        // value at runtime, so stored user meta doesn't need to change.
+        return 'digihood';
     }
 }

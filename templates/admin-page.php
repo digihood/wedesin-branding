@@ -11,7 +11,6 @@ if (!defined('ABSPATH')) exit;
 $baseUrl = admin_url('admin.php?page=digihood-reporter');
 ?>
 <div class="dh-page-wrap">
-    <canvas id="dh-admin-gradient"></canvas>
     <div class="dh-page-container">
 
         <!-- Header -->

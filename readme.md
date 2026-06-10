@@ -4,7 +4,7 @@ Donate link: https://digihood.cz/
 Tags: v3.1.3
 Requires at least: 4.0
 Tested up to: 6.6.2
-Stable tag: 6.6.2
+Stable tag: 5.1.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,13 @@ Here is a short description of the plugin.  This should be no more than 150 char
 
 == Description ==
 Branding plugin pro klienty WeDesIn a dogihood.
+**verze 5.1.0** Redesign pozadí a sjednocení admin barev
+- Nahrazení externího mesh-gradient skriptu (CDN) vlastní CSS animací — bez externí závislosti
+- Přepracované pozadí login i admin stránek (teplý gradient s jemnými barevnými akcenty v brand barvách)
+- Vynucení digihood admin color scheme pro všechny uživatele
+- Lososové akcenty místo defaultní WP modré napříč adminem (vč. blokového editoru přes --wp-admin-theme-color)
+- Drobná úprava login formuláře (odsazení tlačítka)
+
 **verze 3.1.3** Aktualizace frameworku
 - Aktualizace frameworku na nejnovější verzi.
 - Převedení frameworku na submodule jako v ostatních pluginech.

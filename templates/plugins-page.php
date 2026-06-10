@@ -7,7 +7,6 @@
 if (!defined('ABSPATH')) exit;
 ?>
 <div class="dh-page-wrap">
-    <canvas id="dh-admin-gradient"></canvas>
     <div class="dh-page-container">
 
         <!-- Header -->

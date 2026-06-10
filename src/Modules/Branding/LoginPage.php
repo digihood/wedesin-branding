@@ -28,14 +28,6 @@ class LoginPage
             [],
             filemtime(D1G1_PATHS_digibrand . 'assets/css/login.css')
         );
-
-        wp_enqueue_script(
-            'digihood-login-gradient',
-            D1G1_URL_digibrand . 'assets/js/login-gradient.js',
-            [],
-            filemtime(D1G1_PATHS_digibrand . 'assets/js/login-gradient.js'),
-            true
-        );
     }
 
     public function addFavicon(): void
@@ -70,7 +62,7 @@ class LoginPage
 
     public function addGradientBackground(): void
     {
-        echo '<div class="dh-gradient-bg"><canvas id="dh-gradient-canvas"></canvas></div>' . "\n";
+        echo '<div class="dh-gradient-bg"></div>' . "\n";
     }
 
     public function addFooterLink(): void

@@ -15,11 +15,12 @@
 
 /* Animated gradient background */
 body.digihood-login {
-    background-color: #000000;
+    background-color: #5a4330;
     min-height: 100vh;
 }
 
-/* Gradient container */
+/* Warm dark background with soft brand-colored glows.
+   Keeps the glass login card clearly readable while staying on-brand. */
 .dh-gradient-bg {
     position: fixed;
     top: 0;
@@ -28,13 +29,25 @@ body.digihood-login {
     height: 100%;
     overflow: hidden;
     z-index: 0;
-    background-color: #ff817e;
+    background-color: #5a4330;
+    background-image:
+        radial-gradient(68% 68% at 22% 18%, rgba(255, 129, 126, 0.52), transparent 72%),
+        radial-gradient(68% 68% at 82% 86%, rgba(253, 141, 66, 0.50), transparent 72%),
+        radial-gradient(56% 56% at 86% 24%, rgba(76, 175, 80, 0.32), transparent 72%),
+        linear-gradient(135deg, #5d4631 0%, #6e543d 50%, #503c2a 100%);
+    background-size: 160% 160%, 160% 160%, 150% 150%, 200% 200%;
+    background-position: 0% 0%, 100% 100%, 100% 0%, 0% 50%;
+    animation: dh-aurora 16s ease-in-out infinite;
 }
 
-.dh-gradient-bg canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
+@keyframes dh-aurora {
+    0%   { background-position: 0% 0%, 100% 100%, 100% 0%, 0% 50%; }
+    50%  { background-position: 30% 35%, 70% 65%, 78% 18%, 100% 50%; }
+    100% { background-position: 0% 0%, 100% 100%, 100% 0%, 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dh-gradient-bg { animation: none; }
 }
 
 /* Keep login content above the gradient */
@@ -114,6 +127,7 @@ body.digihood-login.wp-core-ui .button-primary {
     width: 100%;
     height: auto !important;
     line-height: 1.5 !important;
+    margin-top: 12px !important;
 }
 
 body.digihood-login.wp-core-ui .button-primary:hover,

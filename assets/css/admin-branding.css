@@ -2,6 +2,20 @@
    digihood Admin Branding — Notices & Global Overrides
    ========================================================================== */
 
+/* Replace WP's default blue accent with brand salmon everywhere it's driven
+   by the --wp-admin-theme-color variable: block editor UI, buttons, focus
+   rings, toggles, range sliders, selected states, links in newer components.
+   Loaded on every admin page, so it applies regardless of the chosen color
+   scheme. */
+body.wp-admin {
+    --wp-admin-theme-color: #ff817e;
+    --wp-admin-theme-color--rgb: 255, 129, 126;
+    --wp-admin-theme-color-darker-10: #e06e6b;
+    --wp-admin-theme-color-darker-10--rgb: 224, 110, 107;
+    --wp-admin-theme-color-darker-20: #c95a57;
+    --wp-admin-theme-color-darker-20--rgb: 201, 90, 87;
+}
+
 /* Admin notices styling */
 .notice {
     border-left-color: #ff817e !important;

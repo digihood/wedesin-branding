@@ -102,14 +102,6 @@ class AdminPage
             filemtime($basePath . 'assets/css/admin-pages.css')
         );
 
-        wp_enqueue_script(
-            'digihood-admin-gradient',
-            $baseUrl . 'assets/js/admin-gradient.js',
-            [],
-            filemtime($basePath . 'assets/js/admin-gradient.js'),
-            true
-        );
-
         // Reporter-specific styles
         wp_enqueue_style(
             'digihood-admin',
