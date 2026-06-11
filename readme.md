@@ -4,7 +4,7 @@ Donate link: https://digihood.cz/
 Tags: v3.1.3
 Requires at least: 4.0
 Tested up to: 6.6.2
-Stable tag: 5.1.3
+Stable tag: 5.1.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,10 @@ Here is a short description of the plugin.  This should be no more than 150 char
 
 == Description ==
 Branding plugin pro klienty WeDesIn a dogihood.
+**verze 5.1.4** Framework přímo v balíčku (oprava aktualizací)
+- plugin-framework převeden z git submodulu na běžné soubory v repu — framework je nyní v každém distribučním kanálu (release asset, GitHub source zip i git clone)
+- Opraven případ, kdy klasická WP aktualizace (PUC) stáhla source archiv bez submodulu → plugin hlásil chybějící plugin-framework
+
 **verze 5.1.3** Odolnost při chybějícím frameworku + auto-aktualizace
 - Plugin se při chybějících souborech složky plugin-framework (např. nasazení bez submodulu) elegantně zastaví a zobrazí adminovi hlášku místo fatální chyby (white-screen)
 - Vynucené automatické aktualizace pluginu — klientské weby si budoucí verze stáhnou samy (PUC + WP cron) bez ručního zásahu
