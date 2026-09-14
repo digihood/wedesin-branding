@@ -4,7 +4,7 @@ Donate link: https://digihood.cz/
 Tags: v3.1.3
 Requires at least: 4.0
 Tested up to: 6.6.2
-Stable tag: 5.1.4
+Stable tag: 5.1.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,11 @@ Here is a short description of the plugin.  This should be no more than 150 char
 
 == Description ==
 Branding plugin pro klienty WeDesIn a dogihood.
+**verze 5.1.5** Oprava PHP warningů při ukládání příspěvků (CF7)
+- saveForm::save_handler už nesahá přímo do pole get_post_types() podle neověřeného $_REQUEST['post_type'] — použit post_type_exists() nad sanitizovanou hodnotou
+- Tím zmizí "Undefined array key" v admin_init a navazující "Cannot modify header information – headers already sent" (projevovalo se např. při zakládání formuláře Contact Form 7)
+- Ošetřen i případ, kdy post_type/submit dorazí jako pole (dříve TypeError na PHP 8)
+
 **verze 5.1.4** Framework přímo v balíčku (oprava aktualizací)
 - plugin-framework převeden z git submodulu na běžné soubory v repu — framework je nyní v každém distribučním kanálu (release asset, GitHub source zip i git clone)
 - Opraven případ, kdy klasická WP aktualizace (PUC) stáhla source archiv bez submodulu → plugin hlásil chybějící plugin-framework

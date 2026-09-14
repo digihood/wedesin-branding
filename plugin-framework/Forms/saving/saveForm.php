@@ -43,12 +43,23 @@ if (!class_exists('saveForm')) {
          
            
         
-            if(isset($_REQUEST['submit']) &&
-                $_REQUEST['submit'] == Globals::$FWDIGI_PLUGINID.'-submit' ||
-                isset($_REQUEST['post_type']) &&
-                get_post_types()[$_REQUEST['post_type']] && 
-                isset($_REQUEST['_wpnonce'])
-            ){
+            // Odeslání formuláře frameworku (vlastní nastavovací stránky).
+            $submit = $_REQUEST['submit'] ?? null;
+            $is_plugin_submit = is_string($submit)
+                && $submit === Globals::$FWDIGI_PLUGINID.'-submit';
+
+            // Uložení příspěvku – ověříme, že jde o skutečně registrovaný post type.
+            // Pozor: $_REQUEST['post_type'] je neověřený vstup a může obsahovat
+            // cokoliv (i pole nebo číslo), proto žádný přímý přístup do pole.
+            $raw_post_type = $_REQUEST['post_type'] ?? null;
+            $post_type = is_string($raw_post_type)
+                ? sanitize_key(wp_unslash($raw_post_type))
+                : '';
+            $is_post_save = '' !== $post_type
+                && post_type_exists($post_type)
+                && isset($_REQUEST['_wpnonce']);
+
+            if($is_plugin_submit || $is_post_save){
                 $request = $this->save_switch_and_checkbox($_REQUEST);  
                 $Rules = new  SetValidationRules($request, $post_id ?? null);
                 $validator = new Validator($Rules,$request);
