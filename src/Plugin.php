@@ -9,7 +9,7 @@ use sitemap\framework\pluginSystem\d1g1PluginRequirements;
 class Plugin extends d1g1PluginRequirements
 {
     public const NAME = 'digihood branding';
-    public const VERSION = '5.1.5';
+    public const VERSION = '5.1.6';
     public const SLUG = 'digibrand';
 
     private static ?self $instance = null;
