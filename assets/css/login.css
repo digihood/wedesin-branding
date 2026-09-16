@@ -67,8 +67,13 @@ body.digihood-login #login h1 a {
     margin-bottom: 24px;
 }
 
-/* Form — dark liquid glass card */
-body.digihood-login #loginform {
+/* Form — dark liquid glass card.
+   Platí pro všechny formuláře na wp-login.php, ne jen pro přihlášení —
+   jinak by zůstalo bílé jádrové pozadí pod bílým textem inputů. */
+body.digihood-login #loginform,
+body.digihood-login #lostpasswordform,
+body.digihood-login #resetpassform,
+body.digihood-login #registerform {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px) saturate(1.2);
     -webkit-backdrop-filter: blur(20px) saturate(1.2);
@@ -81,7 +86,10 @@ body.digihood-login #loginform {
 }
 
 /* Labels — light text on dark glass */
-body.digihood-login #loginform label {
+body.digihood-login #loginform label,
+body.digihood-login #lostpasswordform label,
+body.digihood-login #resetpassform label,
+body.digihood-login #registerform label {
     color: var(--dh-white);
     font-size: 14px;
     font-weight: 600;
@@ -89,6 +97,7 @@ body.digihood-login #loginform label {
 
 /* Inputs — dark glass style */
 body.digihood-login input[type="text"],
+body.digihood-login input[type="email"],
 body.digihood-login input[type="password"] {
     background: rgba(255, 255, 255, 0.1) !important;
     border: 2px solid rgba(255, 255, 255, 0.15) !important;
@@ -100,11 +109,13 @@ body.digihood-login input[type="password"] {
 }
 
 body.digihood-login input[type="text"]::placeholder,
+body.digihood-login input[type="email"]::placeholder,
 body.digihood-login input[type="password"]::placeholder {
     color: rgba(255, 255, 255, 0.4);
 }
 
 body.digihood-login input[type="text"]:focus,
+body.digihood-login input[type="email"]:focus,
 body.digihood-login input[type="password"]:focus {
     border-color: var(--dh-coral) !important;
     box-shadow: 0 0 0 3px rgba(255, 129, 126, 0.25) !important;
@@ -151,6 +162,59 @@ body.digihood-login .wp-hide-pw:focus {
     color: var(--dh-coral) !important;
     box-shadow: none !important;
     border-color: transparent !important;
+}
+
+/* ==========================================================================
+   Reset / zapomenuté heslo / registrace
+   ========================================================================== */
+
+/* Místo pro ikonu oka vpravo — jednotný padding inputů ho jinak přebije
+   a vygenerované heslo by se schovalo pod tlačítko. */
+body.digihood-login .wp-pwd input[type="text"],
+body.digihood-login .wp-pwd input[type="password"] {
+    padding-right: 46px !important;
+}
+
+/* Sekundární tlačítka (Generovat heslo) — sklo místo bílé z jádra.
+   Cílíme na .button, protože „Generovat heslo“ nemá .button-secondary.
+   Oko u hesla je taky .button, to si necháváme průhledné. */
+body.digihood-login.wp-core-ui .button:not(.button-primary):not(.wp-hide-pw) {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 2px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: var(--dh-radius) !important;
+    color: var(--dh-white) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    padding: 10px 20px !important;
+    height: auto !important;
+    line-height: 1.5 !important;
+    text-shadow: none !important;
+    transition: all 0.2s ease;
+}
+
+body.digihood-login.wp-core-ui .button:not(.button-primary):not(.wp-hide-pw):hover,
+body.digihood-login.wp-core-ui .button:not(.button-primary):not(.wp-hide-pw):focus {
+    background: rgba(255, 255, 255, 0.18) !important;
+    border-color: var(--dh-coral) !important;
+    color: var(--dh-white) !important;
+}
+
+/* Nápovědy pod poli — na tmavém skle musí být světlé */
+body.digihood-login .description,
+body.digihood-login .indicator-hint,
+body.digihood-login #reg_passmail,
+body.digihood-login #resetpassform p,
+body.digihood-login #lostpasswordform p:not(.submit) {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Metr síly hesla — barevné pozadí z jádra je světlé,
+   text proto držíme tmavý, ať zůstane čitelný. */
+body.digihood-login #pass-strength-result {
+    border-radius: 12px !important;
+    border-width: 0 !important;
+    color: var(--dh-dark) !important;
+    font-weight: 600;
 }
 
 /* Checkbox */
