@@ -34,7 +34,7 @@ if (!defined('ABSPATH')) exit;
         <a href="mailto:hello@digihood.cz" style="color: #ff817e; text-decoration: none;">hello@digihood.cz</a>
     </p>
     <p style="font-size: 13px; color: #666; margin: 0 0 12px;">
-        <a href="tel:+420731901533" style="color: #ff817e; text-decoration: none;">+420 731 901 533</a>
+        <a href="tel:+420777657474" style="color: #ff817e; text-decoration: none;">+420 777 657 474</a>
     </p>
 
     <a href="https://digihood.cz" target="_blank" rel="noopener" class="dh-widget-btn">

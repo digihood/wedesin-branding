@@ -3,7 +3,7 @@
  * Plugin Name: digihood branding
  * Plugin URI: https://digihood.cz
  * Description: Branding, automatické sledování aktualizací a reportování klientům.
- * Version: 5.1.6
+ * Version: 5.1.7
  * Requires at least: 6.0
  * Requires PHP: 8.0
  * Author: digihood

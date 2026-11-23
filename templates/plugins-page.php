@@ -51,7 +51,7 @@ if (!defined('ABSPATH')) exit;
                 <h3><span class="dashicons dashicons-email-alt"></span> <?php echo $isCzech ? 'Kontakt' : 'Contact'; ?></h3>
                 <ul>
                     <li><span class="dashicons dashicons-email"></span> <a href="mailto:hello@digihood.cz">hello@digihood.cz</a></li>
-                    <li><span class="dashicons dashicons-phone"></span> +420 731 901 533</li>
+                    <li><span class="dashicons dashicons-phone"></span> +420 777 657 474</li>
                     <li><span class="dashicons dashicons-admin-site-alt3"></span> <a href="https://digihood.cz" target="_blank" rel="noopener">digihood.cz</a></li>
                 </ul>
             </div>

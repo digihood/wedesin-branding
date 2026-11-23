@@ -4,7 +4,7 @@ Donate link: https://digihood.cz/
 Tags: v3.1.3
 Requires at least: 4.0
 Tested up to: 6.6.2
-Stable tag: 5.1.6
+Stable tag: 5.1.7
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,9 @@ Here is a short description of the plugin.  This should be no more than 150 char
 
 == Description ==
 Branding plugin pro klienty WeDesIn a dogihood.
+**verze 5.1.7** Nové kontaktní telefonní číslo
+- V dashboard widgetu a na stránce pluginů změněno telefonní číslo na +420 777 657 474
+
 **verze 5.1.6** Oprava neviditelného hesla při resetu + odstranění debug endpointu
 - Branding login stránky se nově aplikuje i na formuláře resetu hesla, zapomenutého hesla a registrace — dřív stylsoval jen #loginform, ale bílý text inputů platil všude, takže na #resetpassform zůstalo bílé pozadí z jádra pod bílým textem a zadané heslo nebylo vidět
 - Doplněny nápovědy pod poli, metr síly hesla, tlačítko "Generovat heslo" a input[type=email] z registrace
