@@ -9,7 +9,7 @@ use sitemap\framework\pluginSystem\d1g1PluginRequirements;
 class Plugin extends d1g1PluginRequirements
 {
     public const NAME = 'digihood branding';
-    public const VERSION = '5.1.7';
+    public const VERSION = '5.1.8';
     public const SLUG = 'digibrand';
 
     private static ?self $instance = null;
@@ -73,9 +73,9 @@ class Plugin extends d1g1PluginRequirements
         );
         $checker->setBranch('master');
 
-        if (defined('GithubToken') && GithubToken) {
-            $checker->setAuthentication(GithubToken);
-        }
+        // Repozitář je veřejný – bez autentizace. Záměrně se nepoužívá konstanta
+        // GithubToken: jiný plugin na webu ji může definovat s neplatným tokenem
+        // a GitHub by pak vracel 401 i u veřejného repozitáře.
     }
 
     protected function check_plugin_requirements(): array

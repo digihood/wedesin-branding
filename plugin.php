@@ -3,7 +3,7 @@
  * Plugin Name: digihood branding
  * Plugin URI: https://digihood.cz
  * Description: Branding, automatické sledování aktualizací a reportování klientům.
- * Version: 5.1.7
+ * Version: 5.1.8
  * Requires at least: 6.0
  * Requires PHP: 8.0
  * Author: digihood
@@ -33,9 +33,11 @@ if (!defined('D1G1_SITE_BOX_LANG_SHOW')) {
 define('D1G1_GITHUBURL_BRAND', 'https://github.com/digihood/wedesin-branding');
 define('D1G1_GITHUBREP_BRAND', 'wedesin-branding');
 
-// GitHub token for plugin updates (read-only access to repo)
+// Repozitář je veřejný, aktualizace přes PUC nepotřebují autentizaci.
+// Prázdná konstanta zůstává kvůli kompatibilitě se staršími pluginy
+// na stejném webu, které na ni mohou sahat bez kontroly defined().
 if (!defined('GithubToken')) {
-    define('GithubToken', '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');
+    define('GithubToken', '');
 }
 
 // Framework stubs (must be loaded before framework, in global namespace)

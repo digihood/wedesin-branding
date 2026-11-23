@@ -4,7 +4,7 @@ Donate link: https://digihood.cz/
 Tags: v3.1.3
 Requires at least: 4.0
 Tested up to: 6.6.2
-Stable tag: 5.1.7
+Stable tag: 5.1.8
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,6 +13,10 @@ Here is a short description of the plugin.  This should be no more than 150 char
 
 == Description ==
 Branding plugin pro klienty WeDesIn a dogihood.
+**verze 5.1.8** Oprava automatických aktualizací
+- Aktualizace se stahují z veřejného GitHub repozitáře bez autentizace — odstraněn napevno vložený token, který GitHub odmítal (401), takže weby novou verzi vůbec neviděly
+- Konstanta GithubToken zůstává definovaná (prázdná) kvůli kompatibilitě s ostatními pluginy
+
 **verze 5.1.7** Nové kontaktní telefonní číslo
 - V dashboard widgetu a na stránce pluginů změněno telefonní číslo na +420 777 657 474
 
